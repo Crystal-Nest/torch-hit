@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[40,)"
+license="GNU AGPLv3"
+issueTrackerURL="https://github.com/Nyphet/torch-hit/issues" #optional
+[[mods]]
+modId="torchhit"
+version="${file.jarVersion}"
+displayName="Just Vertical Slabs"
+updateJSONURL="https://raw.githubusercontent.com/Nyphet/torch-hit/master/updates.json" #optional
+displayURL="https://github.com/Nyphet/torch-hit" #optional
+logoFile="torch-hit.png" #optional
+authors="Crystal Spider" #optional
+description="Attack with torches to deal fire damage!"
+[[dependencies.torchhit]]
+    modId="forge"
+    mandatory=true
+    versionRange="[40,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.torchhit]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.18.2,1.19)"
+    ordering="NONE"
+    side="BOTH"
+#optional

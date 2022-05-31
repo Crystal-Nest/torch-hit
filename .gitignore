@@ -1,0 +1,38 @@
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# vscode
+bin/
+.classpath
+.project
+
+# gradle
+build
+out
+classes
+.gradle
+
+# other
+eclipse
+run
+
+# macos
+*.DS_Store
+
+# Files from Forge MDK
+forge*changelog.txt
+
+# Ignore Fabric files until I will properly setup them
+fabric
