@@ -23,7 +23,7 @@ Downloads are available [here](https://www.curseforge.com/minecraft/mc-mods/torc
 To open a new issue or search an existing one visit the [issues tab](https://github.com/Nyphet/torch-hit/issues).
 
 ## Technical details
-This mod is required on both server and client to work.
+This mod is needed just on the server to work.
 
 ## License and right of use
 Feel free to use this mod for any modpack or video, just be sure to give credit and possibly link [here](https://github.com/Nyphet/torch-hit#readme).  
