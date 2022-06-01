@@ -10,7 +10,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -44,8 +43,9 @@ public class AttackEntityEventHandler {
       InteractionHand torchHand = getTorchHand(player);
       if (torchHand != null && !targetedEntity.fireImmune()) {
         if (torchHand == InteractionHand.MAIN_HAND) {
+          targetedEntity.setSecondsOnFire(directHitDuration);
         } else if (torchHand == InteractionHand.OFF_HAND) {
-
+          targetedEntity.setSecondsOnFire(indirectHitDuration);
         }
       }
     }
