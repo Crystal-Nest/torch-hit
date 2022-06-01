@@ -1,6 +1,7 @@
 package crystalspider.torchhit.config;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -75,24 +76,15 @@ public class TorchHitConfig {
      */
 		public CommonConfig(ForgeConfigSpec.Builder builder) {
       int maxDuration = Enchantments.FIRE_ASPECT.getMaxLevel() * 4;
-			directHitDuration = builder
-        .comment(
-          "Fire damage duration for direct (main hand) hits.",
-          "From 1 to " + maxDuration + "."
-        )
-        .defineInRange("directHitDuration", 4, 0, maxDuration);
-			indirectHitDuration = builder
-        .comment(
-          "Fire damage duration for indirect (off hand + tool) hits.",
-          "From 1 to " + maxDuration + "."
-        )
-        .defineInRange("indirectHitDuration", 2, 0, maxDuration);
+			directHitDuration = builder.comment("Fire damage duration for direct (main hand) hits.").defineInRange("directHitDuration", 4, 1, maxDuration);
+			indirectHitDuration = builder.comment("Fire damage duration for indirect (off hand + tool) hits.").defineInRange("indirectHitDuration", 2, 1, maxDuration);
 			indirectHitToolList = builder
         .comment(
           "List of tools that allow for an indirect hit when a torch is being held in the off hand.",
-          "Leave empty to disable indirect hits."
+          "Leave empty to disable indirect hits.",
+          "Insert either item categories or specific item IDs."
         )
-        .define("indirectHitEnabled", new ArrayList<>());
+        .define("indirectHitEnabled", new ArrayList<String>(List.of("sword", "axe", "pickaxe", "shovel", "hoe")));
 		}
 	}
 }
