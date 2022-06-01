@@ -2,7 +2,6 @@ package crystalspider.torchhit.config;
 
 import java.util.ArrayList;
 
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue; 
 
@@ -24,30 +23,12 @@ public class TorchHitConfig {
 	public static final ForgeConfigSpec SPEC = BUILDER.build();
 
   /**
-   * Returns the value of {@link CommonConfig#directHitLevel}.
-   *
-   * @return {@link CommonConfig#directHitLevel} as read from the {@link #COMMON common} configuration file.
-   */
-  public static Integer getDirectHitLevel() {
-		return COMMON.directHitLevel.get();
-	}
-
-  /**
    * Returns the value of {@link CommonConfig#directHitDuration}.
    *
    * @return {@link CommonConfig#directHitDuration} as read from the {@link #COMMON common} configuration file.
    */
   public static Double getDirectHitDuration() {
 		return COMMON.directHitDuration.get();
-	}
-
-  /**
-   * Returns the value of {@link CommonConfig#indirectHitLevel}.
-   *
-   * @return {@link CommonConfig#indirectHitLevel} as read from the {@link #COMMON common} configuration file.
-   */
-  public static Integer getIndirectHitLevel() {
-		return COMMON.indirectHitLevel.get();
 	}
 
   /**
@@ -82,17 +63,9 @@ public class TorchHitConfig {
    */
   public static class CommonConfig {
     /**
-     * Fire Aspect Level for Direct Hits.
-     */
-    private final ConfigValue<Integer> directHitLevel;
-    /**
      * Fire Aspect Duration for Direct Hits.
      */
     private final ConfigValue<Double> directHitDuration;
-    /**
-     * Fire Aspect Level for Indirect Hits.
-     */
-    private final ConfigValue<Integer> indirectHitLevel;
     /**
      * Fire Aspect Duration for Indirect Hits.
      */
@@ -114,25 +87,12 @@ public class TorchHitConfig {
      * @param builder
      */
 		public CommonConfig(ForgeConfigSpec.Builder builder) {
-      int maxLevel = Enchantments.FIRE_ASPECT.getMaxLevel();
-			directHitLevel = builder
-        .comment(
-          "Fire Aspect level for direct (main hand) hits.",
-          "From 1 to " + maxLevel + "."
-        )
-        .defineInRange("directHitLevel", 1, 1, maxLevel);
 			directHitDuration = builder
         .comment(
           "Fire Aspect duration multiplier for direct (main hand) hits.",
           "From 0 to 2, Fire Aspect duration will be multiplied by this."
         )
         .defineInRange("directHitDuration", 1.0, 0.0, 2.0);
-			indirectHitLevel = builder
-        .comment(
-          "Fire Aspect level for indirect (off hand + tool) hits.",
-          "From 1 to " + maxLevel + "."
-        )
-        .defineInRange("indirectHitLevel", 1, 1, maxLevel);
 			indirectHitDuration = builder
         .comment(
           "Fire Aspect duration multiplier for indirect (off hand + tool) hits.",

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
-import crystalspider.torchhit.TorchHitLoader;
 import crystalspider.torchhit.config.TorchHitConfig;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -18,17 +17,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class AttackEntityEventHandler {
   /**
-   * Fire Aspect Level for Direct Hits.
-   */
-  private final Integer directHitLevel;
-  /**
    * Fire Aspect Duration for Direct Hits.
    */
   private final Double directHitDuration;
-  /**
-   * Fire Aspect Level for Indirect Hits.
-   */
-  private final Integer indirectHitLevel;
   /**
    * Fire Aspect Duration for Indirect Hits.
    */
@@ -44,9 +35,7 @@ public class AttackEntityEventHandler {
   private final Boolean indirectHitEnabled;
 
 	public AttackEntityEventHandler() {
-		directHitLevel = TorchHitConfig.getDirectHitLevel();
     directHitDuration = TorchHitConfig.getDirectHitDuration();
-    indirectHitLevel = TorchHitConfig.getIndirectHitLevel();
     indirectHitDuration = TorchHitConfig.getIndirectHitDuration();
     indirectHitToolList = TorchHitConfig.getIndirectHitToolList();
     indirectHitEnabled = TorchHitConfig.getIndirectHitEnabled();
@@ -60,7 +49,6 @@ public class AttackEntityEventHandler {
       InteractionHand torchHand = getTorchHand(player);
       if (torchHand != null && !targetedEntity.fireImmune()) {
         if (torchHand == InteractionHand.MAIN_HAND) {
-          // targetedEntity.setSecondsOnFire();
         } else if (torchHand == InteractionHand.OFF_HAND) {
 
         }
