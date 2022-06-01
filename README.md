@@ -4,7 +4,7 @@
 ## Features
 - Hit with a torch in your main hand to deal fire aspect!
 - Hit with a tool in your main hand and a torch in your off hand to deal fire aspect!
-- Soul torches lit on fire Piglins for double the time and any other entity for 1 second more!
+- Soul torches lit Piglins on fire for double the time and any other entity for 1 second more!
 - Configurable! See next section for more details.
 
 ## Configuration
