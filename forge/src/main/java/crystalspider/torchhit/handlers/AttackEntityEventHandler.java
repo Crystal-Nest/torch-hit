@@ -19,26 +19,21 @@ public class AttackEntityEventHandler {
   /**
    * Fire Aspect Duration for Direct Hits.
    */
-  private final Double directHitDuration;
+  private final Integer directHitDuration;
   /**
    * Fire Aspect Duration for Indirect Hits.
    */
-  private final Double indirectHitDuration;
+  private final Integer indirectHitDuration;
   /**
    * List of tools that can be used to deal Indirect Hits.
-   * An empty list with {@link #indirectHitEnabled} set to true indicates that any item should allow for an Indirect Hit.
+   * Empty if Indirect Hits are disabled.
    */
   private final ArrayList<String> indirectHitToolList;
-  /**
-   * Whether Indirect Hits are enabled.
-   */
-  private final Boolean indirectHitEnabled;
 
 	public AttackEntityEventHandler() {
     directHitDuration = TorchHitConfig.getDirectHitDuration();
     indirectHitDuration = TorchHitConfig.getIndirectHitDuration();
     indirectHitToolList = TorchHitConfig.getIndirectHitToolList();
-    indirectHitEnabled = TorchHitConfig.getIndirectHitEnabled();
 	}
 
   @SubscribeEvent(priority = EventPriority.HIGH)

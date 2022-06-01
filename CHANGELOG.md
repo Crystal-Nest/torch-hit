@@ -13,5 +13,5 @@ and this project adheres to [Forge Semantic Versioning](https://mcforge.readthed
 - Added indirect (off hand) torch hits.
 - Added configuration options.
 
-[Unreleased]: https://github.com/Nyphet/just-vertical-slabs
-[1.18.2-1.0.0.0]: https://github.com/Nyphet/just-vertical-slabs/releases/tag/v1.18.2-1.0.0.0
+[Unreleased]: https://github.com/Nyphet/torch-hit
+[1.18.2-1.0.0.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.18.2-1.0.0.0

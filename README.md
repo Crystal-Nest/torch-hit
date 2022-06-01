@@ -8,7 +8,7 @@
 
 ## Configuration
 - By default direct (main hand) torch hits deal fire damage for 4 seconds.  
-  The duration can be configured with a multiplier (from 0 to 2).
+  The duration can be configured.
 - By default indirect (off hand) torch hits are enabled and work with any tool, dealing fire damage for 2 seconds.  
   The duration, tool list and whether enabling this feature can all be configured.
 - By default soul torches and regular torches behave the same.  

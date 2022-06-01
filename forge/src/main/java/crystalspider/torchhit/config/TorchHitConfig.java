@@ -2,6 +2,7 @@ package crystalspider.torchhit.config;
 
 import java.util.ArrayList;
 
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue; 
 
@@ -27,7 +28,7 @@ public class TorchHitConfig {
    *
    * @return {@link CommonConfig#directHitDuration} as read from the {@link #COMMON common} configuration file.
    */
-  public static Double getDirectHitDuration() {
+  public static Integer getDirectHitDuration() {
 		return COMMON.directHitDuration.get();
 	}
 
@@ -36,7 +37,7 @@ public class TorchHitConfig {
    *
    * @return {@link CommonConfig#indirectHitDuration} as read from the {@link #COMMON common} configuration file.
    */
-  public static Double getIndirectHitDuration() {
+  public static Integer getIndirectHitDuration() {
 		return COMMON.indirectHitDuration.get();
 	}
 
@@ -50,36 +51,22 @@ public class TorchHitConfig {
 	}
 
   /**
-   * Returns the value of {@link CommonConfig#indirectHitEnabled}.
-   *
-   * @return {@link CommonConfig#indirectHitEnabled} as read from the {@link #COMMON common} configuration file.
-   */
-  public static Boolean getIndirectHitEnabled() {
-		return COMMON.indirectHitEnabled.get();
-	}
-
-  /**
    * Common Configuration for Torch hit!.
    */
   public static class CommonConfig {
     /**
      * Fire Aspect Duration for Direct Hits.
      */
-    private final ConfigValue<Double> directHitDuration;
+    private final ConfigValue<Integer> directHitDuration;
     /**
      * Fire Aspect Duration for Indirect Hits.
      */
-    private final ConfigValue<Double> indirectHitDuration;
+    private final ConfigValue<Integer> indirectHitDuration;
     /**
      * List of tools that can be used to deal Indirect Hits.
-     * An empty list with {@link #indirectHitEnabled} set to true indicates that any item should allow for an Indirect Hit.
-     * TODO: Better define this property.
+     * Empty if Indirect Hits are disabled.
      */
     private final ConfigValue<ArrayList<String>> indirectHitToolList;
-    /**
-     * Whether Indirect Hits are enabled.
-     */
-    private final ConfigValue<Boolean> indirectHitEnabled;
 
     /**
      * Defines the configuration options, their default values and their comments.
@@ -87,28 +74,25 @@ public class TorchHitConfig {
      * @param builder
      */
 		public CommonConfig(ForgeConfigSpec.Builder builder) {
+      int maxDuration = Enchantments.FIRE_ASPECT.getMaxLevel() * 4;
 			directHitDuration = builder
         .comment(
-          "Fire Aspect duration multiplier for direct (main hand) hits.",
-          "From 0 to 2, Fire Aspect duration will be multiplied by this."
+          "Fire damage duration for direct (main hand) hits.",
+          "From 1 to " + maxDuration + "."
         )
-        .defineInRange("directHitDuration", 1.0, 0.0, 2.0);
+        .defineInRange("directHitDuration", 4, 0, maxDuration);
 			indirectHitDuration = builder
         .comment(
-          "Fire Aspect duration multiplier for indirect (off hand + tool) hits.",
-          "From 0 to 2, Fire Aspect duration will be multiplied by this."
+          "Fire damage duration for indirect (off hand + tool) hits.",
+          "From 1 to " + maxDuration + "."
         )
-        .defineInRange("indirectHitDuration", 0.5, 0.0, 2.0);
+        .defineInRange("indirectHitDuration", 2, 0, maxDuration);
 			indirectHitToolList = builder
         .comment(
           "List of tools that allow for an indirect hit when a torch is being held in the off hand.",
-          "Leave empty to allow indirect hits with any item (not only tools)."
+          "Leave empty to disable indirect hits."
         )
         .define("indirectHitEnabled", new ArrayList<>());
-			indirectHitEnabled = builder
-        .comment("Whether to enable indirect (off hand + tool) hits.")
-        .define("indirectHitEnabled", true);
-      // TODO: Add soul & regular configuration options.
 		}
 	}
 }
