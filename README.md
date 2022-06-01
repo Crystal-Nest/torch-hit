@@ -15,7 +15,6 @@
 
 ## Downloads
 This is BOTH the FORGE and FABRIC version, so make sure you're downloading the correct version that suits your needs.  
-As of now, FABRIC version is not released yet, but will soon arrive.  
 Downloads are available [here](https://www.curseforge.com/minecraft/mc-mods/torch-hit/files).
 
 ## Issues
