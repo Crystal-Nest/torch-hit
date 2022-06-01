@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "torch-hit",
+  "version": "${version}",
+  "name": "Torch hit!",
+  "description": ".",
+  "authors": [
+    "Crystal Spider"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/torch-hit",
+    "issues": "https://github.com/Nyphet/torch-hit/issues",
+    "sources": "https://github.com/Nyphet/torch-hit"
+  },
+  "license": "GPL-3.0-or-later",
+  "icon": "assets/torch-hit/torch-hit.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "crystalspider.torchhit.TorchHitLoader"
+    ]
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.13.3",
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  }
+}
