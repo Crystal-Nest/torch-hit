@@ -7,9 +7,9 @@
 - Configurable! See next section for more details.
 
 ## Configuration
-- By default direct (main hand) torch hits deal Fire Aspect I for half the normal duration.  
+- By default direct (main hand) torch hits deal Fire Aspect I for its full duration.  
   Fire Aspect level and duration can be configured.
-- By default indirect (off hand) torch hits are enabled and work with any tool, dealing Fire Aspect I for its full duration.  
+- By default indirect (off hand) torch hits are enabled and work with any tool, dealing Fire Aspect I for half its duration.  
   Fire Aspect level, duration, tool list and whether enabling this feature can all be configured.
 - By default soul torches and regular torches behave the same.  
   This can be changed, allowing each kind of torch to deal more or less damage to specific group of entities.

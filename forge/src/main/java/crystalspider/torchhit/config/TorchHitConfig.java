@@ -126,7 +126,7 @@ public class TorchHitConfig {
           "Fire Aspect duration multiplier for direct (main hand) hits.",
           "From 0 to 2, Fire Aspect duration will be multiplied by this."
         )
-        .defineInRange("directHitDuration", 0.5, 0.0, 2.0);
+        .defineInRange("directHitDuration", 1.0, 0.0, 2.0);
 			indirectHitLevel = builder
         .comment(
           "Fire Aspect level for indirect (off hand + tool) hits.",
@@ -138,7 +138,7 @@ public class TorchHitConfig {
           "Fire Aspect duration multiplier for indirect (off hand + tool) hits.",
           "From 0 to 2, Fire Aspect duration will be multiplied by this."
         )
-        .defineInRange("indirectHitDuration", 1.0, 0.0, 2.0);
+        .defineInRange("indirectHitDuration", 0.5, 0.0, 2.0);
 			indirectHitToolList = builder
         .comment(
           "List of tools that allow for an indirect hit when a torch is being held in the off hand.",

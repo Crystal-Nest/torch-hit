@@ -17,6 +17,7 @@ out
 bin/
 .classpath
 .project
+.vscode
 
 # gradle
 build
