@@ -84,7 +84,7 @@ public class TorchHitConfig {
           "Leave empty to disable indirect hits.",
           "Insert either item categories or specific item IDs."
         )
-        .define("indirectHitEnabled", new ArrayList<String>(List.of("sword", "axe", "pickaxe", "shovel", "hoe")));
+        .define("indirectHitToolList", new ArrayList<String>(List.of("sword", "axe", "pickaxe", "shovel", "hoe")));
 		}
 	}
 }
