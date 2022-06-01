@@ -4,15 +4,14 @@
 ## Features
 - Hit with a torch in your main hand to deal fire aspect!
 - Hit with a tool in your main hand and a torch in your off hand to deal fire aspect!
+- Soul torches lit on fire Piglins for double the time and any other entity for 1 second more!
 - Configurable! See next section for more details.
 
 ## Configuration
-- By default direct (main hand) torch hits deal fire damage for 4 seconds.  
+- By default direct (main hand) torch hits deal fire damage for 4 seconds, same as Fire Aspect I.  
   The duration can be configured.
 - By default indirect (off hand) torch hits are enabled and work with any tool, dealing fire damage for 2 seconds.  
   The duration, tool list and whether enabling this feature can all be configured.
-- By default soul torches and regular torches behave the same.  
-  This can be changed, allowing each kind of torch to deal more or less damage to specific group of entities.
 
 ## Downloads
 This is BOTH the FORGE and FABRIC version, so make sure you're downloading the correct version that suits your needs.  

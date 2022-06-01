@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import crystalspider.torchhit.config.TorchHitConfig;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -51,13 +52,32 @@ public class AttackEntityEventHandler {
       Entity targetedEntity = event.getTarget();
       InteractionHand torchHand = getTorchHand(player);
       if (torchHand != null && !targetedEntity.fireImmune()) {
+        ItemStack torch = player.getItemInHand(torchHand);
         if (torchHand == InteractionHand.MAIN_HAND) {
-          targetedEntity.setRemainingFireTicks(targetedEntity.getRemainingFireTicks() + directHitDuration);
-        } else if (torchHand == InteractionHand.OFF_HAND && isAllowedTool(player.getMainHandItem().getItem())) {
-          targetedEntity.setRemainingFireTicks(targetedEntity.getRemainingFireTicks() + indirectHitDuration);
+          targetedEntity.setRemainingFireTicks(getFireTicks(torch, targetedEntity, directHitDuration));
+        } else if (isAllowedTool(player.getMainHandItem().getItem())) {
+          targetedEntity.setRemainingFireTicks(getFireTicks(torch, targetedEntity, indirectHitDuration));
         }
       }
     }
+  }
+
+  /**
+   * Returns the amount of ticks the given entity should stay on fire.
+   * 
+   * @param torch
+   * @param entity
+   * @param fireDuration
+   * @return
+   */
+  private int getFireTicks(ItemStack torch, Entity entity, int fireDuration) {
+    if (torch.is(Items.SOUL_TORCH)) {
+      if (entity instanceof AbstractPiglin) {
+        return entity.getRemainingFireTicks() + fireDuration * 2;
+      }
+      return entity.getRemainingFireTicks() + fireDuration + 20;
+    }
+    return entity.getRemainingFireTicks() + fireDuration;
   }
 
   /**
