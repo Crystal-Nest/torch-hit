@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Suggest an idea for this mod
-title: ''
+title: Feature request
 labels: enhancement
 assignees: Nyphet
 

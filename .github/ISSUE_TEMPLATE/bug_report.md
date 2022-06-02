@@ -1,7 +1,7 @@
 ---
 name: Bug report
-about: Report a bug
-title: ''
+about: Describe a bug you've encountered
+title: Bug
 labels: bug
 assignees: Nyphet
 
@@ -20,7 +20,10 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Desktop (please complete the following information):**
+**Stacktrace and logs**
+If applicable, copy and paste relevant logs.
+
+**System information:**
  - Mod loader (Fabric or Forge)
  - Mod version
  - Minecraft version
