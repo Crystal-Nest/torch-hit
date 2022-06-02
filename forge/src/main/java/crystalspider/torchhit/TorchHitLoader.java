@@ -29,7 +29,6 @@ public class TorchHitLoader {
    */
   public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(new ResourceLocation(MODID, "main"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, (version) -> true);
 
-
   public TorchHitLoader() {
     MinecraftForge.EVENT_BUS.register(new AttackEntityEventHandler());
     ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, TorchHitConfig.SPEC);
