@@ -1,9 +1,5 @@
 package crystalspider.torchhit;
 
-import com.mojang.logging.LogUtils;
-
-import org.slf4j.Logger;
-
 import crystalspider.torchhit.config.TorchHitConfig;
 import crystalspider.torchhit.handlers.AttackEntityEventHandler;
 import net.minecraft.resources.ResourceLocation;
@@ -23,11 +19,6 @@ public class TorchHitLoader {
    * ID of this mod.
    */
   public static final String MODID = "torchhit";
-
-  /**
-   * Logger.
-   */
-  public static final Logger LOGGER = LogUtils.getLogger();
 
   /**
    * Network channel protocol version.

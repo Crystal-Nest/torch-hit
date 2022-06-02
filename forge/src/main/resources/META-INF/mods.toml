@@ -5,7 +5,7 @@ issueTrackerURL="https://github.com/Nyphet/torch-hit/issues" #optional
 [[mods]]
 modId="torchhit"
 version="${file.jarVersion}"
-displayName="Just Vertical Slabs"
+displayName="Torch hit!"
 updateJSONURL="https://raw.githubusercontent.com/Nyphet/torch-hit/1.18.2/main/forge/updates.json" #optional
 displayURL="https://github.com/Nyphet/torch-hit" #optional
 logoFile="torch-hit.png" #optional
