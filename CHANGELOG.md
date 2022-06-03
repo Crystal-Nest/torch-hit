@@ -8,6 +8,9 @@ and this project adheres to [Forge Semantic Versioning](https://mcforge.readthed
 ## [Unreleased]
 - Nothing new.
 
+## [1.18.2-1.0.0.1] - 2022/06/04
+- Changed standard naming: moved "forge" and "fabric" notation to the end of the version to avoid crashes with Forge.
+
 ## [1.18.2-1.0.0.0] - 2022/06/03
 - Added direct (main hand) torch hits.
 - Added indirect (off hand) torch hits.
