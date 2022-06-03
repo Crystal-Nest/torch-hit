@@ -8,7 +8,7 @@ and this project adheres to [Forge Semantic Versioning](https://mcforge.readthed
 ## [Unreleased]
 - Nothing new.
 
-## [1.18.2-1.0.0.0] - 2022/06/01
+## [1.18.2-1.0.0.0] - 2022/06/03
 - Added direct (main hand) torch hits.
 - Added indirect (off hand) torch hits.
 - Added configuration options.
