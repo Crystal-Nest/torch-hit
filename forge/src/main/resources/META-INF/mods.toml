@@ -8,7 +8,7 @@ version="${file.jarVersion}"
 displayName="Torch hit!"
 updateJSONURL="https://raw.githubusercontent.com/Nyphet/torch-hit/1.18.2/main/forge/updates.json" #optional
 displayURL="https://github.com/Nyphet/torch-hit" #optional
-logoFile="torch-hit.png" #optional
+logoFile="torch-hit.gif" #optional
 authors="Crystal Spider" #optional
 description="Attack with torches to deal fire damage!"
 [[dependencies.torchhit]]

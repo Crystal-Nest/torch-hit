@@ -1,9 +1,9 @@
 # Torch hit!
-### Deal fire aspect with torches!
+### Attack with torches to deal fire damage!
 
 ## Features
-- Hit with a torch in your main hand to deal fire aspect!
-- Hit with a tool in your main hand and a torch in your off hand to deal fire aspect!
+- Hit with a torch in your main hand to deal fire damage!
+- Hit with a tool in your main hand and a torch in your off hand to deal fire damage!
 - Soul torches lit Piglins on fire for double the time and any other entity for 1 second more!
 - Configurable! See next section for more details.
 

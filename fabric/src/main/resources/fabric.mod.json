@@ -3,7 +3,7 @@
   "id": "torch-hit",
   "version": "${version}",
   "name": "Torch hit!",
-  "description": ".",
+  "description": "Attack with torches to deal fire damage!",
   "authors": [
     "Crystal Spider"
   ],
@@ -13,7 +13,7 @@
     "sources": "https://github.com/Nyphet/torch-hit"
   },
   "license": "GPL-3.0-or-later",
-  "icon": "assets/torch-hit/torch-hit.png",
+  "icon": "assets/torch-hit/torch-hit.gif",
   "environment": "*",
   "entrypoints": {
     "main": [
