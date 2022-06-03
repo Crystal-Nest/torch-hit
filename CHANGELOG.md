@@ -17,4 +17,5 @@ and this project adheres to [Forge Semantic Versioning](https://mcforge.readthed
 - Added configuration options.
 
 [Unreleased]: https://github.com/Nyphet/torch-hit
+[1.18.2-1.0.0.1]: https://github.com/Nyphet/torch-hit/releases/tag/v1.18.2-1.0.0.1
 [1.18.2-1.0.0.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.18.2-1.0.0.0
