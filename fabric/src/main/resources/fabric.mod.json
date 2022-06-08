@@ -10,7 +10,7 @@
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/torch-hit",
     "issues": "https://github.com/Nyphet/torch-hit/issues",
-    "sources": "https://github.com/Nyphet/torch-hit"
+    "sources": "https://github.com/Nyphet/torch-hit/tree/1.18.2/main"
   },
   "license": "GPL-3.0-or-later",
   "icon": "assets/torch-hit/torch-hit.gif",
