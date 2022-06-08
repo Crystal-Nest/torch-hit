@@ -1,11 +1,17 @@
 {
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/torch-hit/files",
+  "1.19": {
+    "2.0.0.0": "https://www.curseforge.com/minecraft/mc-mods/torch-hit/files/"
+  },
   "1.18.2": {
+    "2.0.0.0": "https://www.curseforge.com/minecraft/mc-mods/torch-hit/files/3822493",
     "1.0.0.1": "https://www.curseforge.com/minecraft/mc-mods/torch-hit/files/3816304",
     "1.0.0.0": "https://www.curseforge.com/minecraft/mc-mods/torch-hit/files/3816118"
   },
   "promos": {
-    "1.18.2-latest": "1.0.0.1",
-    "1.18.2-recommended": "1.0.0.1"
+    "1.19-latest": "2.0.0.0",
+    "1.19-recommended": "2.0.0.0",
+    "1.18.2-latest": "2.0.0.0",
+    "1.18.2-recommended": "2.0.0.0"
   }
 }
