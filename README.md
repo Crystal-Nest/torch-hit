@@ -25,4 +25,4 @@ This mod is needed just on the server to work.
 
 ## License and right of use
 Feel free to use this mod for any modpack or video, just be sure to give credit and possibly link [here](https://github.com/Nyphet/torch-hit#readme).  
-This project is published under the [GNU General Public License v3.0](https://github.com/Nyphet/torch-hit/blob/1.18.2/main/LICENSE).
+This project is published under the [GNU General Public License v3.0](https://github.com/Nyphet/torch-hit/blob/master/LICENSE).
