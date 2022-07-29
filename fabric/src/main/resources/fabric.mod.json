@@ -10,7 +10,7 @@
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/torch-hit",
     "issues": "https://github.com/Nyphet/torch-hit/issues",
-    "sources": "https://github.com/Nyphet/torch-hit/tree/1.19/main"
+    "sources": "https://github.com/Nyphet/torch-hit/tree/1.19"
   },
   "license": "GPL-3.0-or-later",
   "icon": "assets/torch-hit/torch-hit.gif",
@@ -22,9 +22,9 @@
   },
   "mixins": [],
   "depends": {
-    "fabricloader": ">=0.14.6",
+    "fabricloader": ">=0.14.8",
     "fabric": "*",
-    "minecraft": "~1.19",
+    "minecraft": "1.19",
     "java": ">=17"
   }
 }

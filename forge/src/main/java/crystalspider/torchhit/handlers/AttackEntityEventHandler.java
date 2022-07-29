@@ -47,7 +47,7 @@ public class AttackEntityEventHandler {
    */
   @SubscribeEvent()
   public void onAttackEntityEvent(AttackEntityEvent event) {
-    Player player = event.getPlayer();
+    Player player = event.getEntity();
     if (!player.isSpectator()) {
       Entity targetedEntity = event.getTarget();
       InteractionHand torchHand = getTorchHand(player);
