@@ -3,24 +3,25 @@ loaderVersion="[40,)"
 license="GNU AGPLv3"
 issueTrackerURL="https://github.com/Nyphet/torch-hit/issues" #optional
 [[mods]]
-modId="torchhit"
-version="${file.jarVersion}"
-displayName="Torch hit!"
-updateJSONURL="https://raw.githubusercontent.com/Nyphet/torch-hit/1.18.2/main/forge/updates.json" #optional
-displayURL="https://github.com/Nyphet/torch-hit/tree/1.18.2/main" #optional
+modId="modid"
+version="${modVersion}"
+displayName="${modTitle}"
+updateJSONURL="https://raw.githubusercontent.com/Nyphet/torch-hit/master/forge/updates.json" #optional
+displayURL="https://github.com/Nyphet/torch-hit/tree/${mcVersion}" #optional
 logoFile="torch-hit.gif" #optional
-authors="Crystal Spider" #optional
+# credits="Thank who deserves it." #optional
+authors="${author}" #optional
 description="Attack with torches to deal fire damage!"
-[[dependencies.torchhit]]
+[[dependencies.modid]]
     modId="forge"
     mandatory=true
-    versionRange="[40,)"
+    versionRange="[${forgeVersion},)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.torchhit]]
+[[dependencies.modid]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.18.2,1.19)"
+    versionRange="[${mcVersion},)"
     ordering="NONE"
     side="BOTH"
 #optional
