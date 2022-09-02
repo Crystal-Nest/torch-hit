@@ -50,7 +50,8 @@ def replaceProperties = [
   loader_version: loader_version,
   group: group,
   author: author,
-  github_user: github_user
+  github_user: github_user,
+  forgeconfigapiport_version: forgeconfigapiport_version
 ]
 
 processResources {
