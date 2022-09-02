@@ -52,6 +52,33 @@ public class TorchHitConfig {
 	}
 
   /**
+   * Returns the value of {@link CommonConfig#moddedTorchList}.
+   *
+   * @return {@link CommonConfig#moddedTorchList} as read from the {@link #COMMON common} configuration file.
+   */
+  public static ArrayList<String> getModdedTorchList() {
+		return COMMON.moddedTorchList.get();
+	}
+
+  /**
+   * Returns the value of {@link CommonConfig#moddedSoulTorchList}.
+   *
+   * @return {@link CommonConfig#moddedSoulTorchList} as read from the {@link #COMMON common} configuration file.
+   */
+  public static ArrayList<String> getModdedSoulTorchList() {
+		return COMMON.moddedSoulTorchList.get();
+	}
+
+  /**
+   * Returns the value of {@link CommonConfig#allowCandles}.
+   *
+   * @return {@link CommonConfig#allowCandles} as read from the {@link #COMMON common} configuration file.
+   */
+  public static Boolean getAllowCandles() {
+		return COMMON.allowCandles.get();
+	}
+
+  /**
    * Common Configuration for Torch hit!.
    */
   public static class CommonConfig {
@@ -68,6 +95,20 @@ public class TorchHitConfig {
      * Empty if Indirect Hits are disabled.
      */
     private final ConfigValue<ArrayList<String>> indirectHitToolList;
+    /**
+     * List of item ids that should be considered as a Torch.
+     * Defaults to a list of the most common modded torches.
+     */
+    private final ConfigValue<ArrayList<String>> moddedTorchList;
+    /**
+     * List of item ids that should be considered as a Soul Torch.
+     * Defaults to a list of the most common modded torches.
+     */
+    private final ConfigValue<ArrayList<String>> moddedSoulTorchList;
+    /**
+     * Whether to allow candles to act as torches.
+     */
+    private final ConfigValue<Boolean> allowCandles;
 
     /**
      * Defines the configuration options, their default values and their comments.
@@ -85,6 +126,20 @@ public class TorchHitConfig {
           "Insert either item categories or specific item IDs."
         )
         .define("indirectHitToolList", new ArrayList<String>(List.of("sword", "axe", "pickaxe", "shovel", "hoe")));
+      moddedTorchList = builder.comment("List of item ids that should be considered as a Torch.").define("moddedTorchList", new ArrayList<String>(List.of(
+        "bonetorch:bonetorch",
+        "torchmaster:megatorch",
+        "hardcore_torches:lit_torch",
+        "magnumtorch:diamond_magnum_torch",
+        "magnumtorch:emerald_magnum_torch",
+        "magnumtorch:amethyst_magnum_torch",
+        "magical_torches:mega_torch",
+        "magical_torches:grand_torch",
+        "magical_torches:medium_torch",
+        "magical_torches:small_torch"
+      )));
+      moddedSoulTorchList = builder.comment("List of item ids that should be considered as a Soul Torch.").define("moddedSoulTorchList", new ArrayList<String>());
+      allowCandles = builder.comment("Whether to allow candles to act as torches.").define("allowCandles", true);
 		}
 	}
 }
