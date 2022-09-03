@@ -3,82 +3,190 @@ package crystalspider.torchhit.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import crystalspider.config.AbstractConfig;
-import crystalspider.config.ConfigProperty;
-import crystalspider.config.FabricConfig;
-import crystalspider.torchhit.TorchHitLoader;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue; 
 
 /**
  * Torch hit! Configuration.
  */
 public class TorchHitConfig {
   /**
-   * Configuration.
+   * {@link ForgeConfigSpec} {@link ForgeConfigSpec.Builder Builder}.
    */
-	private static final Config CONFIG = new Config();
+	private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
   /**
-   * {@link FabricConfig} {@link FabricConfig.Builder Builder}.
+   * Common Configuration as read from the configuration file.
    */
-  public static final FabricConfig.Builder BUILDER = new FabricConfig.Builder(TorchHitLoader.MODID, CONFIG);
+	public static final CommonConfig COMMON = new CommonConfig(BUILDER);
+  /**
+   * {@link ForgeConfigSpec}.
+   */
+	public static final ForgeConfigSpec SPEC = BUILDER.build();
 
   /**
-   * Returns the value of {@link Config#directHitDuration}.
+   * Returns the value of {@link CommonConfig#directHitDuration}.
    *
-   * @return {@link Config#directHitDuration} as read from the {@link #CONFIG configuration} file.
+   * @return {@link CommonConfig#directHitDuration} as read from the {@link #COMMON common} configuration file.
    */
   public static Integer getDirectHitDuration() {
-		return CONFIG.directHitDuration.getValue();
+		return COMMON.directHitDuration.get();
 	}
 
   /**
-   * Returns the value of {@link Config#indirectHitDuration}.
+   * Returns the value of {@link CommonConfig#indirectHitDuration}.
    *
-   * @return {@link Config#indirectHitDuration} as read from the {@link #CONFIG configuration} file.
+   * @return {@link CommonConfig#indirectHitDuration} as read from the {@link #COMMON common} configuration file.
    */
   public static Integer getIndirectHitDuration() {
-		return CONFIG.indirectHitDuration.getValue();
+		return COMMON.indirectHitDuration.get();
 	}
 
   /**
-   * Returns the value of {@link Config#indirectHitToolList}.
+   * Returns the value of {@link CommonConfig#indirectHitToolList}.
    *
-   * @return {@link Config#indirectHitToolList} as read from the {@link #CONFIG configuration} file.
+   * @return {@link CommonConfig#indirectHitToolList} as read from the {@link #COMMON common} configuration file.
    */
   public static ArrayList<String> getIndirectHitToolList() {
-		return CONFIG.indirectHitToolList.getValue();
+		return COMMON.indirectHitToolList.get();
 	}
 
   /**
-   * Configuration for Torch hit!.
+   * Returns the value of {@link CommonConfig#moddedTorchList}.
+   *
+   * @return {@link CommonConfig#moddedTorchList} as read from the {@link #COMMON common} configuration file.
    */
-	private static class Config implements AbstractConfig {
+  public static ArrayList<String> getModdedTorchList() {
+		return COMMON.moddedTorchList.get();
+	}
+
+  /**
+   * Returns the value of {@link CommonConfig#moddedSoulTorchList}.
+   *
+   * @return {@link CommonConfig#moddedSoulTorchList} as read from the {@link #COMMON common} configuration file.
+   */
+  public static ArrayList<String> getModdedSoulTorchList() {
+		return COMMON.moddedSoulTorchList.get();
+	}
+
+  /**
+   * Returns the value of {@link CommonConfig#allowCandles}.
+   *
+   * @return {@link CommonConfig#allowCandles} as read from the {@link #COMMON common} configuration file.
+   */
+  public static Boolean getAllowCandles() {
+		return COMMON.allowCandles.get();
+	}
+
+  /**
+   * Returns the value of {@link CommonConfig#breakCandles}.
+   *
+   * @return {@link CommonConfig#breakCandles} as read from the {@link #COMMON common} configuration file.
+   */
+  public static Boolean getBreakCandles() {
+		return COMMON.breakCandles.get();
+	}
+
+  /**
+   * Common Configuration for Torch hit!.
+   */
+  public static class CommonConfig {
     /**
      * Fire Aspect Duration for Direct Hits.
      */
-    private ConfigProperty<Integer> directHitDuration;
+    private final ConfigValue<Integer> directHitDuration;
     /**
      * Fire Aspect Duration for Indirect Hits.
      */
-    private ConfigProperty<Integer> indirectHitDuration;
+    private final ConfigValue<Integer> indirectHitDuration;
     /**
      * List of tools that can be used to deal Indirect Hits.
      * Empty if Indirect Hits are disabled.
      */
-    private ConfigProperty<ArrayList<String>> indirectHitToolList;
+    private final ConfigValue<ArrayList<String>> indirectHitToolList;
+    /**
+     * List of item ids that should be considered as a Torch.
+     * Defaults to a list of the most common modded torches.
+     */
+    private final ConfigValue<ArrayList<String>> moddedTorchList;
+    /**
+     * List of item ids that should be considered as a Soul Torch.
+     * Defaults to a list of the most common modded torches.
+     */
+    private final ConfigValue<ArrayList<String>> moddedSoulTorchList;
+    /**
+     * Whether to allow candles to act as torches.
+     */
+    private final ConfigValue<Boolean> allowCandles;
+    /**
+     * Whether candles should break upon use.
+     */
+    private final ConfigValue<Boolean> breakCandles;
 
-    @Override
-    public void register(FabricConfig.Builder builder) {
+    /**
+     * Defines the configuration options, their default values and their comments.
+     *
+     * @param builder
+     */
+		public CommonConfig(ForgeConfigSpec.Builder builder) {
       int maxDuration = Enchantments.FIRE_ASPECT.getMaxLevel() * 4;
-      directHitDuration = builder.registerProperty("directHitDuration", 4, 1, maxDuration, "Fire damage duration for direct (main hand) hits.");
-      indirectHitDuration = builder.registerProperty("indirectHitDuration", 2, 1, maxDuration, "Fire damage duration for indirect (off hand + tool) hits.");
-      indirectHitToolList = builder.registerProperty(
-        "indirectHitToolList",
-        new ArrayList<String>(List.of("sword", "axe", "pickaxe", "shovel", "hoe")),
-        "List of tools that allow for an indirect hit when a torch is being held in the off hand.",
-        "Leave empty to disable indirect hits.",
-        "Insert either item categories or specific item IDs."
-      );
-    }
+			directHitDuration = builder.comment("Fire damage duration for direct (main hand) hits.").defineInRange("directHitDuration", 4, 1, maxDuration);
+			indirectHitDuration = builder.comment("Fire damage duration for indirect (off hand + tool) hits.").defineInRange("indirectHitDuration", 2, 1, maxDuration);
+			indirectHitToolList = builder
+        .comment(
+          "List of tools that allow for an indirect hit when a torch is being held in the off hand.",
+          "Leave empty to disable indirect hits.",
+          "Insert either item categories or specific item IDs."
+        )
+        .define("indirectHitToolList", new ArrayList<String>(List.of("sword", "axe", "pickaxe", "shovel", "hoe")));
+      moddedTorchList = builder.comment("List of item ids that should be considered as a Torch.").define("moddedTorchList", new ArrayList<String>(List.of(
+        "bonetorch:bonetorch",
+        "torchmaster:megatorch",
+        "hardcore_torches:lit_torch",
+        "magnumtorch:diamond_magnum_torch",
+        "magnumtorch:emerald_magnum_torch",
+        "magnumtorch:amethyst_magnum_torch",
+        "magical_torches:mega_torch",
+        "magical_torches:grand_torch",
+        "magical_torches:medium_torch",
+        "magical_torches:small_torch",
+        "pgwbandedtorches:banded_torch_white",
+        "pgwbandedtorches:banded_torch_orange",
+        "pgwbandedtorches:banded_torch_magenta",
+        "pgwbandedtorches:banded_torch_light_blue",
+        "pgwbandedtorches:banded_torch_yellow",
+        "pgwbandedtorches:banded_torch_lime",
+        "pgwbandedtorches:banded_torch_pink",
+        "pgwbandedtorches:banded_torch_gray",
+        "pgwbandedtorches:banded_torch_light_gray",
+        "pgwbandedtorches:banded_torch_cyan",
+        "pgwbandedtorches:banded_torch_purple",
+        "pgwbandedtorches:banded_torch_blue",
+        "pgwbandedtorches:banded_torch_brown",
+        "pgwbandedtorches:banded_torch_green",
+        "pgwbandedtorches:banded_torch_red",
+        "pgwbandedtorches:banded_torch_black"
+      )));
+      moddedSoulTorchList = builder.comment("List of item ids that should be considered as a Soul Torch.").define("moddedSoulTorchList", new ArrayList<String>(List.of(
+        "pgwbandedtorches:banded_soul_torch_white",
+        "pgwbandedtorches:banded_soul_torch_orange",
+        "pgwbandedtorches:banded_soul_torch_magenta",
+        "pgwbandedtorches:banded_soul_torch_light_blue",
+        "pgwbandedtorches:banded_soul_torch_yellow",
+        "pgwbandedtorches:banded_soul_torch_lime",
+        "pgwbandedtorches:banded_soul_torch_pink",
+        "pgwbandedtorches:banded_soul_torch_gray",
+        "pgwbandedtorches:banded_soul_torch_light_gray",
+        "pgwbandedtorches:banded_soul_torch_cyan",
+        "pgwbandedtorches:banded_soul_torch_purple",
+        "pgwbandedtorches:banded_soul_torch_blue",
+        "pgwbandedtorches:banded_soul_torch_brown",
+        "pgwbandedtorches:banded_soul_torch_green",
+        "pgwbandedtorches:banded_soul_torch_red",
+        "pgwbandedtorches:banded_soul_torch_black"
+      )));
+      allowCandles = builder.comment("Whether to allow candles to act as torches.").define("allowCandles", true);
+      breakCandles = builder.comment("Whether candles should break upon use.", "Effective only if [allowCandles] is enabled.").define("breakCandles", true);
+		}
 	}
 }

@@ -1,30 +1,34 @@
 {
   "schemaVersion": 1,
-  "id": "torch-hit",
-  "version": "${version}",
-  "name": "Torch hit!",
+  "id": "${modid}",
+  "version": "${mod_version}",
+  "name": "${mod_title}",
   "description": "Attack with torches to deal fire damage!",
   "authors": [
-    "Crystal Spider"
+    "${author}"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/torch-hit",
-    "issues": "https://github.com/Nyphet/torch-hit/issues",
-    "sources": "https://github.com/Nyphet/torch-hit/tree/1.19"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/${modid_kebab}",
+    "issues": "https://github.com/${github_user}/${modid_kebab}/issues",
+    "sources": "https://github.com/${github_user}/${modid_kebab}/tree/${minecraft_version}"
   },
   "license": "GPL-3.0-or-later",
-  "icon": "assets/torch-hit/torch-hit.gif",
+  "icon": "assets/${modid}/${modid_kebab}.gif",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "crystalspider.torchhit.TorchHitLoader"
+      "${group}.${modid}.TorchHitLoader"
     ]
   },
   "mixins": [],
   "depends": {
-    "fabricloader": ">=0.14.8",
+    "fabricloader": ">=${loader_version}",
     "fabric": "*",
-    "minecraft": "1.19.1",
+    "forgeconfigapiport": "${forgeconfigapiport_version}",
+    "minecraft": "${minecraft_version}",
     "java": ">=17"
+  },
+  "suggests": {
+    "soulfired": "1.0.0.2"
   }
 }

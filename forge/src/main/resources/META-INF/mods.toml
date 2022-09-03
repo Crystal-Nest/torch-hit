@@ -1,14 +1,14 @@
 modLoader="javafml"
-loaderVersion="[42,)"
+loaderVersion="[${loader_version},)"
 license="GNU AGPLv3"
-issueTrackerURL="https://github.com/Nyphet/torch-hit/issues" #optional
+issueTrackerURL="https://github.com/${github_user}/${modid_kebab}/issues" #optional
 [[mods]]
-modId="modid"
-version="${modVersion}"
-displayName="${modTitle}"
-updateJSONURL="https://raw.githubusercontent.com/Nyphet/torch-hit/master/forge/updates.json" #optional
-displayURL="https://github.com/Nyphet/torch-hit/tree/${mcVersion}" #optional
-logoFile="torch-hit.gif" #optional
+modId="${modid}"
+version="${mod_version}"
+displayName="${mod_title}"
+updateJSONURL="https://raw.githubusercontent.com/${github_user}/${modid_kebab}/master/forge/updates.json" #optional
+displayURL="https://github.com/${github_user}/${modid_kebab}/tree/${minecraft_version}" #optional
+logoFile="${modid_kebab}.gif" #optional
 # credits="Thank who deserves it." #optional
 authors="${author}" #optional
 # Display Test controls the display for your mod in the server connection screen
@@ -19,16 +19,22 @@ authors="${author}" #optional
 # IMPORTANT NOTE: this is NOT an instruction as to which environments (CLIENT or DEDICATED SERVER) your mod loads on. Your mod should load (and maybe do nothing!) whereever it finds itself.
 displayTest="IGNORE_SERVER_VERSION" # MATCH_VERSION is the default if nothing is specified #optional
 description="Attack with torches to deal fire damage!"
-[[dependencies.modid]]
+[[dependencies.${modid}]]
     modId="forge"
     mandatory=true
-    versionRange="[${forgeVersion},)"
+    versionRange="[${loader_version}${forge_subversion},)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.modid]]
+[[dependencies.${modid}]]
     modId="minecraft"
     mandatory=true
-    versionRange="[${mcVersion},)"
+    versionRange="[${minecraft_version},)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.${modid}]]
+    modId="soulfired"
+    mandatory=false
+    versionRange="[1.0.0.2,)"
     ordering="NONE"
     side="BOTH"
 #optional
