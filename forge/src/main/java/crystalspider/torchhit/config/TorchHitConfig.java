@@ -1,6 +1,6 @@
 package crystalspider.torchhit.config;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.enchantment.Enchantments;
@@ -47,7 +47,7 @@ public class TorchHitConfig {
    *
    * @return {@link CommonConfig#indirectHitToolList} as read from the {@link #COMMON common} configuration file.
    */
-  public static ArrayList<String> getIndirectHitToolList() {
+  public static List<String> getIndirectHitToolList() {
 		return COMMON.indirectHitToolList.get();
 	}
 
@@ -56,7 +56,7 @@ public class TorchHitConfig {
    *
    * @return {@link CommonConfig#moddedTorchList} as read from the {@link #COMMON common} configuration file.
    */
-  public static ArrayList<String> getModdedTorchList() {
+  public static List<String> getModdedTorchList() {
 		return COMMON.moddedTorchList.get();
 	}
 
@@ -65,7 +65,7 @@ public class TorchHitConfig {
    *
    * @return {@link CommonConfig#moddedSoulTorchList} as read from the {@link #COMMON common} configuration file.
    */
-  public static ArrayList<String> getModdedSoulTorchList() {
+  public static List<String> getModdedSoulTorchList() {
 		return COMMON.moddedSoulTorchList.get();
 	}
 
@@ -85,17 +85,17 @@ public class TorchHitConfig {
      * List of tools that can be used to deal Indirect Hits.
      * Empty if Indirect Hits are disabled.
      */
-    private final ConfigValue<ArrayList<String>> indirectHitToolList;
+    private final ConfigValue<List<String>> indirectHitToolList;
     /**
      * List of item ids that should be considered as a Torch.
      * Defaults to a list of the most common modded torches.
      */
-    private final ConfigValue<ArrayList<String>> moddedTorchList;
+    private final ConfigValue<List<String>> moddedTorchList;
     /**
      * List of item ids that should be considered as a Soul Torch.
      * Defaults to a list of the most common modded torches.
      */
-    private final ConfigValue<ArrayList<String>> moddedSoulTorchList;
+    private final ConfigValue<List<String>> moddedSoulTorchList;
 
     /**
      * Defines the configuration options, their default values and their comments.
@@ -112,8 +112,8 @@ public class TorchHitConfig {
           "Leave empty to disable indirect hits.",
           "Insert either item categories or specific item IDs."
         )
-        .define("indirectHitToolList", new ArrayList<String>(List.of("sword", "axe", "pickaxe", "shovel", "hoe")));
-      moddedTorchList = builder.comment("List of item ids that should be considered as a Torch.").define("moddedTorchList", new ArrayList<String>(List.of(
+        .define("indirectHitToolList", Arrays.asList("sword", "axe", "pickaxe", "shovel", "hoe"));
+      moddedTorchList = builder.comment("List of item ids that should be considered as a Torch.").define("moddedTorchList", Arrays.asList(
         "bonetorch:bonetorch",
         "torchmaster:megatorch",
         "hardcore_torches:lit_torch",
@@ -140,8 +140,8 @@ public class TorchHitConfig {
         "pgwbandedtorches:banded_torch_green",
         "pgwbandedtorches:banded_torch_red",
         "pgwbandedtorches:banded_torch_black"
-      )));
-      moddedSoulTorchList = builder.comment("List of item ids that should be considered as a Soul Torch.").define("moddedSoulTorchList", new ArrayList<String>(List.of(
+      ));
+      moddedSoulTorchList = builder.comment("List of item ids that should be considered as a Soul Torch.").define("moddedSoulTorchList", Arrays.asList(
         "pgwbandedtorches:banded_soul_torch_white",
         "pgwbandedtorches:banded_soul_torch_orange",
         "pgwbandedtorches:banded_soul_torch_magenta",
@@ -158,7 +158,7 @@ public class TorchHitConfig {
         "pgwbandedtorches:banded_soul_torch_green",
         "pgwbandedtorches:banded_soul_torch_red",
         "pgwbandedtorches:banded_soul_torch_black"
-      )));
+      ));
 		}
 	}
 }
