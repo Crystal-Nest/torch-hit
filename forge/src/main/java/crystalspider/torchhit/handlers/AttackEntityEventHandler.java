@@ -40,11 +40,35 @@ public class AttackEntityEventHandler {
       if (torchHand != null && !entity.fireImmune()) {
         ItemStack torch = player.getItemInHand(torchHand);
         if (torchHand == InteractionHand.MAIN_HAND) {
-          burn(entity, torch, TorchHitConfig.getDirectHitDuration());
+          attack(player, entity, torch, TorchHitConfig.getDirectHitDuration());
         } else if (isAllowedTool(player.getMainHandItem().getItem())) {
-          burn(entity, torch, TorchHitConfig.getIndirectHitDuration());
+          attack(player, entity, torch, TorchHitConfig.getIndirectHitDuration());
         }
       }
+    }
+  }
+
+  /**
+   * Attack the entity with the torch setting it on fire.
+   * 
+   * @param player
+   * @param entity
+   * @param torch
+   * @param defaultDuration
+   */
+  private void attack(Player player, Entity entity, ItemStack torch, int defaultDuration) {
+    burn(entity, torch, defaultDuration);
+    breakCandle(player, torch);
+  }
+
+  /**
+   * Breaks the used candle if enabled.
+   * 
+   * @param torch
+   */
+  private void breakCandle(Player player, ItemStack torch) {
+    if (!player.isCreative() && isCandle(torch) && TorchHitConfig.getBreakCandles()) {
+      torch.shrink(1);
     }
   }
 
@@ -132,7 +156,7 @@ public class AttackEntityEventHandler {
    * @return whether the given {@link ItemStack} is a torch.
    */
   private boolean isTorch(ItemStack itemStack) {
-    return itemStack.is(Items.TORCH) || (TorchHitConfig.getAllowCandles() && itemStack.is(ItemTags.CANDLES)) || TorchHitConfig.getModdedTorchList().contains(getKey(itemStack.getItem())) || isSoulTorch(itemStack);
+    return itemStack.is(Items.TORCH) || isCandle(itemStack) || TorchHitConfig.getModdedTorchList().contains(getKey(itemStack.getItem())) || isSoulTorch(itemStack);
   }
 
   /**
@@ -143,6 +167,16 @@ public class AttackEntityEventHandler {
    */
   private boolean isSoulTorch(ItemStack itemStack) {
     return itemStack.is(Items.SOUL_TORCH) || TorchHitConfig.getModdedSoulTorchList().contains(getKey(itemStack.getItem()));
+  }
+
+  /**
+   * Checks whether the given {@link ItemStack} is a candle.
+   * 
+   * @param itemStack
+   * @return whether the given {@link ItemStack} is a candle.
+   */
+  private boolean isCandle(ItemStack itemStack) {
+    return TorchHitConfig.getAllowCandles() && itemStack.is(ItemTags.CANDLES);
   }
 
   /**

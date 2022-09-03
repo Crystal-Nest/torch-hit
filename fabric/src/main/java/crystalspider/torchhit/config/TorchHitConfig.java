@@ -79,6 +79,15 @@ public class TorchHitConfig {
 	}
 
   /**
+   * Returns the value of {@link CommonConfig#breakCandles}.
+   *
+   * @return {@link CommonConfig#breakCandles} as read from the {@link #COMMON common} configuration file.
+   */
+  public static Boolean getBreakCandles() {
+		return COMMON.breakCandles.get();
+	}
+
+  /**
    * Common Configuration for Torch hit!.
    */
   public static class CommonConfig {
@@ -109,6 +118,10 @@ public class TorchHitConfig {
      * Whether to allow candles to act as torches.
      */
     private final ConfigValue<Boolean> allowCandles;
+    /**
+     * Whether candles should break upon use.
+     */
+    private final ConfigValue<Boolean> breakCandles;
 
     /**
      * Defines the configuration options, their default values and their comments.
@@ -173,6 +186,7 @@ public class TorchHitConfig {
         "pgwbandedtorches:banded_soul_torch_black"
       )));
       allowCandles = builder.comment("Whether to allow candles to act as torches.").define("allowCandles", true);
+      breakCandles = builder.comment("Whether candles should break upon use.", "Effective only if [allowCandles] is enabled.").define("breakCandles", true);
 		}
 	}
 }
