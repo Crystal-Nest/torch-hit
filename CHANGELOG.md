@@ -8,6 +8,26 @@ and this project adheres to [Forge Semantic Versioning](https://mcforge.readthed
 ## [Unreleased]
 - Nothing new.
 
+## [1.19.2-4.0.0.0] - 2022/09/03
+- Added support for Soul Fire'd and modded torches.
+- Added support for candles.
+
+## [1.19.1-4.0.0.0-final] - 2022/09/03
+- Added support for Soul Fire'd and modded torches.
+- Added support for candles.
+
+## [1.19-4.0.0.0-final] - 2022/09/03
+- Added support for Soul Fire'd and modded torches.
+- Added support for candles.
+
+## [1.18.2-4.0.0.0] - 2022/09/03
+- Added support for Soul Fire'd and modded torches.
+- Added support for candles.
+
+## [1.16.5-4.0.0.0-final] - 2022/09/03
+- Backported mod to 1.16.5
+- Added support for Soul Fire'd and modded torches.
+
 ## [1.19.1-3.0.0.0] - 2022/07/29
 - Updated project and repository structure.
 - Updated to Minecraft 1.19.1.
@@ -36,12 +56,19 @@ and this project adheres to [Forge Semantic Versioning](https://mcforge.readthed
 
 [Unreleased]: https://github.com/Nyphet/torch-hit
 
+[1.19.2-4.0.0.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.19.2-4.0.0.0
+
+[1.19.1-4.0.0.0-final]: https://github.com/Nyphet/torch-hit/releases/tag/v1.19.1-4.0.0.0-final
 [1.19.1-3.0.0.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.19.1-3.0.0.0
 
+[1.19-4.0.0.0-final]: https://github.com/Nyphet/torch-hit/releases/tag/v1.19-4.0.0.0-final
 [1.19-3.0.0.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.19-3.0.0.0
 [1.19-2.0.0.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.19-2.0.0.0
 
+[1.18.2-4.0.0.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.18.2-4.0.0.0
 [1.18.2-3.0.0.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.18.2-3.0.0.0
 [1.18.2-2.0.0.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.18.2-2.0.0.0
 [1.18.2-1.0.0.1]: https://github.com/Nyphet/torch-hit/releases/tag/v1.18.2-1.0.0.1
 [1.18.2-1.0.0.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.18.2-1.0.0.0
+
+[1.16.5-4.0.0.0-final]: https://github.com/Nyphet/torch-hit/releases/tag/v1.16.5-4.0.0.0-final
