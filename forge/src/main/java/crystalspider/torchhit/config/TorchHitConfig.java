@@ -136,9 +136,42 @@ public class TorchHitConfig {
         "magical_torches:mega_torch",
         "magical_torches:grand_torch",
         "magical_torches:medium_torch",
-        "magical_torches:small_torch"
+        "magical_torches:small_torch",
+        "pgwbandedtorches:banded_torch_white",
+        "pgwbandedtorches:banded_torch_orange",
+        "pgwbandedtorches:banded_torch_magenta",
+        "pgwbandedtorches:banded_torch_light_blue",
+        "pgwbandedtorches:banded_torch_yellow",
+        "pgwbandedtorches:banded_torch_lime",
+        "pgwbandedtorches:banded_torch_pink",
+        "pgwbandedtorches:banded_torch_gray",
+        "pgwbandedtorches:banded_torch_light_gray",
+        "pgwbandedtorches:banded_torch_cyan",
+        "pgwbandedtorches:banded_torch_purple",
+        "pgwbandedtorches:banded_torch_blue",
+        "pgwbandedtorches:banded_torch_brown",
+        "pgwbandedtorches:banded_torch_green",
+        "pgwbandedtorches:banded_torch_red",
+        "pgwbandedtorches:banded_torch_black"
       )));
-      moddedSoulTorchList = builder.comment("List of item ids that should be considered as a Soul Torch.").define("moddedSoulTorchList", new ArrayList<String>());
+      moddedSoulTorchList = builder.comment("List of item ids that should be considered as a Soul Torch.").define("moddedSoulTorchList", new ArrayList<String>(List.of(
+        "pgwbandedtorches:banded_soul_torch_white",
+        "pgwbandedtorches:banded_soul_torch_orange",
+        "pgwbandedtorches:banded_soul_torch_magenta",
+        "pgwbandedtorches:banded_soul_torch_light_blue",
+        "pgwbandedtorches:banded_soul_torch_yellow",
+        "pgwbandedtorches:banded_soul_torch_lime",
+        "pgwbandedtorches:banded_soul_torch_pink",
+        "pgwbandedtorches:banded_soul_torch_gray",
+        "pgwbandedtorches:banded_soul_torch_light_gray",
+        "pgwbandedtorches:banded_soul_torch_cyan",
+        "pgwbandedtorches:banded_soul_torch_purple",
+        "pgwbandedtorches:banded_soul_torch_blue",
+        "pgwbandedtorches:banded_soul_torch_brown",
+        "pgwbandedtorches:banded_soul_torch_green",
+        "pgwbandedtorches:banded_soul_torch_red",
+        "pgwbandedtorches:banded_soul_torch_black"
+      )));
       allowCandles = builder.comment("Whether to allow candles to act as torches.").define("allowCandles", true);
 		}
 	}
