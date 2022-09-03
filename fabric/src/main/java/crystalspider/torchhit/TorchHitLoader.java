@@ -1,10 +1,11 @@
 package crystalspider.torchhit;
 
-import crystalspider.config.FabricConfig;
 import crystalspider.torchhit.config.TorchHitConfig;
 import crystalspider.torchhit.handlers.AttackEntityHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+import net.minecraftforge.api.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
 
 /**
  * Torch hit! mod loader.
@@ -17,7 +18,7 @@ public class TorchHitLoader implements ModInitializer {
 
   @Override
 	public void onInitialize() {
-    FabricConfig.register(TorchHitConfig.BUILDER);
+    ModLoadingContext.registerConfig(MODID, ModConfig.Type.COMMON, TorchHitConfig.SPEC);
     AttackEntityCallback.EVENT.register(new AttackEntityHandler()::handle);
   }
 }

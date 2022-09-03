@@ -1,17 +1,18 @@
 package crystalspider.torchhit.handlers;
 
-import java.util.ArrayList;
-
 import javax.annotation.Nullable;
 
 import crystalspider.torchhit.config.TorchHitConfig;
+import crystalspider.torchhit.optional.SoulFired;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.tag.ItemTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
@@ -23,24 +24,9 @@ import net.minecraft.world.World;
  */
 public class AttackEntityHandler {
   /**
-   * Fire Aspect Duration for Direct Hits.
+   * Whether Soul Fire'd mod is installed at runtime.
    */
-  private final Integer directHitDuration;
-  /**
-   * Fire Aspect Duration for Indirect Hits.
-   */
-  private final Integer indirectHitDuration;
-  /**
-   * List of tools that can be used to deal Indirect Hits.
-   * Empty if Indirect Hits are disabled.
-   */
-  private final ArrayList<String> indirectHitToolList;
-
-	public AttackEntityHandler() {
-    directHitDuration = TorchHitConfig.getDirectHitDuration() * 20;
-    indirectHitDuration = TorchHitConfig.getIndirectHitDuration() * 20;
-    indirectHitToolList = TorchHitConfig.getIndirectHitToolList();
-	}
+  private static final boolean isSoulfiredInstalled = FabricLoader.getInstance().isModLoaded("soulfired");
 
   /**
    * Handles the {@link AttackEntityCallback} event.
@@ -58,31 +44,87 @@ public class AttackEntityHandler {
       if (torchHand != null && !entity.isFireImmune()) {
         ItemStack torch = player.getStackInHand(torchHand);
         if (torchHand == Hand.MAIN_HAND) {
-          entity.setFireTicks(getFireTicks(torch, entity, directHitDuration));
+          attack(player, entity, torch, TorchHitConfig.getDirectHitDuration());
         } else if (isAllowedTool(player.getMainHandStack().getItem())) {
-          entity.setFireTicks(getFireTicks(torch, entity, indirectHitDuration));
+          attack(player, entity, torch, TorchHitConfig.getIndirectHitDuration());
         }
       }
     }
     return ActionResult.PASS;
   }
 
+  
   /**
-   * Returns the amount of ticks the given entity should stay on fire.
+   * Attack the entity with the torch setting it on fire.
+   * 
+   * @param player
+   * @param entity
+   * @param torch
+   * @param defaultDuration
+   */
+  private void attack(PlayerEntity player, Entity entity, ItemStack torch, int defaultDuration) {
+    burn(entity, torch, defaultDuration);
+    breakCandle(player, torch);
+  }
+
+  /**
+   * Breaks the used candle if enabled.
+   * 
+   * @param torch
+   */
+  private void breakCandle(PlayerEntity player, ItemStack torch) {
+    if (!player.isCreative() && isCandle(torch) && TorchHitConfig.getBreakCandles()) {
+      torch.decrement(1);
+    }
+  }
+
+  /**
+   * Sets the entity on fire.
+   * 
+   * @param entity
+   * @param torch
+   * @param defaultDuration
+   */
+  private void burn(Entity entity, ItemStack torch, int defaultDuration) {
+    entity.setOnFireFor(getFireSeconds(torch, entity, defaultDuration));
+    setFireId(entity, torch);
+  }
+
+  /**
+   * If Soul Fire'd is installed, sets the correct Fire Id.
+   * 
+   * @param entity
+   * @param torch
+   */
+  private void setFireId(Entity entity, ItemStack torch) {
+    if (isSoulfiredInstalled) {
+      if (isSoulTorch(torch)) {
+        SoulFired.setOnSoulFire(entity);
+      } else {
+        SoulFired.setOnFire(entity);
+      }
+    }
+  }
+
+  /**
+   * Returns the amount of seconds the given entity should stay on fire.
    * 
    * @param torch
    * @param entity
    * @param fireDuration
-   * @return
+   * @return the amount of seconds the given entity should stay on fire.
    */
-  private int getFireTicks(ItemStack torch, Entity entity, int fireDuration) {
-    if (torch.isOf(Items.SOUL_TORCH)) {
-      if (entity instanceof AbstractPiglinEntity) {
-        return entity.getFireTicks() + fireDuration * 2;
+  private int getFireSeconds(ItemStack torch, Entity entity, int fireDuration) {
+    if (isSoulTorch(torch)) {
+      if (isSoulfiredInstalled) {
+        return fireDuration;
       }
-      return entity.getFireTicks() + fireDuration + 20;
+      if (entity instanceof AbstractPiglinEntity) {
+        return fireDuration * 2;
+      }
+      return fireDuration + 1;
     }
-    return entity.getFireTicks() + fireDuration;
+    return fireDuration;
   }
 
   /**
@@ -92,7 +134,7 @@ public class AttackEntityHandler {
    * @return
    */
   private boolean isAllowedTool(Item item) {
-    return !indirectHitToolList.isEmpty() && indirectHitToolList.stream().filter(toolType -> getKey(item).matches(".*:([^_]+_)*" + toolType + "(_[^_]+)*")).count() > 0;
+    return !TorchHitConfig.getIndirectHitToolList().isEmpty() && TorchHitConfig.getIndirectHitToolList().stream().filter(toolType -> getKey(item).matches(".*:([^_]+_)*" + toolType + "(_[^_]+)*")).count() > 0;
   }
 
   /**
@@ -120,7 +162,27 @@ public class AttackEntityHandler {
    * @return whether the given {@link ItemStack} is a torch.
    */
   private boolean isTorch(ItemStack itemStack) {
-    return itemStack.isOf(Items.TORCH) || itemStack.isOf(Items.SOUL_TORCH);
+    return itemStack.isOf(Items.TORCH) || isCandle(itemStack) || TorchHitConfig.getModdedTorchList().contains(getKey(itemStack.getItem())) || isSoulTorch(itemStack);
+  }
+
+  /**
+   * Checks whether the given {@link ItemStack} is a soul torch.
+   * 
+   * @param itemStack
+   * @return whether the given {@link ItemStack} is a soul torch.
+   */
+  private boolean isSoulTorch(ItemStack itemStack) {
+    return itemStack.isOf(Items.SOUL_TORCH) || TorchHitConfig.getModdedSoulTorchList().contains(getKey(itemStack.getItem()));
+  }
+
+  /**
+   * Checks whether the given {@link ItemStack} is a candle.
+   * 
+   * @param itemStack
+   * @return whether the given {@link ItemStack} is a candle.
+   */
+  private boolean isCandle(ItemStack itemStack) {
+    return TorchHitConfig.getAllowCandles() && itemStack.isIn(ItemTags.CANDLES);
   }
 
   /**
