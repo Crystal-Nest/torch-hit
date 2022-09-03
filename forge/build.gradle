@@ -19,7 +19,7 @@ archivesBaseName = project.modid
 version = "${minecraft_version}-${mod_version}-${loader.toLowerCase()}"
 group = project.group
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
   mappings channel: 'official', version: "${minecraft_version}"
@@ -91,7 +91,7 @@ dependencies {
   minecraft "net.minecraftforge:forge:${minecraft_version}-${loader_version}${forge_subversion}"
 
   // Soul Fire'd dependency
-  implementation fg.deobf("curse.maven:soulfired-662413:3960956")
+  implementation fg.deobf("curse.maven:soulfired-662413:3962580")
 }
 
 def resourceTarget = 'META-INF/mods.toml'
@@ -147,7 +147,6 @@ jar {
 
 tasks.withType(JavaCompile).configureEach {
   it.options.encoding = 'UTF-8'
-  it.options.release = 17
 }
 
 def changelog = "See [Changelog](https://github.com/${github_user}/${modid_kebab}/blob/master/CHANGELOG.md#${minecraft_version.replaceAll('\\.', '')}-${mod_version.replaceAll('\\.', '')}---${new Date().format("yyyyMMdd")})."

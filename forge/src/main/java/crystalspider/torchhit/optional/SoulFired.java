@@ -2,7 +2,7 @@ package crystalspider.torchhit.optional;
 
 import crystalspider.soulfired.api.FireManager;
 import crystalspider.soulfired.api.type.FireTypeChanger;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.entity.Entity;
 
 /**
  * Proxy for Soul Fire'd mod.

@@ -34,7 +34,6 @@ Compatible with [Soul Fire'd](https://www.curseforge.com/minecraft/mc-mods/soul-
 - By default indirect (off hand) torch hits are enabled and work with any tool, dealing fire damage for 2 seconds.  
   The duration, tool list and whether enabling this feature can all be configured.
 - New items can be made to behave as torches, defaults to a list of the most common modded torches.
-- By default, candles work as torches too! This can be disabled.
 
 ## **License and right of use**
 Feel free to use this mod for any modpack or video, just be sure to give credit and possibly link [here](https://github.com/Nyphet/torch-hit#readme).  

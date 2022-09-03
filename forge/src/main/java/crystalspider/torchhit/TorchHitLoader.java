@@ -2,13 +2,14 @@ package crystalspider.torchhit;
 
 import crystalspider.torchhit.config.TorchHitConfig;
 import crystalspider.torchhit.handlers.AttackEntityEventHandler;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.simple.SimpleChannel;
+
 
 /**
  * Torch hit! mod loader.
@@ -23,7 +24,7 @@ public class TorchHitLoader {
   /**
    * Network channel protocol version.
    */
-  public static final String PROTOCOL_VERSION = "1.18-4.0";
+  public static final String PROTOCOL_VERSION = "1.16-4.0";
   /**
    * {@link SimpleChannel} instance for compatibility client-server.
    */

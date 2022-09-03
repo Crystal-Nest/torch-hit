@@ -3,7 +3,7 @@ package crystalspider.torchhit.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue; 
 
@@ -70,15 +70,6 @@ public class TorchHitConfig {
 	}
 
   /**
-   * Returns the value of {@link CommonConfig#allowCandles}.
-   *
-   * @return {@link CommonConfig#allowCandles} as read from the {@link #COMMON common} configuration file.
-   */
-  public static Boolean getAllowCandles() {
-		return COMMON.allowCandles.get();
-	}
-
-  /**
    * Common Configuration for Torch hit!.
    */
   public static class CommonConfig {
@@ -105,10 +96,6 @@ public class TorchHitConfig {
      * Defaults to a list of the most common modded torches.
      */
     private final ConfigValue<ArrayList<String>> moddedSoulTorchList;
-    /**
-     * Whether to allow candles to act as torches.
-     */
-    private final ConfigValue<Boolean> allowCandles;
 
     /**
      * Defines the configuration options, their default values and their comments.
@@ -172,7 +159,6 @@ public class TorchHitConfig {
         "pgwbandedtorches:banded_soul_torch_red",
         "pgwbandedtorches:banded_soul_torch_black"
       )));
-      allowCandles = builder.comment("Whether to allow candles to act as torches.").define("allowCandles", true);
 		}
 	}
 }

@@ -12,7 +12,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.tag.ItemTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
@@ -137,7 +136,7 @@ public class AttackEntityHandler {
    * @return whether the given {@link ItemStack} is a torch.
    */
   private boolean isTorch(ItemStack itemStack) {
-    return itemStack.isOf(Items.TORCH) || (TorchHitConfig.getAllowCandles() && itemStack.isIn(ItemTags.CANDLES)) || TorchHitConfig.getModdedTorchList().contains(getKey(itemStack.getItem())) || isSoulTorch(itemStack);
+    return itemStack.getItem() == Items.TORCH || TorchHitConfig.getModdedTorchList().contains(getKey(itemStack.getItem())) || isSoulTorch(itemStack);
   }
 
   /**
@@ -147,9 +146,8 @@ public class AttackEntityHandler {
    * @return whether the given {@link ItemStack} is a soul torch.
    */
   private boolean isSoulTorch(ItemStack itemStack) {
-    return itemStack.isOf(Items.SOUL_TORCH) || TorchHitConfig.getModdedSoulTorchList().contains(getKey(itemStack.getItem()));
+    return itemStack.getItem() == Items.SOUL_TORCH || TorchHitConfig.getModdedSoulTorchList().contains(getKey(itemStack.getItem()));
   }
-
 
   /**
    * Returns the in-game ID of the item passed as parameter.

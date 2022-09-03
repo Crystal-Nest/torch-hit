@@ -4,14 +4,13 @@ import javax.annotation.Nullable;
 
 import crystalspider.torchhit.config.TorchHitConfig;
 import crystalspider.torchhit.optional.SoulFired;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.piglin.AbstractPiglinEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.Hand;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -33,13 +32,13 @@ public class AttackEntityEventHandler {
    */
   @SubscribeEvent()
   public void handle(AttackEntityEvent event) {
-    Player player = event.getPlayer();
+    PlayerEntity player = event.getPlayer();
     if (!player.isSpectator()) {
       Entity entity = event.getTarget();
-      InteractionHand torchHand = getTorchHand(player);
+      Hand torchHand = getTorchHand(player);
       if (torchHand != null && !entity.fireImmune()) {
         ItemStack torch = player.getItemInHand(torchHand);
-        if (torchHand == InteractionHand.MAIN_HAND) {
+        if (torchHand == Hand.MAIN_HAND) {
           burn(entity, torch, TorchHitConfig.getDirectHitDuration());
         } else if (isAllowedTool(player.getMainHandItem().getItem())) {
           burn(entity, torch, TorchHitConfig.getIndirectHitDuration());
@@ -89,7 +88,7 @@ public class AttackEntityEventHandler {
       if (isSoulfiredInstalled) {
         return fireDuration;
       }
-      if (entity instanceof AbstractPiglin) {
+      if (entity instanceof AbstractPiglinEntity) {
         return fireDuration * 2;
       }
       return fireDuration + 1;
@@ -108,19 +107,19 @@ public class AttackEntityEventHandler {
   }
 
   /**
-   * Returns the {@link InteractionHand} of the {@link Player} holding a torch.
+   * Returns the {@link Hand} of the {@link PlayerEntity} holding a torch.
    * Null if none could be found.
    * 
    * @param player
-   * @return {@link InteractionHand} holding a torch or null.
+   * @return {@link Hand} holding a torch or null.
    */
   @Nullable
-  private InteractionHand getTorchHand(Player player) {
+  private Hand getTorchHand(PlayerEntity player) {
     if (isTorch(player.getMainHandItem())) {
-      return InteractionHand.MAIN_HAND;
+      return Hand.MAIN_HAND;
     }
     if (isTorch(player.getOffhandItem())) {
-      return InteractionHand.OFF_HAND;
+      return Hand.OFF_HAND;
     }
     return null;
   }
@@ -132,7 +131,7 @@ public class AttackEntityEventHandler {
    * @return whether the given {@link ItemStack} is a torch.
    */
   private boolean isTorch(ItemStack itemStack) {
-    return itemStack.is(Items.TORCH) || (TorchHitConfig.getAllowCandles() && itemStack.is(ItemTags.CANDLES)) || TorchHitConfig.getModdedTorchList().contains(getKey(itemStack.getItem())) || isSoulTorch(itemStack);
+    return itemStack.getItem() == Items.SOUL_TORCH || TorchHitConfig.getModdedTorchList().contains(getKey(itemStack.getItem())) || isSoulTorch(itemStack);
   }
 
   /**
@@ -142,7 +141,7 @@ public class AttackEntityEventHandler {
    * @return whether the given {@link ItemStack} is a soul torch.
    */
   private boolean isSoulTorch(ItemStack itemStack) {
-    return itemStack.is(Items.SOUL_TORCH) || TorchHitConfig.getModdedSoulTorchList().contains(getKey(itemStack.getItem()));
+    return itemStack.getItem() == Items.SOUL_TORCH || TorchHitConfig.getModdedSoulTorchList().contains(getKey(itemStack.getItem()));
   }
 
   /**
