@@ -152,15 +152,15 @@ public class TorchHitConfig {
      */
     private final ConfigValue<Boolean> consumeCandle;
     /**
-     * Whether to break the torch upon use.
+     * Whether torches should break upon use.
      */
     private final BooleanValue consumeTorch;
     /**
-     * Whether to break the torch upon use even if no fire was set.
+     * Whether to break the torch/candle upon use even if no fire was set.
      */
     private final BooleanValue consumeWithoutFire;
     /**
-     * Chance (in percentage) for torches to set on fire targets.
+     * Chance (in percentage) for torches/candles to set targets on fire.
      */
     private final IntValue fireChance;
 

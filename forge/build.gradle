@@ -173,6 +173,7 @@ curseforge {
     }
   }
   options {
+    detectNewerJava = true
     forgeGradleIntegration = false
   }
 }
