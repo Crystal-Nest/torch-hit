@@ -33,46 +33,80 @@ public class AttackEntityHandler {
    * @param player
    * @param world
    * @param hand
-   * @param entity
+   * @param target
    * @param hitResult
    * @return {@link ActionResult}.
    */
-  public ActionResult handle(PlayerEntity player, World world, Hand hand, Entity entity, EntityHitResult hitResult) {
-    if (!player.isSpectator()) {
-      Hand torchHand = getTorchHand(player);
-      if (torchHand != null && !entity.isFireImmune()) {
-        ItemStack torch = player.getStackInHand(torchHand);
-        if (torchHand == Hand.MAIN_HAND) {
-          burn(entity, torch, TorchHitConfig.getDirectHitDuration());
+  public ActionResult handle(PlayerEntity player, World world, Hand hand, Entity target, EntityHitResult hitResult) {
+    if (!player.world.isClient && !player.isSpectator()) {
+      Hand interactionHand = getHand(player);
+      if (interactionHand != null && !target.isFireImmune()) {
+        ItemStack item = player.getStackInHand(interactionHand);
+        if (hand == Hand.MAIN_HAND) {
+          attack(player, target, item, TorchHitConfig.getDirectHitDuration());
         } else if (isAllowedTool(player.getMainHandStack().getItem())) {
-          burn(entity, torch, TorchHitConfig.getIndirectHitDuration());
-        }
+            attack(player, target, item, TorchHitConfig.getIndirectHitDuration());
+          }
       }
     }
     return ActionResult.PASS;
   }
 
   /**
+   * Attack the target entity with the torch item it on fire.
+   * 
+   * @param player
+   * @param target
+   * @param item
+   * @param defaultDuration
+   */
+  private void attack(PlayerEntity player, Entity target, ItemStack item, int defaultDuration) {
+    consumeItem(player, item, burn(target, item, defaultDuration));
+  }
+
+  /**
+   * Consumes the used item if enabled.
+   * 
+   * @param player
+   * @param item
+   * @param fireSeconds
+   */
+  private void consumeItem(PlayerEntity player, ItemStack item, int fireSeconds) {
+    if (
+      !player.isCreative() &&
+      isTorch(item) &&
+      TorchHitConfig.getConsumeTorch() &&
+      (TorchHitConfig.getConsumeWithoutFire() || fireSeconds > 0)
+    ) {
+      item.decrement(1);
+    }
+  }
+
+  /**
    * Sets the entity on fire.
    * 
-   * @param entity
+   * @param target
    * @param torch
    * @param defaultDuration
    */
-  private void burn(Entity entity, ItemStack torch, int defaultDuration) {
-    entity.setOnFireFor(getFireSeconds(torch, entity, defaultDuration));
-    setFireId(entity, torch);
+  private int burn(Entity target, ItemStack item, int defaultDuration) {
+    int fireSeconds = getFireSeconds(item, target, defaultDuration);
+    if (fireSeconds > 0) {
+      target.setOnFireFor(fireSeconds);
+      setFireId(target, item);
+    }
+    return fireSeconds;
   }
 
   /**
    * If Soul Fire'd is installed, sets the correct Fire Id.
    * 
    * @param entity
-   * @param torch
+   * @param item
    */
-  private void setFireId(Entity entity, ItemStack torch) {
+  private void setFireId(Entity entity, ItemStack item) {
     if (isSoulfiredInstalled) {
-      if (isSoulTorch(torch)) {
+      if (isSoulTorch(item)) {
         SoulFired.setOnSoulFire(entity);
       } else {
         SoulFired.setOnFire(entity);
@@ -83,22 +117,25 @@ public class AttackEntityHandler {
   /**
    * Returns the amount of seconds the given entity should stay on fire.
    * 
-   * @param torch
-   * @param entity
+   * @param item
+   * @param target
    * @param fireDuration
    * @return the amount of seconds the given entity should stay on fire.
    */
-  private int getFireSeconds(ItemStack torch, Entity entity, int fireDuration) {
-    if (isSoulTorch(torch)) {
-      if (isSoulfiredInstalled) {
-        return fireDuration;
+  private int getFireSeconds(ItemStack item, Entity target, int fireDuration) {
+    if ((Math.random() * 100) < TorchHitConfig.getFireChance()) {
+      if (isSoulTorch(item)) {
+        if (isSoulfiredInstalled) {
+          return fireDuration;
+        }
+        if (target instanceof AbstractPiglinEntity) {
+          return fireDuration * 2;
+        }
+        return fireDuration + 1;
       }
-      if (entity instanceof AbstractPiglinEntity) {
-        return fireDuration * 2;
-      }
-      return fireDuration + 1;
+      return fireDuration;
     }
-    return fireDuration;
+    return 0;
   }
 
   /**
@@ -119,7 +156,7 @@ public class AttackEntityHandler {
    * @return {@link Hand} holding a torch or null.
    */
   @Nullable
-  private Hand getTorchHand(PlayerEntity player) {
+  private Hand getHand(PlayerEntity player) {
     if (isTorch(player.getMainHandStack())) {
       return Hand.MAIN_HAND;
     }
@@ -132,21 +169,21 @@ public class AttackEntityHandler {
   /**
    * Checks whether the given {@link ItemStack} is a torch.
    * 
-   * @param itemStack
+   * @param item
    * @return whether the given {@link ItemStack} is a torch.
    */
-  private boolean isTorch(ItemStack itemStack) {
-    return itemStack.getItem() == Items.TORCH || TorchHitConfig.getModdedTorchList().contains(getKey(itemStack.getItem())) || isSoulTorch(itemStack);
+  private boolean isTorch(ItemStack item) {
+    return item.getItem() == Items.TORCH || TorchHitConfig.getModdedTorchList().contains(getKey(item.getItem())) || isSoulTorch(item);
   }
 
   /**
    * Checks whether the given {@link ItemStack} is a soul torch.
    * 
-   * @param itemStack
+   * @param item
    * @return whether the given {@link ItemStack} is a soul torch.
    */
-  private boolean isSoulTorch(ItemStack itemStack) {
-    return itemStack.getItem() == Items.SOUL_TORCH || TorchHitConfig.getModdedSoulTorchList().contains(getKey(itemStack.getItem()));
+  private boolean isSoulTorch(ItemStack item) {
+    return item.getItem() == Items.SOUL_TORCH || TorchHitConfig.getModdedSoulTorchList().contains(getKey(item.getItem()));
   }
 
   /**

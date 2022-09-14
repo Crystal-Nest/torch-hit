@@ -5,7 +5,9 @@ import java.util.List;
 
 import net.minecraft.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue; 
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue; 
 
 /**
  * Torch hit! Configuration.
@@ -14,15 +16,15 @@ public class TorchHitConfig {
   /**
    * {@link ForgeConfigSpec} {@link ForgeConfigSpec.Builder Builder}.
    */
-	private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+  private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
   /**
    * Common Configuration as read from the configuration file.
    */
-	public static final CommonConfig COMMON = new CommonConfig(BUILDER);
+  public static final CommonConfig COMMON = new CommonConfig(BUILDER);
   /**
    * {@link ForgeConfigSpec}.
    */
-	public static final ForgeConfigSpec SPEC = BUILDER.build();
+  public static final ForgeConfigSpec SPEC = BUILDER.build();
 
   /**
    * Returns the value of {@link CommonConfig#directHitDuration}.
@@ -30,8 +32,8 @@ public class TorchHitConfig {
    * @return {@link CommonConfig#directHitDuration} as read from the {@link #COMMON common} configuration file.
    */
   public static Integer getDirectHitDuration() {
-		return COMMON.directHitDuration.get();
-	}
+    return COMMON.directHitDuration.get();
+  }
 
   /**
    * Returns the value of {@link CommonConfig#indirectHitDuration}.
@@ -39,8 +41,8 @@ public class TorchHitConfig {
    * @return {@link CommonConfig#indirectHitDuration} as read from the {@link #COMMON common} configuration file.
    */
   public static Integer getIndirectHitDuration() {
-		return COMMON.indirectHitDuration.get();
-	}
+    return COMMON.indirectHitDuration.get();
+  }
 
   /**
    * Returns the value of {@link CommonConfig#indirectHitToolList}.
@@ -48,8 +50,8 @@ public class TorchHitConfig {
    * @return {@link CommonConfig#indirectHitToolList} as read from the {@link #COMMON common} configuration file.
    */
   public static List<String> getIndirectHitToolList() {
-		return COMMON.indirectHitToolList.get();
-	}
+    return COMMON.indirectHitToolList.get();
+  }
 
   /**
    * Returns the value of {@link CommonConfig#moddedTorchList}.
@@ -57,8 +59,8 @@ public class TorchHitConfig {
    * @return {@link CommonConfig#moddedTorchList} as read from the {@link #COMMON common} configuration file.
    */
   public static List<String> getModdedTorchList() {
-		return COMMON.moddedTorchList.get();
-	}
+    return COMMON.moddedTorchList.get();
+  }
 
   /**
    * Returns the value of {@link CommonConfig#moddedSoulTorchList}.
@@ -66,9 +68,35 @@ public class TorchHitConfig {
    * @return {@link CommonConfig#moddedSoulTorchList} as read from the {@link #COMMON common} configuration file.
    */
   public static List<String> getModdedSoulTorchList() {
-		return COMMON.moddedSoulTorchList.get();
+    return COMMON.moddedSoulTorchList.get();
+  }
+  
+  /**
+   * Returns the value of {@link CommonConfig#consumeTorch}.
+   *
+   * @return {@link CommonConfig#consumeTorch} as read from the {@link #COMMON common} configuration file.
+   */
+  public static Boolean getConsumeTorch() {
+		return COMMON.consumeTorch.get();
 	}
 
+  /**
+   * Returns the value of {@link CommonConfig#consumeWithoutFire}.
+   *
+   * @return {@link CommonConfig#consumeWithoutFire} as read from the {@link #COMMON common} configuration file.
+   */
+  public static Boolean getConsumeWithoutFire() {
+		return COMMON.consumeWithoutFire.get();
+	}
+
+  /**
+   * Returns the value of {@link CommonConfig#fireChance}.
+   *
+   * @return {@link CommonConfig#fireChance} as read from the {@link #COMMON common} configuration file.
+   */
+  public static Integer getFireChance() {
+    return COMMON.fireChance.get();
+  }
   /**
    * Common Configuration for Torch hit!.
    */
@@ -76,11 +104,11 @@ public class TorchHitConfig {
     /**
      * Fire Aspect Duration for Direct Hits.
      */
-    private final ConfigValue<Integer> directHitDuration;
+    private final IntValue directHitDuration;
     /**
      * Fire Aspect Duration for Indirect Hits.
      */
-    private final ConfigValue<Integer> indirectHitDuration;
+    private final IntValue indirectHitDuration;
     /**
      * List of tools that can be used to deal Indirect Hits.
      * Empty if Indirect Hits are disabled.
@@ -96,17 +124,29 @@ public class TorchHitConfig {
      * Defaults to a list of the most common modded torches.
      */
     private final ConfigValue<List<String>> moddedSoulTorchList;
+    /**
+     * Whether torches should break upon use.
+     */
+    private final BooleanValue consumeTorch;
+    /**
+     * Whether to break the torch upon use even if no fire was set.
+     */
+    private final BooleanValue consumeWithoutFire;
+    /**
+     * Chance (in percentage) for torches to set on fire targets.
+     */
+    private final IntValue fireChance;
 
     /**
      * Defines the configuration options, their default values and their comments.
      *
      * @param builder
      */
-		public CommonConfig(ForgeConfigSpec.Builder builder) {
+    public CommonConfig(ForgeConfigSpec.Builder builder) {
       int maxDuration = Enchantments.FIRE_ASPECT.getMaxLevel() * 4;
-			directHitDuration = builder.comment("Fire damage duration for direct (main hand) hits.").defineInRange("directHitDuration", 4, 1, maxDuration);
-			indirectHitDuration = builder.comment("Fire damage duration for indirect (off hand + tool) hits.").defineInRange("indirectHitDuration", 2, 1, maxDuration);
-			indirectHitToolList = builder
+      directHitDuration = builder.comment("Fire damage duration for direct (main hand) hits.").defineInRange("directHitDuration", 4, 1, maxDuration);
+      indirectHitDuration = builder.comment("Fire damage duration for indirect (off hand + tool) hits.").defineInRange("indirectHitDuration", 2, 1, maxDuration);
+      indirectHitToolList = builder
         .comment(
           "List of tools that allow for an indirect hit when a torch is being held in the off hand.",
           "Leave empty to disable indirect hits.",
@@ -159,6 +199,14 @@ public class TorchHitConfig {
         "pgwbandedtorches:banded_soul_torch_red",
         "pgwbandedtorches:banded_soul_torch_black"
       ));
-		}
-	}
+      consumeTorch = builder.comment("Whether torches should break upon use.").define("consume torch", false);
+      consumeWithoutFire = builder
+        .comment(
+          "Whether to break the torch upon use even if no fire was set.",
+          "Effective only if [fire chance] and [consume torch] are set different from default."
+        )
+        .define("consume without fire", false);
+      fireChance = builder.comment("Chance (in percentage) for torches to set targets on fire.").defineInRange("fire chance", 100, 1, 100);
+    }
+  }
 }

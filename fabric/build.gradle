@@ -95,7 +95,7 @@ tasks.withType(JavaCompile).configureEach {
   it.options.encoding = 'UTF-8'
 }
 
-def changelog = "See [Changelog](https://github.com/${github_user}/${modid_kebab}/blob/master/CHANGELOG.md#${minecraft_version.replaceAll('\\.', '')}-${mod_version.replaceAll('\\.', '')}---${new Date().format("yyyyMMdd")})."
+def body_changelog = "See [Changelog](https://github.com/${github_user}/${modid_kebab}/blob/master/CHANGELOG.md#${minecraft_version.replaceAll('\\.', '')}-${mod_version.replaceAll('\\.', '')}---${new Date().format("yyyyMMdd")})."
 
 file("../api-keys.properties").withReader { 
   Properties props = new Properties()
@@ -108,7 +108,7 @@ curseforge {
   project {
     id = "${curseforge_id}"
     changelogType = 'markdown'
-    changelog = "${changelog}"
+    changelog = body_changelog
     releaseType = 'release'
     addGameVersion "${loader}"
     addGameVersion "${minecraft_version}"
@@ -133,7 +133,7 @@ githubRelease {
   targetCommitish "${minecraft_version}"
   releaseName "v${minecraft_version}-${mod_version}"
   generateReleaseNotes false
-  body changelog
+  body body_changelog
   draft true
   prerelease false
   releaseAssets remapJar
