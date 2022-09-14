@@ -117,6 +117,7 @@ curseforge {
       relations {
         requiredDependency 'forge-config-api-port-fabric'
         requiredDependency 'fabric-api'
+        optionalDependency 'soul-fired'
       }
     }
   }

@@ -168,7 +168,9 @@ curseforge {
     addGameVersion "${minecraft_version}"
     mainArtifact(jar) {
       displayName = "[${loader} - ${minecraft_version}] ${mod_title} v${mod_version}"
-      // relations {}
+      relations {
+        optionalDependency 'soul-fired'
+      }
     }
   }
   options {
