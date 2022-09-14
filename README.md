@@ -36,6 +36,8 @@ Compatible with [Soul Fire'd](https://www.curseforge.com/minecraft/mc-mods/soul-
 - New items can be made to behave as torches, defaults to a list of the most common modded torches.
 - By default, candles work as torches too! However they break if used to attack.  
   Whether candles break when used and whether to enable this feature at all can be configured.
+- By default torches and candles always set targets on fire and only candles break upon use.  
+  Whether also torches should break, the chance of setting targets on fire and whether to break items can all be configured.
 
 ## **License and right of use**
 Feel free to use this mod for any modpack or video, just be sure to give credit and possibly link [here](https://github.com/Nyphet/torch-hit#readme).  
