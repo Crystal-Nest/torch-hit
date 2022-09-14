@@ -5,7 +5,9 @@ import java.util.List;
 
 import net.minecraft.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue; 
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue; 
 
 /**
  * Torch hit! Configuration.
@@ -79,13 +81,40 @@ public class TorchHitConfig {
 	}
 
   /**
-   * Returns the value of {@link CommonConfig#breakCandles}.
+   * Returns the value of {@link CommonConfig#consumeCandle}.
    *
-   * @return {@link CommonConfig#breakCandles} as read from the {@link #COMMON common} configuration file.
+   * @return {@link CommonConfig#consumeCandle} as read from the {@link #COMMON common} configuration file.
    */
-  public static Boolean getBreakCandles() {
-		return COMMON.breakCandles.get();
+  public static Boolean getConsumeCandle() {
+		return COMMON.consumeCandle.get();
 	}
+
+  /**
+   * Returns the value of {@link CommonConfig#consumeTorch}.
+   *
+   * @return {@link CommonConfig#consumeTorch} as read from the {@link #COMMON common} configuration file.
+   */
+  public static Boolean getConsumeTorch() {
+		return COMMON.consumeTorch.get();
+	}
+
+  /**
+   * Returns the value of {@link CommonConfig#consumeWithoutFire}.
+   *
+   * @return {@link CommonConfig#consumeWithoutFire} as read from the {@link #COMMON common} configuration file.
+   */
+  public static Boolean getConsumeWithoutFire() {
+		return COMMON.consumeWithoutFire.get();
+	}
+
+  /**
+   * Returns the value of {@link CommonConfig#fireChance}.
+   *
+   * @return {@link CommonConfig#fireChance} as read from the {@link #COMMON common} configuration file.
+   */
+  public static Integer getFireChance() {
+    return COMMON.fireChance.get();
+  }
 
   /**
    * Common Configuration for Torch hit!.
@@ -94,11 +123,11 @@ public class TorchHitConfig {
     /**
      * Fire Aspect Duration for Direct Hits.
      */
-    private final ConfigValue<Integer> directHitDuration;
+    private final IntValue directHitDuration;
     /**
      * Fire Aspect Duration for Indirect Hits.
      */
-    private final ConfigValue<Integer> indirectHitDuration;
+    private final IntValue indirectHitDuration;
     /**
      * List of tools that can be used to deal Indirect Hits.
      * Empty if Indirect Hits are disabled.
@@ -121,7 +150,19 @@ public class TorchHitConfig {
     /**
      * Whether candles should break upon use.
      */
-    private final ConfigValue<Boolean> breakCandles;
+    private final ConfigValue<Boolean> consumeCandle;
+    /**
+     * Whether to break the torch upon use.
+     */
+    private final BooleanValue consumeTorch;
+    /**
+     * Whether to break the torch upon use even if no fire was set.
+     */
+    private final BooleanValue consumeWithoutFire;
+    /**
+     * Chance (in percentage) for torches to set on fire targets.
+     */
+    private final IntValue fireChance;
 
     /**
      * Defines the configuration options, their default values and their comments.
@@ -130,16 +171,16 @@ public class TorchHitConfig {
      */
 		public CommonConfig(ForgeConfigSpec.Builder builder) {
       int maxDuration = Enchantments.FIRE_ASPECT.getMaxLevel() * 4;
-			directHitDuration = builder.comment("Fire damage duration for direct (main hand) hits.").defineInRange("directHitDuration", 4, 1, maxDuration);
-			indirectHitDuration = builder.comment("Fire damage duration for indirect (off hand + tool) hits.").defineInRange("indirectHitDuration", 2, 1, maxDuration);
+			directHitDuration = builder.comment("Fire damage duration for direct (main hand) hits.").defineInRange("direct hit duration", 4, 1, maxDuration);
+			indirectHitDuration = builder.comment("Fire damage duration for indirect (off hand + tool) hits.").defineInRange("indirect hit duration", 2, 1, maxDuration);
 			indirectHitToolList = builder
         .comment(
           "List of tools that allow for an indirect hit when a torch is being held in the off hand.",
           "Leave empty to disable indirect hits.",
           "Insert either item categories or specific item IDs."
         )
-        .define("indirectHitToolList", new ArrayList<String>(List.of("sword", "axe", "pickaxe", "shovel", "hoe")));
-      moddedTorchList = builder.comment("List of item ids that should be considered as a Torch.").define("moddedTorchList", new ArrayList<String>(List.of(
+        .define("indirect tools", new ArrayList<String>(List.of("sword", "axe", "pickaxe", "shovel", "hoe")));
+      moddedTorchList = builder.comment("List of item ids that should be considered as a Torch.").define("torch list", new ArrayList<String>(List.of(
         "bonetorch:bonetorch",
         "torchmaster:megatorch",
         "hardcore_torches:lit_torch",
@@ -167,7 +208,7 @@ public class TorchHitConfig {
         "pgwbandedtorches:banded_torch_red",
         "pgwbandedtorches:banded_torch_black"
       )));
-      moddedSoulTorchList = builder.comment("List of item ids that should be considered as a Soul Torch.").define("moddedSoulTorchList", new ArrayList<String>(List.of(
+      moddedSoulTorchList = builder.comment("List of item ids that should be considered as a Soul Torch.").define("soul torch list", new ArrayList<String>(List.of(
         "pgwbandedtorches:banded_soul_torch_white",
         "pgwbandedtorches:banded_soul_torch_orange",
         "pgwbandedtorches:banded_soul_torch_magenta",
@@ -185,8 +226,16 @@ public class TorchHitConfig {
         "pgwbandedtorches:banded_soul_torch_red",
         "pgwbandedtorches:banded_soul_torch_black"
       )));
-      allowCandles = builder.comment("Whether to allow candles to act as torches.").define("allowCandles", true);
-      breakCandles = builder.comment("Whether candles should break upon use.", "Effective only if [allowCandles] is enabled.").define("breakCandles", true);
+      allowCandles = builder.comment("Whether to allow candles to act as torches.").define("allow candles", true);
+      consumeCandle = builder.comment("Whether candles should break upon use.", "Effective only if [allowCandles] is enabled.").define("consume candle", true);
+      consumeTorch = builder.comment("Whether torches should break upon use.").define("consume torch", false);
+      consumeWithoutFire = builder
+        .comment(
+          "Whether to break the torch/candle upon use even if no fire was set.",
+          "Effective only if [fire chance] and at least one of [consume torch] and [consume candle] are set different from default."
+        )
+        .define("consume without fire", false);
+      fireChance = builder.comment("Chance (in percentage) for torches/candles to set targets on fire.").defineInRange("fire chance", 100, 1, 100);
 		}
 	}
 }
