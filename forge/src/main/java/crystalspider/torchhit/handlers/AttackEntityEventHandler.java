@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -189,6 +190,10 @@ public class AttackEntityEventHandler {
    * @return in-game ID of the given item.
    */
   private String getKey(Item item) {
-    return ForgeRegistries.ITEMS.getKey(item).toString();
+    ResourceLocation itemLocation = ForgeRegistries.ITEMS.getKey(item);
+    if (itemLocation != null) {
+      return itemLocation.toString();
+    }
+    return "";
   }
 }
