@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import crystalspider.torchhit.config.TorchHitConfig;
 import crystalspider.torchhit.optional.SoulFired;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -209,6 +210,10 @@ public class AttackEntityEventHandler {
    * @return in-game ID of the given item.
    */
   private String getKey(Item item) {
-    return ForgeRegistries.ITEMS.getKey(item).toString();
+    ResourceLocation itemLocation = ForgeRegistries.ITEMS.getKey(item);
+    if (itemLocation != null) {
+      return itemLocation.toString();
+    }
+    return "";
   }
 }
