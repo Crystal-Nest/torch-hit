@@ -180,7 +180,7 @@ public class AttackEntityEventHandler {
    * @return whether the given {@link ItemStack} is a torch.
    */
   private boolean isTorch(ItemStack item) {
-    return item.is(Items.TORCH) || TorchHitConfig.getModdedTorchList().contains(getKey(item.getItem())) || isSoulTorch(item);
+    return (item.is(Items.TORCH) && TorchHitConfig.getVanillaTorchesEnabled()) || TorchHitConfig.getExtraTorchItems().contains(getKey(item.getItem())) || isSoulTorch(item);
   }
 
   /**
@@ -190,7 +190,7 @@ public class AttackEntityEventHandler {
    * @return whether the given {@link ItemStack} is a soul torch.
    */
   private boolean isSoulTorch(ItemStack item) {
-    return item.is(Items.SOUL_TORCH) || TorchHitConfig.getModdedSoulTorchList().contains(getKey(item.getItem()));
+    return (item.is(Items.SOUL_TORCH) && TorchHitConfig.getVanillaTorchesEnabled()) || TorchHitConfig.getExtraSoulTorchItems().contains(getKey(item.getItem()));
   }
 
   /**
