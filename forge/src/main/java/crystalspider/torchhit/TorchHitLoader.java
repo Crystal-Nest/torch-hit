@@ -23,7 +23,7 @@ public class TorchHitLoader {
   /**
    * Network channel protocol version.
    */
-  public static final String PROTOCOL_VERSION = "1.18-5.0";
+  public static final String PROTOCOL_VERSION = "1.18-6.0";
   /**
    * {@link SimpleChannel} instance for compatibility client-server.
    */
