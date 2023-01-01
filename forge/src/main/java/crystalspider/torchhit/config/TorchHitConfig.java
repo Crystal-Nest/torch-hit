@@ -54,23 +54,32 @@ public class TorchHitConfig {
   }
 
   /**
-   * Returns the value of {@link CommonConfig#moddedTorchList}.
+   * Returns the value of {@link CommonConfig#extraTorchItems}.
    *
-   * @return {@link CommonConfig#moddedTorchList} as read from the {@link #COMMON common} configuration file.
+   * @return {@link CommonConfig#extraTorchItems} as read from the {@link #COMMON common} configuration file.
    */
-  public static List<String> getModdedTorchList() {
-    return COMMON.moddedTorchList.get();
+  public static List<String> getExtraTorchItems() {
+    return COMMON.extraTorchItems.get();
   }
 
   /**
-   * Returns the value of {@link CommonConfig#moddedSoulTorchList}.
+   * Returns the value of {@link CommonConfig#extraSoulTorchItems}.
    *
-   * @return {@link CommonConfig#moddedSoulTorchList} as read from the {@link #COMMON common} configuration file.
+   * @return {@link CommonConfig#extraSoulTorchItems} as read from the {@link #COMMON common} configuration file.
    */
-  public static List<String> getModdedSoulTorchList() {
-    return COMMON.moddedSoulTorchList.get();
+  public static List<String> getExtraSoulTorchItems() {
+    return COMMON.extraSoulTorchItems.get();
   }
-  
+
+  /**
+   * Returns the value of {@link CommonConfig#vanillaTorchesEnabled}.
+   *
+   * @return {@link CommonConfig#vanillaTorchesEnabled} as read from the {@link #COMMON common} configuration file.
+   */
+  public static Boolean getVanillaTorchesEnabled() {
+    return COMMON.vanillaTorchesEnabled.get();
+  }
+
   /**
    * Returns the value of {@link CommonConfig#consumeTorch}.
    *
@@ -97,6 +106,7 @@ public class TorchHitConfig {
   public static Integer getFireChance() {
     return COMMON.fireChance.get();
   }
+
   /**
    * Common Configuration for Torch hit!.
    */
@@ -118,12 +128,16 @@ public class TorchHitConfig {
      * List of item ids that should be considered as a Torch.
      * Defaults to a list of the most common modded torches.
      */
-    private final ConfigValue<List<String>> moddedTorchList;
+    private final ConfigValue<List<String>> extraTorchItems;
     /**
      * List of item ids that should be considered as a Soul Torch.
      * Defaults to a list of the most common modded torches.
      */
-    private final ConfigValue<List<String>> moddedSoulTorchList;
+    private final ConfigValue<List<String>> extraSoulTorchItems;
+    /**
+     * Whether Vanilla torches can set targets on fire.
+     */
+    private final BooleanValue vanillaTorchesEnabled;
     /**
      * Whether torches should break upon use.
      */
@@ -144,8 +158,8 @@ public class TorchHitConfig {
      */
     public CommonConfig(ForgeConfigSpec.Builder builder) {
       int maxDuration = Enchantments.FIRE_ASPECT.getMaxLevel() * 4;
-      directHitDuration = builder.comment("Fire damage duration for direct (main hand) hits.").defineInRange("directHitDuration", 4, 1, maxDuration);
-      indirectHitDuration = builder.comment("Fire damage duration for indirect (off hand + tool) hits.").defineInRange("indirectHitDuration", 2, 1, maxDuration);
+      directHitDuration = builder.comment("Fire damage duration for direct (main hand) hits.").defineInRange("direct hit duration", 4, 1, maxDuration);
+      indirectHitDuration = builder.comment("Fire damage duration for indirect (off hand + tool) hits.").defineInRange("indirect hit duration", 2, 1, maxDuration);
       indirectHitToolList = builder
         .comment(
           "List of tools that allow for an indirect hit when a torch is being held in the off hand.",
@@ -153,7 +167,7 @@ public class TorchHitConfig {
           "Insert either item categories or specific item IDs."
         )
         .define("indirectHitToolList", Arrays.asList("sword", "axe", "pickaxe", "shovel", "hoe"));
-      moddedTorchList = builder.comment("List of item ids that should be considered as a Torch.").define("moddedTorchList", Arrays.asList(
+      extraTorchItems = builder.comment("List of item ids that should be considered as a Torch.").define("extra torch items", Arrays.asList(
         "bonetorch:bonetorch",
         "torchmaster:megatorch",
         "hardcore_torches:lit_torch",
@@ -181,7 +195,7 @@ public class TorchHitConfig {
         "pgwbandedtorches:banded_torch_red",
         "pgwbandedtorches:banded_torch_black"
       ));
-      moddedSoulTorchList = builder.comment("List of item ids that should be considered as a Soul Torch.").define("moddedSoulTorchList", Arrays.asList(
+      extraSoulTorchItems = builder.comment("List of item ids that should be considered as a Soul Torch.").define("extra soul torch items", Arrays.asList(
         "pgwbandedtorches:banded_soul_torch_white",
         "pgwbandedtorches:banded_soul_torch_orange",
         "pgwbandedtorches:banded_soul_torch_magenta",
@@ -199,6 +213,12 @@ public class TorchHitConfig {
         "pgwbandedtorches:banded_soul_torch_red",
         "pgwbandedtorches:banded_soul_torch_black"
       ));
+      vanillaTorchesEnabled = builder
+        .comment(
+          "Whether Vanilla torches can set targets on fire.",
+          "If false, only the items specified by [extra torch items] and [extra soul torch items] will set targets on fire."
+        )
+        .define("vanilla torches enabled", true);
       consumeTorch = builder.comment("Whether torches should break upon use.").define("consume torch", false);
       consumeWithoutFire = builder
         .comment(
