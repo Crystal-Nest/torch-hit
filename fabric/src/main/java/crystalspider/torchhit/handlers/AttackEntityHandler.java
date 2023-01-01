@@ -1,6 +1,6 @@
 package crystalspider.torchhit.handlers;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import crystalspider.torchhit.config.TorchHitConfig;
 import crystalspider.torchhit.optional.SoulFired;
