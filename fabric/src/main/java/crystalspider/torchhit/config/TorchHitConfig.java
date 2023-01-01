@@ -1,6 +1,6 @@
 package crystalspider.torchhit.config;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.enchantment.Enchantments;
@@ -49,27 +49,36 @@ public class TorchHitConfig {
    *
    * @return {@link CommonConfig#indirectHitToolList} as read from the {@link #COMMON common} configuration file.
    */
-  public static ArrayList<String> getIndirectHitToolList() {
+  public static List<String> getIndirectHitToolList() {
 		return COMMON.indirectHitToolList.get();
 	}
 
   /**
-   * Returns the value of {@link CommonConfig#moddedTorchList}.
+   * Returns the value of {@link CommonConfig#extraTorchItems}.
    *
-   * @return {@link CommonConfig#moddedTorchList} as read from the {@link #COMMON common} configuration file.
+   * @return {@link CommonConfig#extraTorchItems} as read from the {@link #COMMON common} configuration file.
    */
-  public static ArrayList<String> getModdedTorchList() {
-		return COMMON.moddedTorchList.get();
-	}
+  public static List<String> getExtraTorchItems() {
+    return COMMON.extraTorchItems.get();
+  }
 
   /**
-   * Returns the value of {@link CommonConfig#moddedSoulTorchList}.
+   * Returns the value of {@link CommonConfig#extraSoulTorchItems}.
    *
-   * @return {@link CommonConfig#moddedSoulTorchList} as read from the {@link #COMMON common} configuration file.
+   * @return {@link CommonConfig#extraSoulTorchItems} as read from the {@link #COMMON common} configuration file.
    */
-  public static ArrayList<String> getModdedSoulTorchList() {
-		return COMMON.moddedSoulTorchList.get();
-	}
+  public static List<String> getExtraSoulTorchItems() {
+    return COMMON.extraSoulTorchItems.get();
+  }
+
+  /**
+   * Returns the value of {@link CommonConfig#vanillaTorchesEnabled}.
+   *
+   * @return {@link CommonConfig#vanillaTorchesEnabled} as read from the {@link #COMMON common} configuration file.
+   */
+  public static Boolean getVanillaTorchesEnabled() {
+    return COMMON.vanillaTorchesEnabled.get();
+  }
 
   /**
    * Returns the value of {@link CommonConfig#allowCandles}.
@@ -132,17 +141,21 @@ public class TorchHitConfig {
      * List of tools that can be used to deal Indirect Hits.
      * Empty if Indirect Hits are disabled.
      */
-    private final ConfigValue<ArrayList<String>> indirectHitToolList;
+    private final ConfigValue<List<String>> indirectHitToolList;
     /**
      * List of item ids that should be considered as a Torch.
      * Defaults to a list of the most common modded torches.
      */
-    private final ConfigValue<ArrayList<String>> moddedTorchList;
+    private final ConfigValue<List<String>> extraTorchItems;
     /**
      * List of item ids that should be considered as a Soul Torch.
      * Defaults to a list of the most common modded torches.
      */
-    private final ConfigValue<ArrayList<String>> moddedSoulTorchList;
+    private final ConfigValue<List<String>> extraSoulTorchItems;
+    /**
+     * Whether Vanilla torches can set targets on fire.
+     */
+    private final BooleanValue vanillaTorchesEnabled;
     /**
      * Whether to allow candles to act as torches.
      */
@@ -171,16 +184,16 @@ public class TorchHitConfig {
      */
 		public CommonConfig(ForgeConfigSpec.Builder builder) {
       int maxDuration = Enchantments.FIRE_ASPECT.getMaxLevel() * 4;
-			directHitDuration = builder.comment("Fire damage duration for direct (main hand) hits.").defineInRange("direct hit duration", 4, 1, maxDuration);
-			indirectHitDuration = builder.comment("Fire damage duration for indirect (off hand + tool) hits.").defineInRange("indirect hit duration", 2, 1, maxDuration);
-			indirectHitToolList = builder
+      directHitDuration = builder.comment("Fire damage duration for direct (main hand) hits.").defineInRange("direct hit duration", 4, 1, maxDuration);
+      indirectHitDuration = builder.comment("Fire damage duration for indirect (off hand + tool) hits.").defineInRange("indirect hit duration", 2, 1, maxDuration);
+      indirectHitToolList = builder
         .comment(
           "List of tools that allow for an indirect hit when a torch is being held in the off hand.",
           "Leave empty to disable indirect hits.",
           "Insert either item categories or specific item IDs."
         )
-        .define("indirect tools", new ArrayList<String>(List.of("sword", "axe", "pickaxe", "shovel", "hoe")));
-      moddedTorchList = builder.comment("List of item ids that should be considered as a Torch.").define("torch list", new ArrayList<String>(List.of(
+        .define("indirect tools", Arrays.asList("sword", "axe", "pickaxe", "shovel", "hoe"));
+      extraTorchItems = builder.comment("List of item ids that should be considered as a Torch.").define("extra torch items", Arrays.asList(
         "bonetorch:bonetorch",
         "torchmaster:megatorch",
         "hardcore_torches:lit_torch",
@@ -207,8 +220,8 @@ public class TorchHitConfig {
         "pgwbandedtorches:banded_torch_green",
         "pgwbandedtorches:banded_torch_red",
         "pgwbandedtorches:banded_torch_black"
-      )));
-      moddedSoulTorchList = builder.comment("List of item ids that should be considered as a Soul Torch.").define("soul torch list", new ArrayList<String>(List.of(
+      ));
+      extraSoulTorchItems = builder.comment("List of item ids that should be considered as a Soul Torch.").define("extra soul torch items", Arrays.asList(
         "pgwbandedtorches:banded_soul_torch_white",
         "pgwbandedtorches:banded_soul_torch_orange",
         "pgwbandedtorches:banded_soul_torch_magenta",
@@ -225,7 +238,13 @@ public class TorchHitConfig {
         "pgwbandedtorches:banded_soul_torch_green",
         "pgwbandedtorches:banded_soul_torch_red",
         "pgwbandedtorches:banded_soul_torch_black"
-      )));
+      ));
+      vanillaTorchesEnabled = builder
+        .comment(
+          "Whether Vanilla torches can set targets on fire.",
+          "If false, only the items specified by [extra torch items] and [extra soul torch items] will set targets on fire."
+        )
+        .define("vanilla torches enabled", true);
       allowCandles = builder.comment("Whether to allow candles to act as torches.").define("allow candles", true);
       consumeCandle = builder.comment("Whether candles should break upon use.", "Effective only if [allowCandles] is enabled.").define("consume candle", true);
       consumeTorch = builder.comment("Whether torches should break upon use.").define("consume torch", false);
