@@ -12,11 +12,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.tag.ItemTags;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 /**
@@ -213,6 +213,6 @@ public class AttackEntityHandler {
    * @return in-game ID of the given item.
    */
   private String getKey(Item item) {
-    return Registry.ITEM.getKey(item).get().getValue().toString();
+    return Registries.ITEM.getKey(item).get().getValue().toString();
   }
 }
