@@ -35,8 +35,8 @@ Compatible with [Soul Fire'd](https://www.curseforge.com/minecraft/mc-mods/soul-
   The duration, tool list and whether enabling this feature can all be configured.
 - New items can be made to behave as torches, defaults to a list of the most common modded torches.
 - By default torches always set targets on fire and do not break upon use.  
-  Whether torches should break, the chance of setting targets on fire can all be configured.
-- By default Vanilla torches can be used to deal fire damage.
+  Whether torches should break, the chance of setting targets on fire can all be configured.  
+- By default Vanilla torches can be used to deal fire damage.  
   If you wish to tweak the game balance, Vanilla torches can be prevented from dealing fire damage and only the extra items in the configuration will work.
 
 ## **License and right of use**
