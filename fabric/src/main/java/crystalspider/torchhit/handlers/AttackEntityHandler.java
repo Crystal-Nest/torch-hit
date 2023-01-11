@@ -42,11 +42,10 @@ public class AttackEntityHandler {
       Hand interactionHand = getHand(player);
       if (interactionHand != null && !target.isFireImmune()) {
         ItemStack item = player.getStackInHand(interactionHand);
-        if (hand == Hand.MAIN_HAND) {
-          attack(player, target, item, TorchHitConfig.getDirectHitDuration());
-        } else if (isAllowedTool(player.getMainHandStack().getItem())) {
-            attack(player, target, item, TorchHitConfig.getIndirectHitDuration());
-          }
+        boolean directHit = interactionHand == Hand.MAIN_HAND;
+        if (directHit || isAllowedTool(player.getMainHandStack().getItem())) {
+          attack(player, target, item, directHit);
+        }
       }
     }
     return ActionResult.PASS;
@@ -58,10 +57,10 @@ public class AttackEntityHandler {
    * @param player
    * @param target
    * @param item
-   * @param defaultDuration
+   * @param directHit whether the hit is direct ({@code true}) or indirect ({@code false}).
    */
-  private void attack(PlayerEntity player, Entity target, ItemStack item, int defaultDuration) {
-    consumeItem(player, item, burn(target, item, defaultDuration));
+  private void attack(PlayerEntity player, Entity target, ItemStack item, boolean directHit) {
+    consumeItem(player, item, directHit, burn(target, item, directHit ? TorchHitConfig.getDirectHitDuration() : TorchHitConfig.getIndirectHitDuration()));
   }
 
   /**
@@ -69,13 +68,15 @@ public class AttackEntityHandler {
    * 
    * @param player
    * @param item
+   * @param directHit whether the hit is direct ({@code true}) or indirect ({@code false}).
    * @param fireSeconds
    */
-  private void consumeItem(PlayerEntity player, ItemStack item, int fireSeconds) {
+  private void consumeItem(PlayerEntity player, ItemStack item, boolean directHit, int fireSeconds) {
     if (
       !player.isCreative() &&
       isTorch(item) &&
       TorchHitConfig.getConsumeTorch() &&
+      (directHit || TorchHitConfig.getConsumeWithIndirectHits()) &&
       (TorchHitConfig.getConsumeWithoutFire() || fireSeconds > 0)
     ) {
       item.decrement(1);

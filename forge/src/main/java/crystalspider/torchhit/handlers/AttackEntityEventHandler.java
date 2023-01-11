@@ -38,11 +38,10 @@ public class AttackEntityEventHandler {
       Entity target = event.getTarget();
       Hand interactionHand = getInteractionHand(player);
       if (interactionHand != null && !target.fireImmune()) {
-        ItemStack torch = player.getItemInHand(interactionHand);
-        if (interactionHand == Hand.MAIN_HAND) {
-          attack(player, target, torch, TorchHitConfig.getDirectHitDuration());
-        } else if (isAllowedTool(player.getMainHandItem().getItem())) {
-          attack(player, target, torch, TorchHitConfig.getIndirectHitDuration());
+        ItemStack item = player.getItemInHand(interactionHand);
+        boolean directHit = interactionHand == Hand.MAIN_HAND;
+        if (directHit || isAllowedTool(player.getMainHandItem().getItem())) {
+          attack(player, target, item, directHit);
         }
       }
     }
@@ -53,28 +52,30 @@ public class AttackEntityEventHandler {
    * 
    * @param player
    * @param target
-   * @param torch
-   * @param defaultDuration
+   * @param item
+   * @param directHit whether the hit is direct ({@code true}) or indirect ({@code false}).
    */
-  private void attack(PlayerEntity player, Entity target, ItemStack torch, int defaultDuration) {
-    consumeItem(player, torch, burn(target, torch, defaultDuration));
+  private void attack(PlayerEntity player, Entity target, ItemStack item, boolean directHit) {
+    consumeItem(player, item, directHit, burn(target, item, directHit ? TorchHitConfig.getDirectHitDuration() : TorchHitConfig.getIndirectHitDuration()));
   }
 
   /**
    * Consumes the used torch if enabled.
    * 
    * @param player
-   * @param torch
+   * @param item
+   * @param directHit whether the hit is direct ({@code true}) or indirect ({@code false}).
    * @param fireSeconds
    */
-  private void consumeItem(PlayerEntity player, ItemStack torch, int fireSeconds) {
+  private void consumeItem(PlayerEntity player, ItemStack item, boolean directHit, int fireSeconds) {
     if (
       !player.isCreative() &&
-      isTorch(torch) &&
+      isTorch(item) &&
       TorchHitConfig.getConsumeTorch() &&
+      (directHit || TorchHitConfig.getConsumeWithIndirectHits()) &&
       (TorchHitConfig.getConsumeWithoutFire() || fireSeconds > 0)
     ) {
-      torch.shrink(1);
+      item.shrink(1);
     }
   }
 
@@ -82,15 +83,15 @@ public class AttackEntityEventHandler {
    * Sets the entity on fire.
    * 
    * @param target
-   * @param torch
+   * @param item
    * @param defaultDuration
    * @return amound of seconds the entity will be set on fire.
    */
-  private int burn(Entity target, ItemStack torch, int defaultDuration) {
-    int fireSeconds = getFireSeconds(torch, target, defaultDuration);
+  private int burn(Entity target, ItemStack item, int defaultDuration) {
+    int fireSeconds = getFireSeconds(item, target, defaultDuration);
     if (fireSeconds > 0) {
       if (isSoulfiredInstalled) {
-        SoulFired.setOnFire(target, fireSeconds, isSoulTorch(torch));
+        SoulFired.setOnFire(target, fireSeconds, isSoulTorch(item));
       } else {
         target.setSecondsOnFire(fireSeconds);
       }
@@ -101,14 +102,14 @@ public class AttackEntityEventHandler {
   /**
    * Returns the amount of seconds the given entity should stay on fire.
    * 
-   * @param torch
+   * @param item
    * @param target
    * @param fireDuration
    * @return the amount of seconds the given entity should stay on fire.
    */
-  private int getFireSeconds(ItemStack torch, Entity target, int fireDuration) {
+  private int getFireSeconds(ItemStack item, Entity target, int fireDuration) {
     if ((Math.random() * 100) < TorchHitConfig.getFireChance()) {
-      if (isSoulTorch(torch)) {
+      if (isSoulTorch(item)) {
         if (isSoulfiredInstalled) {
           return fireDuration;
         }

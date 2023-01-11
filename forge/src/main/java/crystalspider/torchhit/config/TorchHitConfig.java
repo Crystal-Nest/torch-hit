@@ -99,6 +99,15 @@ public class TorchHitConfig {
 	}
 
   /**
+   * Returns the value of {@link CommonConfig#consumeWithIndirectHit}.
+   *
+   * @return {@link CommonConfig#consumeWithIndirectHit} as read from the {@link #COMMON common} configuration file.
+   */
+  public static Boolean getConsumeWithIndirectHits() {
+    return COMMON.consumeWithIndirectHit.get();
+  }
+
+  /**
    * Returns the value of {@link CommonConfig#fireChance}.
    *
    * @return {@link CommonConfig#fireChance} as read from the {@link #COMMON common} configuration file.
@@ -146,6 +155,10 @@ public class TorchHitConfig {
      * Whether to break the torch upon use even if no fire was set.
      */
     private final BooleanValue consumeWithoutFire;
+    /**
+     * Whether to break the torch upon indirect hits.
+     */
+    private final BooleanValue consumeWithIndirectHit;
     /**
      * Chance (in percentage) for torches to set on fire targets.
      */
@@ -226,6 +239,12 @@ public class TorchHitConfig {
           "Effective only if [fire chance] and [consume torch] are set different from default."
         )
         .define("consume without fire", false);
+      consumeWithIndirectHit = builder
+        .comment(
+          "Whether to break the torch upon indirect hits.",
+          "Effective only if [consume torch] is set to true."
+        )
+        .define("consume with indirect hits", false);
       fireChance = builder.comment("Chance (in percentage) for torches to set targets on fire.").defineInRange("fire chance", 100, 1, 100);
     }
   }
