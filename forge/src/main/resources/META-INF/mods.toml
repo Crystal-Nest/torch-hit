@@ -34,7 +34,7 @@ description="Attack with torches to deal fire damage!"
 [[dependencies.${modid}]]
     modId="soulfired"
     mandatory=false
-    versionRange="[1.0.0.2-final,)"
+    versionRange="[3.0.0.0,)"
     ordering="NONE"
     side="BOTH"
 #optional
