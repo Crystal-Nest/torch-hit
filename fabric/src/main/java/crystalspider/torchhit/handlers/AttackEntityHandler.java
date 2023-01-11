@@ -92,26 +92,13 @@ public class AttackEntityHandler {
   private int burn(Entity target, ItemStack item, int defaultDuration) {
     int fireSeconds = getFireSeconds(item, target, defaultDuration);
     if (fireSeconds > 0) {
-      target.setOnFireFor(fireSeconds);
-      setFireId(target, item);
-    }
-    return fireSeconds;
-  }
-
-  /**
-   * If Soul Fire'd is installed, sets the correct Fire Id.
-   * 
-   * @param entity
-   * @param item
-   */
-  private void setFireId(Entity entity, ItemStack item) {
-    if (isSoulfiredInstalled) {
-      if (isSoulTorch(item)) {
-        SoulFired.setOnSoulFire(entity);
+      if (isSoulfiredInstalled) {
+        SoulFired.setOnFire(target, fireSeconds, isSoulTorch(item));
       } else {
-        SoulFired.setOnFire(entity);
+        target.setOnFireFor(fireSeconds);
       }
     }
+    return fireSeconds;
   }
 
   /**

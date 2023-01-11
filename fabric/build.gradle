@@ -36,7 +36,7 @@ dependencies {
   modImplementation "net.minecraftforge:forgeconfigapiport-fabric:${forgeconfigapiport_version}"
 
   // Soul Fire'd dependency
-  modImplementation "curse.maven:soulfired-662413:3962598"
+  modImplementation "curse.maven:soulfired-662413:4326779"
 }
 
 def resourceTarget = 'fabric.mod.json'
