@@ -29,6 +29,6 @@
     "java": ">=17"
   },
   "suggests": {
-    "soulfired": ">=1.1.0.0"
+    "soulfired": "^3.0.0.0"
   }
 }
