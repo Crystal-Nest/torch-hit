@@ -19,6 +19,6 @@ public class TorchHitLoader implements ModInitializer {
   @Override
 	public void onInitialize() {
     ModLoadingContext.registerConfig(MODID, ModConfig.Type.COMMON, TorchHitConfig.SPEC);
-    AttackEntityCallback.EVENT.register(new AttackEntityHandler()::handle);
+    AttackEntityCallback.EVENT.register(AttackEntityHandler::handle);
   }
 }

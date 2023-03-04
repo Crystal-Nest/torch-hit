@@ -3,6 +3,8 @@ package crystalspider.torchhit.config;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import net.minecraft.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
@@ -49,7 +51,7 @@ public class TorchHitConfig {
    *
    * @return {@link CommonConfig#indirectHitToolList} as read from the {@link #COMMON common} configuration file.
    */
-  public static List<String> getIndirectHitToolList() {
+  public static List<? extends String> getIndirectHitToolList() {
     return COMMON.indirectHitToolList.get();
   }
 
@@ -58,7 +60,7 @@ public class TorchHitConfig {
    *
    * @return {@link CommonConfig#extraTorchItems} as read from the {@link #COMMON common} configuration file.
    */
-  public static List<String> getExtraTorchItems() {
+  public static List<? extends String> getExtraTorchItems() {
     return COMMON.extraTorchItems.get();
   }
 
@@ -67,7 +69,7 @@ public class TorchHitConfig {
    *
    * @return {@link CommonConfig#extraSoulTorchItems} as read from the {@link #COMMON common} configuration file.
    */
-  public static List<String> getExtraSoulTorchItems() {
+  public static List<? extends String> getExtraSoulTorchItems() {
     return COMMON.extraSoulTorchItems.get();
   }
 
@@ -132,17 +134,17 @@ public class TorchHitConfig {
      * List of tools that can be used to deal Indirect Hits.
      * Empty if Indirect Hits are disabled.
      */
-    private final ConfigValue<List<String>> indirectHitToolList;
+    private final ConfigValue<List<? extends String>> indirectHitToolList;
     /**
      * List of item ids that should be considered as a Torch.
      * Defaults to a list of the most common modded torches.
      */
-    private final ConfigValue<List<String>> extraTorchItems;
+    private final ConfigValue<List<? extends String>> extraTorchItems;
     /**
      * List of item ids that should be considered as a Soul Torch.
      * Defaults to a list of the most common modded torches.
      */
-    private final ConfigValue<List<String>> extraSoulTorchItems;
+    private final ConfigValue<List<? extends String>> extraSoulTorchItems;
     /**
      * Whether Vanilla torches can set targets on fire.
      */
@@ -179,53 +181,61 @@ public class TorchHitConfig {
           "Leave empty to disable indirect hits.",
           "Insert either item categories or specific item IDs."
         )
-        .define("indirectHitToolList", Arrays.asList("sword", "axe", "pickaxe", "shovel", "hoe"));
-      extraTorchItems = builder.comment("List of item ids that should be considered as a Torch.").define("extra torch items", Arrays.asList(
-        "bonetorch:bonetorch",
-        "torchmaster:megatorch",
-        "hardcore_torches:lit_torch",
-        "magnumtorch:diamond_magnum_torch",
-        "magnumtorch:emerald_magnum_torch",
-        "magnumtorch:amethyst_magnum_torch",
-        "magical_torches:mega_torch",
-        "magical_torches:grand_torch",
-        "magical_torches:medium_torch",
-        "magical_torches:small_torch",
-        "pgwbandedtorches:banded_torch_white",
-        "pgwbandedtorches:banded_torch_orange",
-        "pgwbandedtorches:banded_torch_magenta",
-        "pgwbandedtorches:banded_torch_light_blue",
-        "pgwbandedtorches:banded_torch_yellow",
-        "pgwbandedtorches:banded_torch_lime",
-        "pgwbandedtorches:banded_torch_pink",
-        "pgwbandedtorches:banded_torch_gray",
-        "pgwbandedtorches:banded_torch_light_gray",
-        "pgwbandedtorches:banded_torch_cyan",
-        "pgwbandedtorches:banded_torch_purple",
-        "pgwbandedtorches:banded_torch_blue",
-        "pgwbandedtorches:banded_torch_brown",
-        "pgwbandedtorches:banded_torch_green",
-        "pgwbandedtorches:banded_torch_red",
-        "pgwbandedtorches:banded_torch_black"
-      ));
-      extraSoulTorchItems = builder.comment("List of item ids that should be considered as a Soul Torch.").define("extra soul torch items", Arrays.asList(
-        "pgwbandedtorches:banded_soul_torch_white",
-        "pgwbandedtorches:banded_soul_torch_orange",
-        "pgwbandedtorches:banded_soul_torch_magenta",
-        "pgwbandedtorches:banded_soul_torch_light_blue",
-        "pgwbandedtorches:banded_soul_torch_yellow",
-        "pgwbandedtorches:banded_soul_torch_lime",
-        "pgwbandedtorches:banded_soul_torch_pink",
-        "pgwbandedtorches:banded_soul_torch_gray",
-        "pgwbandedtorches:banded_soul_torch_light_gray",
-        "pgwbandedtorches:banded_soul_torch_cyan",
-        "pgwbandedtorches:banded_soul_torch_purple",
-        "pgwbandedtorches:banded_soul_torch_blue",
-        "pgwbandedtorches:banded_soul_torch_brown",
-        "pgwbandedtorches:banded_soul_torch_green",
-        "pgwbandedtorches:banded_soul_torch_red",
-        "pgwbandedtorches:banded_soul_torch_black"
-      ));
+        .defineListAllowEmpty(Arrays.asList("indirect tools"), () -> Arrays.asList("sword", "axe", "pickaxe", "shovel", "hoe"), (element) -> element instanceof String && StringUtils.isNotBlank((String) element));
+      extraTorchItems = builder.comment("List of item ids that should be considered as a Torch.").defineListAllowEmpty(
+        Arrays.asList("extra torch items"),
+        () -> Arrays.asList(
+          "bonetorch:bonetorch",
+          "torchmaster:megatorch",
+          "hardcore_torches:lit_torch",
+          "magnumtorch:diamond_magnum_torch",
+          "magnumtorch:emerald_magnum_torch",
+          "magnumtorch:amethyst_magnum_torch",
+          "magical_torches:mega_torch",
+          "magical_torches:grand_torch",
+          "magical_torches:medium_torch",
+          "magical_torches:small_torch",
+          "pgwbandedtorches:banded_torch_white",
+          "pgwbandedtorches:banded_torch_orange",
+          "pgwbandedtorches:banded_torch_magenta",
+          "pgwbandedtorches:banded_torch_light_blue",
+          "pgwbandedtorches:banded_torch_yellow",
+          "pgwbandedtorches:banded_torch_lime",
+          "pgwbandedtorches:banded_torch_pink",
+          "pgwbandedtorches:banded_torch_gray",
+          "pgwbandedtorches:banded_torch_light_gray",
+          "pgwbandedtorches:banded_torch_cyan",
+          "pgwbandedtorches:banded_torch_purple",
+          "pgwbandedtorches:banded_torch_blue",
+          "pgwbandedtorches:banded_torch_brown",
+          "pgwbandedtorches:banded_torch_green",
+          "pgwbandedtorches:banded_torch_red",
+          "pgwbandedtorches:banded_torch_black"
+        ), 
+        (element) -> element instanceof String && StringUtils.isNotBlank((String) element)
+      );
+      extraSoulTorchItems = builder.comment("List of item ids that should be considered as a Soul Torch.").defineListAllowEmpty(
+        Arrays.asList("extra soul torch items"),
+        () -> Arrays.asList(
+          "pgwbandedtorches:banded_soul_torch_white",
+          "pgwbandedtorches:banded_soul_torch_orange",
+          "pgwbandedtorches:banded_soul_torch_magenta",
+          "pgwbandedtorches:banded_soul_torch_light_blue",
+          "pgwbandedtorches:banded_soul_torch_yellow",
+          "pgwbandedtorches:banded_soul_torch_lime",
+          "pgwbandedtorches:banded_soul_torch_pink",
+          "pgwbandedtorches:banded_soul_torch_gray",
+          "pgwbandedtorches:banded_soul_torch_light_gray",
+          "pgwbandedtorches:banded_soul_torch_cyan",
+          "pgwbandedtorches:banded_soul_torch_purple",
+          "pgwbandedtorches:banded_soul_torch_blue",
+          "pgwbandedtorches:banded_soul_torch_brown",
+          "pgwbandedtorches:banded_soul_torch_green",
+          "pgwbandedtorches:banded_soul_torch_red",
+          "pgwbandedtorches:banded_soul_torch_black"
+        ),
+        (element) -> element instanceof String && StringUtils.isNotBlank((String) element)
+      );
       vanillaTorchesEnabled = builder
         .comment(
           "Whether Vanilla torches can set targets on fire.",

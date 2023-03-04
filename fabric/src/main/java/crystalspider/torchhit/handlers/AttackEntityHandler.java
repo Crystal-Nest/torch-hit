@@ -1,6 +1,6 @@
 package crystalspider.torchhit.handlers;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import crystalspider.torchhit.config.TorchHitConfig;
 import crystalspider.torchhit.optional.SoulFired;
@@ -37,7 +37,7 @@ public class AttackEntityHandler {
    * @param hitResult
    * @return {@link ActionResult}.
    */
-  public ActionResult handle(PlayerEntity player, World world, Hand hand, Entity target, EntityHitResult hitResult) {
+  public static ActionResult handle(PlayerEntity player, World world, Hand hand, Entity target, EntityHitResult hitResult) {
     if (!player.world.isClient && !player.isSpectator()) {
       Hand interactionHand = getHand(player);
       if (interactionHand != null && !target.isFireImmune()) {
@@ -59,7 +59,7 @@ public class AttackEntityHandler {
    * @param item
    * @param directHit whether the hit is direct ({@code true}) or indirect ({@code false}).
    */
-  private void attack(PlayerEntity player, Entity target, ItemStack item, boolean directHit) {
+  private static void attack(PlayerEntity player, Entity target, ItemStack item, boolean directHit) {
     consumeItem(player, item, directHit, burn(target, item, directHit ? TorchHitConfig.getDirectHitDuration() : TorchHitConfig.getIndirectHitDuration()));
   }
 
@@ -71,7 +71,7 @@ public class AttackEntityHandler {
    * @param directHit whether the hit is direct ({@code true}) or indirect ({@code false}).
    * @param fireSeconds
    */
-  private void consumeItem(PlayerEntity player, ItemStack item, boolean directHit, int fireSeconds) {
+  private static void consumeItem(PlayerEntity player, ItemStack item, boolean directHit, int fireSeconds) {
     if (
       !player.isCreative() &&
       isTorch(item) &&
@@ -90,7 +90,7 @@ public class AttackEntityHandler {
    * @param torch
    * @param defaultDuration
    */
-  private int burn(Entity target, ItemStack item, int defaultDuration) {
+  private static int burn(Entity target, ItemStack item, int defaultDuration) {
     int fireSeconds = getFireSeconds(item, target, defaultDuration);
     if (fireSeconds > 0) {
       if (isSoulfiredInstalled) {
@@ -110,7 +110,7 @@ public class AttackEntityHandler {
    * @param fireDuration
    * @return the amount of seconds the given entity should stay on fire.
    */
-  private int getFireSeconds(ItemStack item, Entity target, int fireDuration) {
+  private static int getFireSeconds(ItemStack item, Entity target, int fireDuration) {
     if ((Math.random() * 100) < TorchHitConfig.getFireChance()) {
       if (isSoulTorch(item)) {
         if (isSoulfiredInstalled) {
@@ -132,7 +132,7 @@ public class AttackEntityHandler {
    * @param item
    * @return
    */
-  private boolean isAllowedTool(Item item) {
+  private static boolean isAllowedTool(Item item) {
     return !TorchHitConfig.getIndirectHitToolList().isEmpty() && TorchHitConfig.getIndirectHitToolList().stream().filter(toolType -> getKey(item).matches(".*:([^_]+_)*" + toolType + "(_[^_]+)*")).count() > 0;
   }
 
@@ -144,7 +144,7 @@ public class AttackEntityHandler {
    * @return {@link Hand} holding a torch or null.
    */
   @Nullable
-  private Hand getHand(PlayerEntity player) {
+  private static Hand getHand(PlayerEntity player) {
     if (isTorch(player.getMainHandStack())) {
       return Hand.MAIN_HAND;
     }
@@ -160,7 +160,7 @@ public class AttackEntityHandler {
    * @param item
    * @return whether the given {@link ItemStack} is a torch.
    */
-  private boolean isTorch(ItemStack item) {
+  private static boolean isTorch(ItemStack item) {
     return (item.getItem() == Items.TORCH && TorchHitConfig.getVanillaTorchesEnabled()) || TorchHitConfig.getExtraTorchItems().contains(getKey(item.getItem())) || isSoulTorch(item);
   }
 
@@ -170,7 +170,7 @@ public class AttackEntityHandler {
    * @param item
    * @return whether the given {@link ItemStack} is a soul torch.
    */
-  private boolean isSoulTorch(ItemStack item) {
+  private static boolean isSoulTorch(ItemStack item) {
     return (item.getItem() == Items.SOUL_TORCH && TorchHitConfig.getVanillaTorchesEnabled()) || TorchHitConfig.getExtraSoulTorchItems().contains(getKey(item.getItem()));
   }
 
@@ -180,7 +180,7 @@ public class AttackEntityHandler {
    * @param item
    * @return in-game ID of the given item.
    */
-  private String getKey(Item item) {
+  private static String getKey(Item item) {
     return Registry.ITEM.getKey(item).get().getValue().toString();
   }
 }
