@@ -8,6 +8,22 @@ and this project adheres to [Forge Semantic Versioning](https://mcforge.readthed
 ## [Unreleased]
 - Nothing new.
 
+## [1.19.2-6.0.1.1] - 2023/03/05
+- Fix [#12](https://github.com/Nyphet/torch-hit/issues/12).
+- Fix [#13](https://github.com/Nyphet/torch-hit/issues/13).
+
+## [1.19.2-6.0.1.1] - 2023/03/05
+- Fix [#12](https://github.com/Nyphet/torch-hit/issues/12).
+- Fix [#13](https://github.com/Nyphet/torch-hit/issues/13).
+
+## [1.18.2-6.0.1.1] - 2023/03/05
+- Fix [#12](https://github.com/Nyphet/torch-hit/issues/12).
+- Fix [#13](https://github.com/Nyphet/torch-hit/issues/13).
+
+## [1.16.5-6.0.1.1] - 2023/03/05
+- Fix [#12](https://github.com/Nyphet/torch-hit/issues/12).
+- Fix [#13](https://github.com/Nyphet/torch-hit/issues/13).
+
 ## [1.19.2-6.0.1.0] - 2023/01/11
 - Added compatibility for Soul Fire'd 3.0.0.0.
 
@@ -116,9 +132,11 @@ and this project adheres to [Forge Semantic Versioning](https://mcforge.readthed
 
 [Unreleased]: https://github.com/Nyphet/torch-hit
 
+[1.19.3-6.0.1.1]: https://github.com/Nyphet/torch-hit/releases/tag/v1.19.3-6.0.1.1
 [1.19.3-6.0.1.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.19.3-6.0.1.0
 [1.19.3-6.0.0.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.19.3-6.0.0.0
 
+[1.19.2-6.0.1.1]: https://github.com/Nyphet/torch-hit/releases/tag/v1.19.2-6.0.1.1
 [1.19.2-6.0.1.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.19.2-6.0.1.0
 [1.19.2-6.0.0.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.19.2-6.0.0.0
 [1.19.2-5.0.0.1]: https://github.com/Nyphet/torch-hit/releases/tag/v1.19.2-5.0.0.1
@@ -134,6 +152,7 @@ and this project adheres to [Forge Semantic Versioning](https://mcforge.readthed
 [1.19-3.0.0.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.19-3.0.0.0
 [1.19-2.0.0.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.19-2.0.0.0
 
+[1.18.2-6.0.1.1]: https://github.com/Nyphet/torch-hit/releases/tag/v1.18.2-6.0.1.1
 [1.18.2-6.0.1.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.18.2-6.0.1.0
 [1.18.2-6.0.0.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.18.2-6.0.0.0
 [1.18.2-5.0.0.1]: https://github.com/Nyphet/torch-hit/releases/tag/v1.18.2-5.0.0.1
@@ -144,6 +163,7 @@ and this project adheres to [Forge Semantic Versioning](https://mcforge.readthed
 [1.18.2-1.0.0.1]: https://github.com/Nyphet/torch-hit/releases/tag/v1.18.2-1.0.0.1
 [1.18.2-1.0.0.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.18.2-1.0.0.0
 
+[1.16.5-6.0.1.1]: https://github.com/Nyphet/torch-hit/releases/tag/v1.16.5-6.0.1.1
 [1.16.5-6.0.1.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.16.5-6.0.1.0
 [1.16.5-6.0.0.0]: https://github.com/Nyphet/torch-hit/releases/tag/v1.16.5-6.0.0.0
 [1.16.5-5.0.0.1]: https://github.com/Nyphet/torch-hit/releases/tag/v1.16.5-5.0.0.1
