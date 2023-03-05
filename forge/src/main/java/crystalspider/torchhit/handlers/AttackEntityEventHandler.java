@@ -16,11 +16,14 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * {@link AttackEntityEvent} handler.
  */
+@EventBusSubscriber(bus = Bus.FORGE)
 public class AttackEntityEventHandler {
   /**
    * Whether Soul Fire'd mod is installed at runtime.
@@ -33,7 +36,7 @@ public class AttackEntityEventHandler {
    * @param event
    */
   @SubscribeEvent()
-  public void handle(AttackEntityEvent event) {
+  public static void handle(AttackEntityEvent event) {
     Player player = event.getPlayer();
     if (!player.level.isClientSide && !player.isSpectator()) {
       Entity target = event.getTarget();
@@ -56,7 +59,7 @@ public class AttackEntityEventHandler {
    * @param item
    * @param directHit whether the hit is direct ({@code true}) or indirect ({@code false}).
    */
-  private void attack(Player player, Entity target, ItemStack item, boolean directHit) {
+  private static void attack(Player player, Entity target, ItemStack item, boolean directHit) {
     consumeItem(player, item, directHit, burn(target, item, directHit ? TorchHitConfig.getDirectHitDuration() : TorchHitConfig.getIndirectHitDuration()));
   }
 
@@ -68,7 +71,7 @@ public class AttackEntityEventHandler {
    * @param directHit whether the hit is direct ({@code true}) or indirect ({@code false}).
    * @param fireSeconds
    */
-  private void consumeItem(Player player, ItemStack item, boolean directHit, int fireSeconds) {
+  private static void consumeItem(Player player, ItemStack item, boolean directHit, int fireSeconds) {
     if (
       !player.isCreative() &&
       ((isCandle(item) && TorchHitConfig.getConsumeCandle()) || (isTorch(item) && TorchHitConfig.getConsumeTorch())) &&
@@ -87,7 +90,7 @@ public class AttackEntityEventHandler {
    * @param defaultDuration
    * @return amound of seconds the entity will be set on fire.
    */
-  private int burn(Entity target, ItemStack item, int defaultDuration) {
+  private static int burn(Entity target, ItemStack item, int defaultDuration) {
     int fireSeconds = getFireSeconds(item, target, defaultDuration);
     if (fireSeconds > 0) {
       if (isSoulfiredInstalled) {
@@ -107,7 +110,7 @@ public class AttackEntityEventHandler {
    * @param fireDuration
    * @return the amount of seconds the given entity should stay on fire.
    */
-  private int getFireSeconds(ItemStack item, Entity target, int fireDuration) {
+  private static int getFireSeconds(ItemStack item, Entity target, int fireDuration) {
     if ((Math.random() * 100) < TorchHitConfig.getFireChance()) {
       if (isSoulTorch(item)) {
         if (isSoulfiredInstalled) {
@@ -129,7 +132,7 @@ public class AttackEntityEventHandler {
    * @param item
    * @return whether the given {@link Item} is a tool that allows Indirect Hits.
    */
-  private boolean isAllowedTool(Item item) {
+  private static boolean isAllowedTool(Item item) {
     return !TorchHitConfig.getIndirectHitToolList().isEmpty() && TorchHitConfig.getIndirectHitToolList().stream().filter(toolType -> getKey(item).matches(".*:([^_]+_)*" + toolType + "(_[^_]+)*")).count() > 0;
   }
 
@@ -141,7 +144,7 @@ public class AttackEntityEventHandler {
    * @return {@link InteractionHand} holding a torch or null.
    */
   @Nullable
-  private InteractionHand getInteractionHand(Player player) {
+  private static InteractionHand getInteractionHand(Player player) {
     if (isValidItem(player.getMainHandItem())) {
       return InteractionHand.MAIN_HAND;
     }
@@ -157,7 +160,7 @@ public class AttackEntityEventHandler {
    * @param item
    * @return whether the given {@link ItemStack} is a valid item.
    */
-  private boolean isValidItem(ItemStack item) {
+  private static boolean isValidItem(ItemStack item) {
     return isTorch(item) || isCandle(item);
   }
 
@@ -167,7 +170,7 @@ public class AttackEntityEventHandler {
    * @param item
    * @return whether the given {@link ItemStack} is a torch.
    */
-  private boolean isTorch(ItemStack item) {
+  private static boolean isTorch(ItemStack item) {
     return (item.is(Items.TORCH) && TorchHitConfig.getVanillaTorchesEnabled()) || TorchHitConfig.getExtraTorchItems().contains(getKey(item.getItem())) || isSoulTorch(item);
   }
 
@@ -177,7 +180,7 @@ public class AttackEntityEventHandler {
    * @param item
    * @return whether the given {@link ItemStack} is a soul torch.
    */
-  private boolean isSoulTorch(ItemStack item) {
+  private static boolean isSoulTorch(ItemStack item) {
     return (item.is(Items.SOUL_TORCH) && TorchHitConfig.getVanillaTorchesEnabled()) || TorchHitConfig.getExtraSoulTorchItems().contains(getKey(item.getItem()));
   }
 
@@ -187,7 +190,7 @@ public class AttackEntityEventHandler {
    * @param item
    * @return whether the given {@link ItemStack} is a candle.
    */
-  private boolean isCandle(ItemStack item) {
+  private static boolean isCandle(ItemStack item) {
     return TorchHitConfig.getAllowCandles() && item.is(ItemTags.CANDLES);
   }
 
@@ -197,7 +200,7 @@ public class AttackEntityEventHandler {
    * @param item
    * @return in-game ID of the given item.
    */
-  private String getKey(Item item) {
+  private static String getKey(Item item) {
     ResourceLocation itemLocation = ForgeRegistries.ITEMS.getKey(item);
     if (itemLocation != null) {
       return itemLocation.toString();
