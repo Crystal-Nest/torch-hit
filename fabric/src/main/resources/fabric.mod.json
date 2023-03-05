@@ -3,7 +3,7 @@
   "id": "${modid}",
   "version": "${mod_version}",
   "name": "${mod_title}",
-  "description": "Attack with torches to deal fire damage!",
+  "description": "Attack with torches!",
   "authors": [
     "${author}"
   ],
