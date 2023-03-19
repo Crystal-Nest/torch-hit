@@ -1,7 +1,7 @@
 ![Torch hit! banner](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/torch-hit/banner.gif)
 
 ---
-![Minecraft](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/minecraft/minecraft.svg)[![1.19.3](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/minecraft/1-19-3.svg)](https://modrinth.com/mod/torch-hit/versions?g=1.19.3)![Separator](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/separator.svg)[![1.19.2](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/minecraft/1-19-2.svg)](https://modrinth.com/mod/torch-hit/versions?g=1.19.2)![Separator](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/separator.svg)[![1.18.2](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/minecraft/1-18-2.svg)](https://modrinth.com/mod/torch-hit/versions?g=1.18.2)![Separator](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/separator.svg)[![1.16.5](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/minecraft/1-16-5.svg)](https://modrinth.com/mod/torch-hit/versions?g=1.16.5)
+![Minecraft](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/minecraft/minecraft.svg)[![1.19.4](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/minecraft/1-19-4.svg)](https://modrinth.com/mod/torch-hit/versions?g=1.19.4)![Separator](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/separator.svg)[![1.19.3](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/minecraft/1-19-3.svg)](https://modrinth.com/mod/torch-hit/versions?g=1.19.3)![Separator](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/separator.svg)[![1.19.2](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/minecraft/1-19-2.svg)](https://modrinth.com/mod/torch-hit/versions?g=1.19.2)![Separator](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/separator.svg)[![1.18.2](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/minecraft/1-18-2.svg)](https://modrinth.com/mod/torch-hit/versions?g=1.18.2)![Separator](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/separator.svg)[![1.16.5](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/minecraft/1-16-5.svg)](https://modrinth.com/mod/torch-hit/versions?g=1.16.5)
 
 ![Loader](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/loader/loader.svg)[![Forge](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/loader/forge.svg)](https://modrinth.com/mod/torch-hit/versions?l=forge)![Separator](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/separator.svg)[![Fabric](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/loader/fabric.svg)](https://modrinth.com/mod/torch-hit/versions?l=fabric)
 
@@ -17,13 +17,13 @@ While holding a torch you can set on fire your enemies, for an easier exploratio
 
 ## **Compatibility**
 Compatible with [Soul Fire'd](https://modrinth.com/mod/soul-fire-d) and with any modded torch!  
-![Soul hit](https://github.com/Nyphet/mod-fancy-assets/blob/main/torch-hit/soul-hit.gif?raw=true) ![Mod hit](https://github.com/Nyphet/mod-fancy-assets/blob/main/torch-hit/mod-hit.gif?raw=true)
+![Soul hit](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/torch-hit/soul-hit.gif) ![Mod hit](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/torch-hit/mod-hit.gif)
 
 ## **Features**
 - Hit with a torch in your main hand to deal fire damage!  
-![Hit](https://github.com/Nyphet/mod-fancy-assets/blob/main/torch-hit/hit.gif?raw=true)
+![Hit](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/torch-hit/hit.gif)
 - Hit with a tool in your main hand and a torch in your off hand to deal fire damage!  
-![Tool hit](https://github.com/Nyphet/mod-fancy-assets/blob/main/torch-hit/tool-hit.gif?raw=true)
+![Tool hit](https://raw.githubusercontent.com/Nyphet/mod-fancy-assets/main/torch-hit/tool-hit.gif)
 - If Soul Fire'd is installed, soul torches set mobs on soul fire!  
   If it's not installed, soul torches lit Piglins on fire for double the time and any other entity for 1 second more!  
 - **Highly configurable!** See next section for more details.
