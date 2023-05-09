@@ -41,6 +41,12 @@ Compatible with [Soul Fire'd](https://modrinth.com/mod/soul-fire-d) and with any
 - By default Vanilla torches can be used to deal fire damage.  
   If you wish to tweak the game balance, Vanilla torches can be prevented from dealing fire damage and only the extra items in the configuration will work.
 
+## **Dependencies**
+| Mod | Loader | Requirement |
+| :-: | :----: | :---------: |
+| [Forge Config API Port](https://modrinth.com/mod/forge-config-api-port) | Fabric | Required |
+| [Soul Fire'd](https://modrinth.com/mod/soul-fire-d) | Fabric/Forge | Optional |
+
 ## **License and right of use**
 Feel free to use this mod for any modpack or video, just be sure to give credit and possibly link [here](https://github.com/Nyphet/torch-hit#readme).  
 This project is published under the [GNU General Public License v3.0](https://github.com/Nyphet/torch-hit/blob/master/LICENSE).
