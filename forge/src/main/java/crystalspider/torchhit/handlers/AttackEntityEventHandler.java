@@ -36,9 +36,10 @@ public class AttackEntityEventHandler {
    * @param event
    */
   @SubscribeEvent()
+  @SuppressWarnings("resource")
   public static void handle(AttackEntityEvent event) {
     Player player = event.getEntity();
-    if (!player.level.isClientSide && !player.isSpectator()) {
+    if (!player.level().isClientSide && !player.isSpectator()) {
       Entity target = event.getTarget();
       InteractionHand interactionHand = getInteractionHand(player);
       if (interactionHand != null && !target.fireImmune()) {

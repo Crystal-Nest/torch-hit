@@ -38,8 +38,9 @@ public class AttackEntityHandler {
    * @param hitResult
    * @return {@link ActionResult}.
    */
+  @SuppressWarnings("resource")
   public static ActionResult handle(PlayerEntity player, World world, Hand hand, Entity target, EntityHitResult hitResult) {
-    if (!player.world.isClient && !player.isSpectator()) {
+    if (!player.getWorld().isClient && !player.isSpectator()) {
       Hand interactionHand = getHand(player);
       if (interactionHand != null && !target.isFireImmune()) {
         ItemStack item = player.getStackInHand(interactionHand);

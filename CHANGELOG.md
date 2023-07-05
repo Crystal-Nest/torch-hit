@@ -8,6 +8,10 @@ and this project adheres to [Forge Semantic Versioning](https://mcforge.readthed
 ## [Unreleased]
 - Nothing new.
 
+## [1.20.1-6.0.1.2] - 2023/07/05
+- Ported to 1.20.1
+- Changed in-game mod picture.
+
 ## [1.19.4-6.0.1.2] - 2023/03/19
 - Ported to 1.19.4
 - Changed in-game mod picture.
@@ -147,6 +151,8 @@ and this project adheres to [Forge Semantic Versioning](https://mcforge.readthed
 - Added configuration options.
 
 [Unreleased]: https://github.com/Nyphet/torch-hit
+
+[1.20.1-6.0.1.2]: https://github.com/Nyphet/torch-hit/releases/tag/v1.20.1-6.0.1.2
 
 [1.19.4-6.0.1.2]: https://github.com/Nyphet/torch-hit/releases/tag/v1.19.4-6.0.1.2
 

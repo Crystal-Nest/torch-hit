@@ -1,5 +1,5 @@
 plugins {
-  id "fabric-loom" version "1.1-SNAPSHOT"
+  id "fabric-loom" version "1.2-SNAPSHOT"
   id "com.modrinth.minotaur" version "2.+"
   id "com.matthewprenger.cursegradle" version "1.4.+"
   id "com.github.breadmoirai.github-release" version "2.4.+"
@@ -37,7 +37,7 @@ dependencies {
   modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forgeconfigapiport_version}"
 
   // Soul Fire'd dependency
-  modImplementation "curse.maven:soulfired-662413:4326783"
+  modImplementation "curse.maven:soulfired-662413:4625002"
 }
 
 def resourceTarget = "fabric.mod.json"
