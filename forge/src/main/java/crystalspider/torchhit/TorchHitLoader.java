@@ -5,8 +5,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.network.ChannelBuilder;
+import net.minecraftforge.network.SimpleChannel;
 
 /**
  * Torch hit! mod loader.
@@ -21,11 +21,16 @@ public class TorchHitLoader {
   /**
    * Network channel protocol version.
    */
-  public static final String PROTOCOL_VERSION = "1.20-6.0";
+  public static final int PROTOCOL_VERSION = 1_20__6_0;
   /**
    * {@link SimpleChannel} instance for compatibility client-server.
    */
-  public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(new ResourceLocation(MODID, "main"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, (version) -> true);
+  public static final SimpleChannel INSTANCE = ChannelBuilder
+    .named(new ResourceLocation(MODID, "main"))
+    .networkProtocolVersion(PROTOCOL_VERSION)
+    .clientAcceptedVersions((status, version) -> true)
+    .serverAcceptedVersions((status, version) -> version == PROTOCOL_VERSION)
+    .simpleChannel();
 
   public TorchHitLoader() {
     ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, TorchHitConfig.SPEC);
