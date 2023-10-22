@@ -43,7 +43,7 @@ public final class LivingAttackEventHandler {
   public static void handle(LivingAttackEvent event) {
     Entity entity = event.getSource().getEntity();
     Entity directEntity = event.getSource().getDirectEntity();
-    if (entity instanceof LivingEntity && entity == directEntity && !entity.level.isClientSide && !entity.isSpectator()) {
+    if (entity instanceof LivingEntity && entity == directEntity && !entity.level.isClientSide && !entity.isSpectator() && (entity instanceof PlayerEntity || TorchHitConfig.getFireFromMobs())) {
       LivingEntity attacker = (LivingEntity) entity, target = event.getEntityLiving();
       Hand interactionHand = getInteractionHand(attacker);
       if (interactionHand != null && !target.fireImmune()) {
