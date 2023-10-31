@@ -1,79 +1,82 @@
-package crystalspider.torchhit.handlers;
+package crystalspider.torchhit.handler;
+
+import java.util.function.Supplier;
 
 import org.jetbrains.annotations.Nullable;
 
+import crystalspider.fabricpolyfill.api.event.ServerLivingEntityEvents;
 import crystalspider.torchhit.config.TorchHitConfig;
 import crystalspider.torchhit.optional.SoulFired;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.AbstractPiglinEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
 
 /**
  * {@link AttackEntityCallback} event handler.
  */
-public class AttackEntityHandler {
+public final class AttackEntityHandler {
   /**
    * Whether Soul Fire'd mod is installed at runtime.
    */
-  private static final boolean isSoulfiredInstalled = FabricLoader.getInstance().isModLoaded("soulfired");
+  private static final Supplier<Boolean> isSoulfiredInstalled = () -> FabricLoader.getInstance().isModLoaded("soulfired");
 
   /**
-   * Handles the {@link AttackEntityCallback} event.
+   * Handles the {@link ServerLivingEntityEvents.ALLOW_DAMAGE} event.
    * 
-   * @param player
-   * @param world
-   * @param hand
    * @param target
-   * @param hitResult
-   * @return {@link ActionResult}.
+   * @param source
+   * @param amount
+   * @return
    */
-  public static ActionResult handle(PlayerEntity player, World world, Hand hand, Entity target, EntityHitResult hitResult) {
-    if (!player.world.isClient && !player.isSpectator()) {
-      Hand interactionHand = getHand(player);
+  public static boolean handle(LivingEntity target, DamageSource source, float amount) {
+    Entity attackerEntity = source.getAttacker();
+    Entity directEntity = source.getSource();
+    if (attackerEntity instanceof LivingEntity && attackerEntity == directEntity && !attackerEntity.world.isClient && !attackerEntity.isSpectator() && (attackerEntity instanceof PlayerEntity || TorchHitConfig.getFireFromMobs())) {
+      LivingEntity attacker = (LivingEntity) attackerEntity;
+      Hand interactionHand = getHand(attacker);
       if (interactionHand != null && !target.isFireImmune()) {
-        ItemStack item = player.getStackInHand(interactionHand);
+        ItemStack item = attacker.getStackInHand(interactionHand);
         boolean directHit = interactionHand == Hand.MAIN_HAND;
-        if (directHit || isAllowedTool(player.getMainHandStack().getItem())) {
-          attack(player, target, item, directHit);
+        if (directHit || isAllowedTool(attacker.getMainHandStack().getItem())) {
+          attack(attacker, target, item, directHit);
         }
       }
     }
-    return ActionResult.PASS;
+    return true;
   }
 
   /**
    * Attack the target entity with the torch item it on fire.
    * 
-   * @param player
+   * @param attacker
    * @param target
    * @param item
    * @param directHit whether the hit is direct ({@code true}) or indirect ({@code false}).
    */
-  private static void attack(PlayerEntity player, Entity target, ItemStack item, boolean directHit) {
-    consumeItem(player, item, directHit, burn(target, item, directHit ? TorchHitConfig.getDirectHitDuration() : TorchHitConfig.getIndirectHitDuration()));
+  private static void attack(LivingEntity attacker, Entity target, ItemStack item, boolean directHit) {
+    consumeItem(attacker, item, directHit, burn(target, item, directHit ? TorchHitConfig.getDirectHitDuration() : TorchHitConfig.getIndirectHitDuration()));
   }
 
   /**
    * Consumes the used item if enabled.
    * 
-   * @param player
+   * @param attacker
    * @param item
    * @param directHit whether the hit is direct ({@code true}) or indirect ({@code false}).
    * @param fireSeconds
    */
-  private static void consumeItem(PlayerEntity player, ItemStack item, boolean directHit, int fireSeconds) {
+  private static void consumeItem(LivingEntity attacker, ItemStack item, boolean directHit, int fireSeconds) {
     if (
-      !player.isCreative() &&
+      !(attacker instanceof PlayerEntity && ((PlayerEntity) attacker).isCreative()) &&
       isTorch(item) &&
       TorchHitConfig.getConsumeTorch() &&
       (directHit || TorchHitConfig.getConsumeWithIndirectHits()) &&
@@ -93,7 +96,7 @@ public class AttackEntityHandler {
   private static int burn(Entity target, ItemStack item, int defaultDuration) {
     int fireSeconds = getFireSeconds(item, target, defaultDuration);
     if (fireSeconds > 0) {
-      if (isSoulfiredInstalled) {
+      if (isSoulfiredInstalled.get()) {
         SoulFired.setOnFire(target, fireSeconds, isSoulTorch(item));
       } else {
         target.setOnFireFor(fireSeconds);
@@ -113,7 +116,7 @@ public class AttackEntityHandler {
   private static int getFireSeconds(ItemStack item, Entity target, int fireDuration) {
     if ((Math.random() * 100) < TorchHitConfig.getFireChance()) {
       if (isSoulTorch(item)) {
-        if (isSoulfiredInstalled) {
+        if (isSoulfiredInstalled.get()) {
           return fireDuration;
         }
         if (target instanceof AbstractPiglinEntity) {
@@ -137,18 +140,18 @@ public class AttackEntityHandler {
   }
 
   /**
-   * Returns the {@link Hand} of the {@link PlayerEntity} holding a torch.
+   * Returns the {@link Hand} of the {@link LivingEntity} holding a torch.
    * Null if none could be found.
    * 
-   * @param player
+   * @param attacker
    * @return {@link Hand} holding a torch or null.
    */
   @Nullable
-  private static Hand getHand(PlayerEntity player) {
-    if (isTorch(player.getMainHandStack())) {
+  private static Hand getHand(LivingEntity attacker) {
+    if (isTorch(attacker.getMainHandStack())) {
       return Hand.MAIN_HAND;
     }
-    if (isTorch(player.getOffHandStack())) {
+    if (isTorch(attacker.getOffHandStack())) {
       return Hand.OFF_HAND;
     }
     return null;
