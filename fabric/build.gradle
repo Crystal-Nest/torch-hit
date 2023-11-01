@@ -23,6 +23,7 @@ repositories {
       includeGroup "curse.maven"
     }
   }
+  maven { url = "https://jitpack.io" }
 }
 
 dependencies {
@@ -39,7 +40,9 @@ dependencies {
   // Soul Fire'd dependency
   modImplementation "curse.maven:soul-fired-662413:4783337"
   // Fabric Polyfill dependency
-  modImplementation "curse.maven:fabric-polyfill-926195:4829317"
+  modImplementation "curse.maven:fabric-polyfill-926195:4833040"
+  // MixinSquared dependency for Fabric Polyfill
+  include(runtimeOnly(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.1.1")))
 }
 
 def resourceTarget = "fabric.mod.json"
