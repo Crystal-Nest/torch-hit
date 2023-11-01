@@ -23,6 +23,7 @@ repositories {
       includeGroup "curse.maven"
     }
   }
+  maven { url = "https://jitpack.io" }
 }
 
 dependencies {
@@ -37,7 +38,11 @@ dependencies {
   modImplementation "net.minecraftforge:forgeconfigapiport-fabric:${forgeconfigapiport_version}"
 
   // Soul Fire'd dependency
-  modImplementation "curse.maven:soulfired-662413:4326779"
+  modImplementation "curse.maven:soul-fired-662413:4783345"
+  // Fabric Polyfill dependency
+  modImplementation "curse.maven:fabric-polyfill-926195:4833153"
+  // MixinSquared dependency for Fabric Polyfill
+  include(api(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.1.1")))
 }
 
 def resourceTarget = "fabric.mod.json"
@@ -117,8 +122,9 @@ curseforge {
     mainArtifact(remapJar) {
       displayName = "[${loader} - ${minecraft_version}] ${mod_title} v${mod_version}"
       relations {
-        requiredDependency "forge-config-api-port-fabric"
         requiredDependency "fabric-api"
+        requiredDependency "forge-config-api-port-fabric"
+        requiredDependency "fabric-polyfill"
         optionalDependency "soul-fired"
       }
     }
@@ -142,6 +148,7 @@ modrinth {
   dependencies {
     required.project "fabric-api"
     required.project "forge-config-api-port"
+    required.project "fabric-polyfill"
     optional.project "soul-fire-d"
   }
 }
