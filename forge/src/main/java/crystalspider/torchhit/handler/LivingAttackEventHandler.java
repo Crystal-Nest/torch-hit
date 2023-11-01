@@ -43,14 +43,16 @@ public final class LivingAttackEventHandler {
   public static void handle(LivingAttackEvent event) {
     Entity entity = event.getSource().getEntity();
     Entity directEntity = event.getSource().getDirectEntity();
-    if (entity instanceof LivingEntity && entity == directEntity && !entity.level.isClientSide && !entity.isSpectator() && (entity instanceof PlayerEntity || TorchHitConfig.getFireFromMobs())) {
+    if (entity instanceof LivingEntity && entity == directEntity && !entity.level.isClientSide && !entity.isSpectator()) {
       LivingEntity attacker = (LivingEntity) entity, target = event.getEntityLiving();
-      Hand interactionHand = getInteractionHand(attacker);
-      if (interactionHand != null && !target.fireImmune()) {
-        ItemStack item = attacker.getItemInHand(interactionHand);
-        boolean directHit = interactionHand == Hand.MAIN_HAND;
-        if (directHit || isAllowedTool(attacker.getMainHandItem().getItem())) {
-          attack(attacker, target, item, directHit);
+      if (canAttack(attacker, target)) {
+        Hand interactionHand = getInteractionHand(attacker);
+        if (interactionHand != null && !target.fireImmune()) {
+          ItemStack item = attacker.getItemInHand(interactionHand);
+          boolean directHit = interactionHand == Hand.MAIN_HAND;
+          if (directHit || isAllowedTool(attacker.getMainHandItem().getItem())) {
+            attack(attacker, target, item, directHit);
+          }
         }
       }
     }
@@ -178,6 +180,17 @@ public final class LivingAttackEventHandler {
    */
   private static boolean isSoulTorch(ItemStack item) {
     return (item.getItem() == Items.SOUL_TORCH && TorchHitConfig.getVanillaTorchesEnabled()) || TorchHitConfig.getExtraSoulTorchItems().contains(getKey(item.getItem()));
+  }
+
+  /**
+   * Checks whether the {@code attacker} can actually attack the {@code target}.
+   * 
+   * @param attacker
+   * @param target
+   * @return whether the {@code attacker} can actually attack the {@code target}.
+   */
+  private static boolean canAttack(LivingEntity attacker, LivingEntity target) {
+    return (attacker instanceof PlayerEntity || TorchHitConfig.getFireFromMobs()) && attacker.canAttack(target) && (!(attacker instanceof PlayerEntity && target instanceof PlayerEntity) || ((PlayerEntity) attacker).canHarmPlayer((PlayerEntity) target));
   }
 
   /**
