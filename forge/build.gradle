@@ -92,7 +92,7 @@ dependencies {
   minecraft "net.minecraftforge:forge:${minecraft_version}-${loader_version}${forge_subversion}"
 
   // Soul Fire'd dependency
-  implementation fg.deobf("curse.maven:soulfired-662413:4326782")
+  implementation fg.deobf("curse.maven:soul-fired-662413:4783351")
 }
 
 def resourceTarget = "META-INF/mods.toml"

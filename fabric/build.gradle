@@ -37,7 +37,7 @@ dependencies {
   modImplementation "net.minecraftforge:forgeconfigapiport-fabric:${forgeconfigapiport_version}"
 
   // Soul Fire'd dependency
-  modImplementation "curse.maven:soulfired-662413:4326781"
+  modImplementation "curse.maven:soul-fired-662413:4783350"
 }
 
 def resourceTarget = "fabric.mod.json"
@@ -117,8 +117,8 @@ curseforge {
     mainArtifact(remapJar) {
       displayName = "[${loader} - ${minecraft_version}] ${mod_title} v${mod_version}"
       relations {
-        requiredDependency "forge-config-api-port-fabric"
         requiredDependency "fabric-api"
+        requiredDependency "forge-config-api-port-fabric"
         optionalDependency "soul-fired"
       }
     }
