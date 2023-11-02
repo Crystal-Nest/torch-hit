@@ -117,8 +117,8 @@ curseforge {
     mainArtifact(remapJar) {
       displayName = "[${loader} - ${minecraft_version}] ${mod_title} v${mod_version}"
       relations {
-        requiredDependency "forge-config-api-port-fabric"
         requiredDependency "fabric-api"
+        requiredDependency "forge-config-api-port-fabric"
         optionalDependency "soul-fired"
       }
     }

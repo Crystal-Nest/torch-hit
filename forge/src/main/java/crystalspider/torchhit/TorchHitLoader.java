@@ -21,16 +21,11 @@ public class TorchHitLoader {
   /**
    * Network channel protocol version.
    */
-  public static final int PROTOCOL_VERSION = 1_20__6_0;
+  public static final int PROTOCOL_VERSION = 1_20_2__6_0;
   /**
    * {@link SimpleChannel} instance for compatibility client-server.
    */
-  public static final SimpleChannel INSTANCE = ChannelBuilder
-    .named(new ResourceLocation(MODID, "main"))
-    .networkProtocolVersion(PROTOCOL_VERSION)
-    .clientAcceptedVersions((status, version) -> true)
-    .serverAcceptedVersions((status, version) -> version == PROTOCOL_VERSION)
-    .simpleChannel();
+  public static final SimpleChannel INSTANCE = ChannelBuilder.named(new ResourceLocation(MODID, "main")).networkProtocolVersion(PROTOCOL_VERSION).optionalClient().simpleChannel();
 
   public TorchHitLoader() {
     ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, TorchHitConfig.SPEC);
