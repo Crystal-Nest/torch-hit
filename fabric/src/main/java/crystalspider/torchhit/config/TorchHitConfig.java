@@ -134,6 +134,15 @@ public class TorchHitConfig {
   }
 
   /**
+   * Returns the value of {@link CommonConfig#fireFromMobs}.
+   *
+   * @return {@link CommonConfig#fireFromMobs} as read from the {@link #COMMON common} configuration file.
+   */
+  public static Boolean getFireFromMobs() {
+    return COMMON.fireFromMobs.get();
+  }
+
+  /**
    * Common Configuration for Torch hit!.
    */
   public static class CommonConfig {
@@ -188,6 +197,10 @@ public class TorchHitConfig {
      * Chance (in percentage) for torches/candles to set targets on fire.
      */
     private final IntValue fireChance;
+    /**
+     * Whether mobs wielding a torch can set their targets on fire.
+     */
+    private final BooleanValue fireFromMobs;
 
     /**
      * Defines the configuration options, their default values and their comments.
@@ -281,6 +294,7 @@ public class TorchHitConfig {
         )
         .define("consume with indirect hits", false);
       fireChance = builder.comment("Chance (in percentage) for torches/candles to set targets on fire.").defineInRange("fire chance", 100, 1, 100);
+      fireFromMobs = builder.comment("Whether mobs wielding a torch can set their targets on fire.", "Generally useful only when other mods tweak mobs to wield torches.").define("fire from mobs", true);
     }
   }
 }
