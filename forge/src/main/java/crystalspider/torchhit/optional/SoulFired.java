@@ -6,7 +6,7 @@ import net.minecraft.world.entity.Entity;
 /**
  * Proxy for Soul Fire'd mod.
  */
-public abstract class SoulFired {
+public final class SoulFired {
   /**
    * Sets on fire the given entity, for the given seconds, with the correct Fire Type.
    * 
