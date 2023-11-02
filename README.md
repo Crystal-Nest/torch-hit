@@ -39,7 +39,9 @@ Compatible with [Soul Fire'd](https://modrinth.com/mod/soul-fire-d) and with any
 - By default torches and candles always set targets on fire and only candles break upon use.  
   Whether also torches should break, the chance of setting targets on fire and whether to break items can all be configured.  
 - By default Vanilla torches can be used to deal fire damage.  
-  If you wish to tweak the game balance, Vanilla torches can be prevented from dealing fire damage and only the extra items in the configuration will work.
+  If you wish to tweak the game balance, Vanilla torches can be prevented from dealing fire damage and only the extra items in the configuration will work.  
+- By default mobs wielding torches can set other entities (players included) on fire.  
+  This option can be disabled.
 
 ## **Dependencies**
 | Mod | Loader | Requirement |
