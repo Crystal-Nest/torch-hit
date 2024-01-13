@@ -8,6 +8,9 @@ and this project adheres to [Forge Semantic Versioning](https://mcforge.readthed
 ## [Unreleased]
 - Nothing new.
 
+## [1.20.4-6.0.2.0] - 2024/01/13
+- Ported to 1.20.4
+
 ## [1.20.2-6.0.2.0] - 2023/11/02
 - Implemented [#20](https://github.com/Nyphet/torch-hit/issues/20).
 - Fixed [#21](https://github.com/Nyphet/torch-hit/issues/21).

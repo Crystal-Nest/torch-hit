@@ -4,8 +4,8 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import crystalspider.torchhit.TorchHitLoader;
-import crystalspider.torchhit.config.TorchHitConfig;
+import crystalspider.torchhit.ModLoader;
+import crystalspider.torchhit.config.ModConfig;
 import crystalspider.torchhit.optional.SoulFired;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -28,7 +28,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 /**
  * Handler for the {@link AttackEntityEvent}.
  */
-@EventBusSubscriber(modid = TorchHitLoader.MODID, bus = Bus.FORGE)
+@EventBusSubscriber(modid = ModLoader.MOD_ID, bus = Bus.FORGE)
 public final class LivingAttackEventHandler {
   /**
    * Whether Soul Fire'd mod is installed at runtime.
@@ -45,8 +45,8 @@ public final class LivingAttackEventHandler {
   public static void handle(LivingAttackEvent event) {
     Entity entity = event.getSource().getEntity();
     Entity directEntity = event.getSource().getDirectEntity();
-    if (entity instanceof LivingEntity && entity == directEntity && !entity.level().isClientSide && !entity.isSpectator()) {
-      LivingEntity attacker = (LivingEntity) entity, target = event.getEntity();
+    if (entity instanceof LivingEntity attacker && entity == directEntity && !entity.level().isClientSide && !entity.isSpectator()) {
+      LivingEntity target = event.getEntity();
       if (canAttack(attacker, target)) {
         InteractionHand interactionHand = getInteractionHand(attacker);
         if (interactionHand != null && !target.fireImmune()) {
@@ -69,7 +69,7 @@ public final class LivingAttackEventHandler {
    * @param directHit whether the hit is direct ({@code true}) or indirect ({@code false}).
    */
   private static void attack(LivingEntity attacker, Entity target, ItemStack item, boolean directHit) {
-    consumeItem(attacker, item, directHit, burn(target, item, directHit ? TorchHitConfig.getDirectHitDuration() : TorchHitConfig.getIndirectHitDuration()));
+    consumeItem(attacker, item, directHit, burn(target, item, directHit ? ModConfig.getDirectHitDuration() : ModConfig.getIndirectHitDuration()));
   }
 
   /**
@@ -83,9 +83,9 @@ public final class LivingAttackEventHandler {
   private static void consumeItem(LivingEntity attacker, ItemStack item, boolean directHit, int fireSeconds) {
     if (
       !(attacker instanceof Player && ((Player) attacker).isCreative()) &&
-      ((isCandle(item) && TorchHitConfig.getConsumeCandle()) || (isTorch(item) && TorchHitConfig.getConsumeTorch())) &&
-      (directHit || TorchHitConfig.getConsumeWithIndirectHits()) &&
-      (TorchHitConfig.getConsumeWithoutFire() || fireSeconds > 0)
+      ((isCandle(item) && ModConfig.getConsumeCandle()) || (isTorch(item) && ModConfig.getConsumeTorch())) &&
+      (directHit || ModConfig.getConsumeWithIndirectHits()) &&
+      (ModConfig.getConsumeWithoutFire() || fireSeconds > 0)
     ) {
       item.shrink(1);
     }
@@ -120,7 +120,7 @@ public final class LivingAttackEventHandler {
    * @return the amount of seconds the given entity should stay on fire.
    */
   private static int getFireSeconds(ItemStack item, Entity target, int fireDuration) {
-    if ((Math.random() * 100) < TorchHitConfig.getFireChance()) {
+    if ((Math.random() * 100) < ModConfig.getFireChance()) {
       if (isSoulTorch(item)) {
         if (isSoulfiredInstalled.get()) {
           return fireDuration;
@@ -142,7 +142,7 @@ public final class LivingAttackEventHandler {
    * @return whether the given {@link Item} is a tool that allows Indirect Hits.
    */
   private static boolean isAllowedTool(Item item) {
-    return !TorchHitConfig.getIndirectHitToolList().isEmpty() && TorchHitConfig.getIndirectHitToolList().stream().filter(toolType -> getKey(item).matches(".*:([^_]+_)*" + toolType + "(_[^_]+)*")).count() > 0;
+    return !ModConfig.getIndirectHitToolList().isEmpty() && ModConfig.getIndirectHitToolList().stream().anyMatch(toolType -> getKey(item).matches(".*:([^_]+_)*" + toolType + "(_[^_]+)*"));
   }
 
   /**
@@ -180,7 +180,7 @@ public final class LivingAttackEventHandler {
    * @return whether the given {@link ItemStack} is a torch.
    */
   private static boolean isTorch(ItemStack item) {
-    return (item.is(Items.TORCH) && TorchHitConfig.getVanillaTorchesEnabled()) || TorchHitConfig.getExtraTorchItems().contains(getKey(item.getItem())) || isSoulTorch(item);
+    return (item.is(Items.TORCH) && ModConfig.getVanillaTorchesEnabled()) || ModConfig.getExtraTorchItems().contains(getKey(item.getItem())) || isSoulTorch(item);
   }
 
   /**
@@ -190,7 +190,7 @@ public final class LivingAttackEventHandler {
    * @return whether the given {@link ItemStack} is a soul torch.
    */
   private static boolean isSoulTorch(ItemStack item) {
-    return (item.is(Items.SOUL_TORCH) && TorchHitConfig.getVanillaTorchesEnabled()) || TorchHitConfig.getExtraSoulTorchItems().contains(getKey(item.getItem()));
+    return (item.is(Items.SOUL_TORCH) && ModConfig.getVanillaTorchesEnabled()) || ModConfig.getExtraSoulTorchItems().contains(getKey(item.getItem()));
   }
 
   /**
@@ -200,7 +200,7 @@ public final class LivingAttackEventHandler {
    * @return whether the given {@link ItemStack} is a candle.
    */
   private static boolean isCandle(ItemStack item) {
-    return TorchHitConfig.getAllowCandles() && item.is(ItemTags.CANDLES);
+    return ModConfig.getAllowCandles() && item.is(ItemTags.CANDLES);
   }
 
   /**
@@ -211,7 +211,7 @@ public final class LivingAttackEventHandler {
    * @return whether the {@code attacker} can actually attack the {@code target}.
    */
   private static boolean canAttack(LivingEntity attacker, LivingEntity target) {
-    return (attacker instanceof Player || TorchHitConfig.getFireFromMobs()) && attacker.canAttack(target) && (!(attacker instanceof Player && target instanceof Player) || ((Player) attacker).canHarmPlayer((Player) target));
+    return (attacker instanceof Player || ModConfig.getFireFromMobs()) && attacker.canAttack(target) && (!(attacker instanceof Player && target instanceof Player) || ((Player) attacker).canHarmPlayer((Player) target));
   }
 
   /**

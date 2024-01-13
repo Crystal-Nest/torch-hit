@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import org.jetbrains.annotations.Nullable;
 
-import crystalspider.torchhit.config.TorchHitConfig;
+import crystalspider.torchhit.config.ModConfig;
 import crystalspider.torchhit.optional.SoulFired;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
@@ -38,12 +38,10 @@ public final class AttackEntityHandler {
    * @param amount
    * @return
    */
-  @SuppressWarnings("resource")
   public static boolean handle(LivingEntity target, DamageSource source, float amount) {
     Entity attackerEntity = source.getAttacker();
     Entity directEntity = source.getSource();
-    if (attackerEntity instanceof LivingEntity && attackerEntity == directEntity && !attackerEntity.getWorld().isClient && !attackerEntity.isSpectator()) {
-      LivingEntity attacker = (LivingEntity) attackerEntity;
+    if (attackerEntity instanceof LivingEntity attacker && attackerEntity == directEntity && !attackerEntity.getWorld().isClient && !attackerEntity.isSpectator()) {
       if (canAttack(attacker, target)) {
         Hand interactionHand = getHand(attacker);
         if (interactionHand != null && !target.isFireImmune()) {
@@ -67,7 +65,7 @@ public final class AttackEntityHandler {
    * @param directHit whether the hit is direct ({@code true}) or indirect ({@code false}).
    */
   private static void attack(LivingEntity attacker, Entity target, ItemStack item, boolean directHit) {
-    consumeItem(attacker, item, directHit, burn(target, item, directHit ? TorchHitConfig.getDirectHitDuration() : TorchHitConfig.getIndirectHitDuration()));
+    consumeItem(attacker, item, directHit, burn(target, item, directHit ? ModConfig.getDirectHitDuration() : ModConfig.getIndirectHitDuration()));
   }
 
   /**
@@ -81,9 +79,9 @@ public final class AttackEntityHandler {
   private static void consumeItem(LivingEntity attacker, ItemStack item, boolean directHit, int fireSeconds) {
     if (
       !(attacker instanceof PlayerEntity && ((PlayerEntity) attacker).isCreative()) &&
-      ((isCandle(item) && TorchHitConfig.getConsumeCandle()) || (isTorch(item) && TorchHitConfig.getConsumeTorch())) &&
-      (directHit || TorchHitConfig.getConsumeWithIndirectHits()) &&
-      (TorchHitConfig.getConsumeWithoutFire() || fireSeconds > 0)
+      ((isCandle(item) && ModConfig.getConsumeCandle()) || (isTorch(item) && ModConfig.getConsumeTorch())) &&
+      (directHit || ModConfig.getConsumeWithIndirectHits()) &&
+      (ModConfig.getConsumeWithoutFire() || fireSeconds > 0)
     ) {
       item.decrement(1);
     }
@@ -93,7 +91,7 @@ public final class AttackEntityHandler {
    * Sets the entity on fire.
    * 
    * @param target
-   * @param torch
+   * @param item
    * @param defaultDuration
    */
   private static int burn(Entity target, ItemStack item, int defaultDuration) {
@@ -117,7 +115,7 @@ public final class AttackEntityHandler {
    * @return the amount of seconds the given entity should stay on fire.
    */
   private static int getFireSeconds(ItemStack item, Entity target, int fireDuration) {
-    if ((Math.random() * 100) < TorchHitConfig.getFireChance()) {
+    if ((Math.random() * 100) < ModConfig.getFireChance()) {
       if (isSoulTorch(item)) {
         if (isSoulfiredInstalled.get()) {
           return fireDuration;
@@ -139,7 +137,7 @@ public final class AttackEntityHandler {
    * @return
    */
   private static boolean isAllowedTool(Item item) {
-    return !TorchHitConfig.getIndirectHitToolList().isEmpty() && TorchHitConfig.getIndirectHitToolList().stream().filter(toolType -> getKey(item).matches(".*:([^_]+_)*" + toolType + "(_[^_]+)*")).count() > 0;
+    return !ModConfig.getIndirectHitToolList().isEmpty() && ModConfig.getIndirectHitToolList().stream().anyMatch(toolType -> getKey(item).matches(".*:([^_]+_)*" + toolType + "(_[^_]+)*"));
   }
 
   /**
@@ -177,7 +175,7 @@ public final class AttackEntityHandler {
    * @return whether the given {@link ItemStack} is a torch.
    */
   private static boolean isTorch(ItemStack item) {
-    return (item.isOf(Items.TORCH) && TorchHitConfig.getVanillaTorchesEnabled()) || TorchHitConfig.getExtraTorchItems().contains(getKey(item.getItem())) || isSoulTorch(item);
+    return (item.isOf(Items.TORCH) && ModConfig.getVanillaTorchesEnabled()) || ModConfig.getExtraTorchItems().contains(getKey(item.getItem())) || isSoulTorch(item);
   }
 
   /**
@@ -187,7 +185,7 @@ public final class AttackEntityHandler {
    * @return whether the given {@link ItemStack} is a soul torch.
    */
   private static boolean isSoulTorch(ItemStack item) {
-    return (item.isOf(Items.SOUL_TORCH) && TorchHitConfig.getVanillaTorchesEnabled()) || TorchHitConfig.getExtraSoulTorchItems().contains(getKey(item.getItem()));
+    return (item.isOf(Items.SOUL_TORCH) && ModConfig.getVanillaTorchesEnabled()) || ModConfig.getExtraSoulTorchItems().contains(getKey(item.getItem()));
   }
 
   /**
@@ -197,7 +195,7 @@ public final class AttackEntityHandler {
    * @return whether the given {@link ItemStack} is a candle.
    */
   private static boolean isCandle(ItemStack item) {
-    return TorchHitConfig.getAllowCandles() && item.isIn(ItemTags.CANDLES);
+    return ModConfig.getAllowCandles() && item.isIn(ItemTags.CANDLES);
   }
 
   /**
@@ -208,7 +206,7 @@ public final class AttackEntityHandler {
    * @return whether the {@code attacker} can actually attack the {@code target}.
    */
   private static boolean canAttack(LivingEntity attacker, LivingEntity target) {
-    return (attacker instanceof PlayerEntity || TorchHitConfig.getFireFromMobs()) && attacker.canTarget(target) && (!(attacker instanceof PlayerEntity && target instanceof PlayerEntity) || ((PlayerEntity) attacker).shouldDamagePlayer((PlayerEntity) target));
+    return (attacker instanceof PlayerEntity || ModConfig.getFireFromMobs()) && attacker.canTarget(target) && (!(attacker instanceof PlayerEntity && target instanceof PlayerEntity) || ((PlayerEntity) attacker).shouldDamagePlayer((PlayerEntity) target));
   }
 
   /**

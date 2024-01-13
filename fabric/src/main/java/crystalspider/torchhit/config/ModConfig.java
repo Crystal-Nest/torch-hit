@@ -1,29 +1,29 @@
 package crystalspider.torchhit.config;
 
-import java.util.List;
+import net.minecraft.enchantment.Enchantments;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
+import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
+import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
 
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue; 
+import java.util.List;
 
 /**
  * Torch hit! Configuration.
  */
-public class TorchHitConfig {
+public class ModConfig {
   /**
-   * {@link ForgeConfigSpec} {@link ForgeConfigSpec.Builder Builder}.
+   * {@link ModConfigSpec} {@link ModConfigSpec.Builder Builder}.
    */
-	private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+  private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
   /**
    * Common Configuration as read from the configuration file.
    */
-	public static final CommonConfig COMMON = new CommonConfig(BUILDER);
+  public static final CommonConfig COMMON = new CommonConfig(BUILDER);
   /**
-   * {@link ForgeConfigSpec}.
+   * {@link ModConfigSpec}.
    */
-	public static final ForgeConfigSpec SPEC = BUILDER.build();
+  public static final ModConfigSpec SPEC = BUILDER.build();
 
   /**
    * Returns the value of {@link CommonConfig#directHitDuration}.
@@ -31,8 +31,8 @@ public class TorchHitConfig {
    * @return {@link CommonConfig#directHitDuration} as read from the {@link #COMMON common} configuration file.
    */
   public static Integer getDirectHitDuration() {
-		return COMMON.directHitDuration.get();
-	}
+    return COMMON.directHitDuration.get();
+  }
 
   /**
    * Returns the value of {@link CommonConfig#indirectHitDuration}.
@@ -40,8 +40,8 @@ public class TorchHitConfig {
    * @return {@link CommonConfig#indirectHitDuration} as read from the {@link #COMMON common} configuration file.
    */
   public static Integer getIndirectHitDuration() {
-		return COMMON.indirectHitDuration.get();
-	}
+    return COMMON.indirectHitDuration.get();
+  }
 
   /**
    * Returns the value of {@link CommonConfig#indirectHitToolList}.
@@ -85,8 +85,8 @@ public class TorchHitConfig {
    * @return {@link CommonConfig#allowCandles} as read from the {@link #COMMON common} configuration file.
    */
   public static Boolean getAllowCandles() {
-		return COMMON.allowCandles.get();
-	}
+    return COMMON.allowCandles.get();
+  }
 
   /**
    * Returns the value of {@link CommonConfig#consumeCandle}.
@@ -94,8 +94,8 @@ public class TorchHitConfig {
    * @return {@link CommonConfig#consumeCandle} as read from the {@link #COMMON common} configuration file.
    */
   public static Boolean getConsumeCandle() {
-		return COMMON.consumeCandle.get();
-	}
+    return COMMON.consumeCandle.get();
+  }
 
   /**
    * Returns the value of {@link CommonConfig#consumeTorch}.
@@ -103,8 +103,8 @@ public class TorchHitConfig {
    * @return {@link CommonConfig#consumeTorch} as read from the {@link #COMMON common} configuration file.
    */
   public static Boolean getConsumeTorch() {
-		return COMMON.consumeTorch.get();
-	}
+    return COMMON.consumeTorch.get();
+  }
 
   /**
    * Returns the value of {@link CommonConfig#consumeWithoutFire}.
@@ -112,8 +112,8 @@ public class TorchHitConfig {
    * @return {@link CommonConfig#consumeWithoutFire} as read from the {@link #COMMON common} configuration file.
    */
   public static Boolean getConsumeWithoutFire() {
-		return COMMON.consumeWithoutFire.get();
-	}
+    return COMMON.consumeWithoutFire.get();
+  }
 
   /**
    * Returns the value of {@link CommonConfig#consumeWithIndirectHit}.
@@ -207,7 +207,7 @@ public class TorchHitConfig {
      *
      * @param builder
      */
-		public CommonConfig(ForgeConfigSpec.Builder builder) {
+    public CommonConfig(ModConfigSpec.Builder builder) {
       int maxDuration = Enchantments.FIRE_ASPECT.getMaxLevel() * 4;
       directHitDuration = builder.comment("Fire damage duration for direct (main hand) hits.").defineInRange("direct hit duration", 4, 1, maxDuration);
       indirectHitDuration = builder.comment("Fire damage duration for indirect (off hand + tool) hits.").defineInRange("indirect hit duration", 2, 1, maxDuration);
@@ -247,7 +247,7 @@ public class TorchHitConfig {
           "pgwbandedtorches:banded_torch_green",
           "pgwbandedtorches:banded_torch_red",
           "pgwbandedtorches:banded_torch_black"
-        ), 
+        ),
         (element) -> element instanceof String && !((String) element).isBlank()
       );
       extraSoulTorchItems = builder.comment("List of item ids that should be considered as a Soul Torch.").defineListAllowEmpty(

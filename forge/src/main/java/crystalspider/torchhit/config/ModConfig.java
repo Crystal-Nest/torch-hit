@@ -2,7 +2,7 @@ package crystalspider.torchhit.config;
 
 import java.util.List;
 
-import net.minecraft.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
@@ -11,7 +11,7 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 /**
  * Torch hit! Configuration.
  */
-public class TorchHitConfig {
+public class ModConfig {
   /**
    * {@link ForgeConfigSpec} {@link ForgeConfigSpec.Builder Builder}.
    */
