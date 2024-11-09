@@ -6,7 +6,7 @@ plugins {
 
 base {
   archivesName = "$mod_id_kebab-$name"
-  version = "$minecraft_version-$mod_version"
+  version = "$minecraft_compat_version-$mod_version"
 }
 
 java {
@@ -64,7 +64,7 @@ if (name != "fabric") {
 ["apiElements", "runtimeElements", "sourcesElements", "javadocElements"].each { variant ->
   configurations."$variant".outgoing {
     capability("$group:${base.archivesName.get()}:$version")
-    capability("$group:$mod_id-${project.name}-$minecraft_version:$version")
+    capability("$group:$mod_id-${project.name}-$minecraft_compat_version:$version")
     capability("$group:$mod_id:$version")
   }
   publishing.publications.configureEach {
@@ -90,7 +90,7 @@ jar {
       "Implementation-Title"    : mod_title,
       "Implementation-Vendor"   : mod_authors,
       "Implementation-Version"  : project.version,
-      "Implementation-URL"      : "https://github.com/$github_user/$mod_id_kebab/tree/$minecraft_version",
+      "Implementation-URL"      : "https://github.com/$github_user/$mod_id_kebab/tree/$minecraft_compat_version",
       "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
       "Timestamp"               : System.currentTimeMillis(),
       "Built-On-Java"           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
@@ -115,6 +115,7 @@ processResources {
     "curseforge_id"                : curseforge_id,
     "minecraft_version"            : minecraft_version,
     "minecraft_version_range"      : minecraft_version_range,
+    minecraft_compat_version       : minecraft_compat_version,
     "fabric_version"               : fabric_version,
     "fabric_loader_version"        : fabric_loader_version,
     "neoforge_version"             : neoforge_version,
@@ -160,9 +161,9 @@ publishing {
       version = project.version
       from components.java
       pom {
-        name = "[$loader - $minecraft_version] $mod_title v$mod_version"
+        name = "[$loader - $minecraft_compat_version] $mod_title v$mod_version"
         description = "$description"
-        url = "https://github.com/$github_user/$mod_id_kebab/tree/$minecraft_version"
+        url = "https://github.com/$github_user/$mod_id_kebab/tree/$minecraft_compat_version"
         issueManagement {
           system = "github"
           url = "https://github.com/$github_user/$mod_id_kebab/issues"
@@ -204,15 +205,15 @@ publisher {
   if (!noPublish) {
     setLoaders(loader)
   }
-  setGameVersions(minecraft_version)
-  setDisplayName("[$loader - $minecraft_version] $mod_title v$mod_version")
+  setGameVersions([minecraft_version, minecraft_compat_version])
+  setDisplayName("[$loader - $minecraft_compat_version] $mod_title v$mod_version")
   setJavaVersions([JavaVersion.VERSION_21]) // Remember to update this to match java_version gradle property.
   setCurseEnvironment("server") // "server", "client" or "both".
   github {
     repo = "$github_user/$mod_id_kebab"
     tag = "v${project.version}"
     displayName("v${project.version}")
-    target = minecraft_version
+    target = minecraft_compat_version
     createTag = true
     createRelease = true
     updateRelease = true
