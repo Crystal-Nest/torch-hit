@@ -16,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Repairable;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -64,20 +65,22 @@ public final class AttackHandler {
    * @param directHit whether the hit is direct ({@code true}) or indirect ({@code false}).
    * @param seconds fire duration.
    */
-  @SuppressWarnings("DataFlowIssue")
   private static void consumeItem(LivingEntity attacker, ItemStack item, boolean directHit, int seconds) {
     if (!(attacker instanceof Player player && player.isCreative())) {
       if (((isCandle(item) && ModConfig.getConsumeCandle()) || (isTorch(item) && ModConfig.getConsumeTorch())) && (directHit || ModConfig.getConsumeWithIndirectHits()) && (ModConfig.getConsumeWithoutFire() || seconds > 0)) {
         item.shrink(1);
       } else if (
         ModConfig.getIndirectHitToolDamage() > 0 &&
-        attacker.getMainHandItem().has(DataComponents.TOOL) &&
-        attacker.getMainHandItem().has(DataComponents.REPAIRABLE) &&
-        attacker.getMainHandItem().has(DataComponents.MAX_DAMAGE) &&
-        attacker.getMainHandItem().get(DataComponents.REPAIRABLE).items().unwrapKey().isPresent() &&
-        attacker.getMainHandItem().get(DataComponents.REPAIRABLE).items().unwrapKey().get().toString().equals(ItemTags.WOODEN_TOOL_MATERIALS.toString())
+        attacker.getMainHandItem() instanceof ItemStack tool &&
+        tool.has(DataComponents.TOOL) &&
+        tool.has(DataComponents.REPAIRABLE) &&
+        tool.has(DataComponents.MAX_DAMAGE) &&
+        tool.get(DataComponents.MAX_DAMAGE) instanceof Integer durability &&
+        tool.get(DataComponents.REPAIRABLE) instanceof Repairable repairable &&
+        repairable.items().unwrapKey().isPresent() &&
+        repairable.items().unwrapKey().get().toString().equals(ItemTags.WOODEN_TOOL_MATERIALS.toString())
       ) {
-        attacker.getMainHandItem().hurtAndBreak((attacker.getMainHandItem().get(DataComponents.MAX_DAMAGE) * ModConfig.getIndirectHitToolDamage() + 99) / 100, attacker, EquipmentSlot.MAINHAND);
+        tool.hurtAndBreak((durability * ModConfig.getIndirectHitToolDamage() + 99) / 100, attacker, EquipmentSlot.MAINHAND);
       }
     }
   }
