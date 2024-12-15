@@ -7,6 +7,7 @@ import it.crystalnest.torch_hit.config.ModConfig;
 import it.crystalnest.torch_hit.platform.Services;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -18,6 +19,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Repairable;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 /**
  * Handles attack events.
@@ -77,8 +80,9 @@ public final class AttackHandler {
         tool.has(DataComponents.MAX_DAMAGE) &&
         tool.get(DataComponents.MAX_DAMAGE) instanceof Integer durability &&
         tool.get(DataComponents.REPAIRABLE) instanceof Repairable repairable &&
-        repairable.items().unwrapKey().isPresent() &&
-        repairable.items().unwrapKey().get().toString().equals(ItemTags.WOODEN_TOOL_MATERIALS.toString())
+        repairable.items().unwrapKey() instanceof Optional<TagKey<Item>> tag &&
+        tag.isPresent() &&
+        tag.get().toString().equals(ItemTags.WOODEN_TOOL_MATERIALS.toString())
       ) {
         tool.hurtAndBreak((durability * ModConfig.getIndirectHitToolDamage() + 99) / 100, attacker, EquipmentSlot.MAINHAND);
       }
