@@ -8,7 +8,7 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 /**
  * NeoForge attack handler.
  */
-@EventBusSubscriber(modid = Constants.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = Constants.MOD_ID)
 public final class NeoForgeAttackHandler {
   private NeoForgeAttackHandler() {}
 

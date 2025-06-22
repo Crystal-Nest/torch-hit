@@ -236,7 +236,7 @@ public final class ModConfig extends CommonConfig {
         " Leave empty to disable indirect hits.",
         " Insert either item categories or specific item IDs."
       )
-      .defineListAllowEmpty("indirect tools", () -> List.of("sword", "axe", "pickaxe", "shovel", "hoe"), this::stringListValidator);
+      .defineListAllowEmpty("indirect tools", () -> List.of("sword", "axe", "pickaxe", "shovel", "hoe"), () -> "", this::stringListValidator);
     indirectHitToolDamage = builder.comment(" How much Indirect Hits should damage wooden tools (in percentage).", " 0 to disable.").defineInRange("indirect hit tool damage", 33, 0, 100);
     extraTorchItems = builder.comment(" List of item ids that should be considered as a Torch.").defineListAllowEmpty(
       "extra torch items",
@@ -268,6 +268,7 @@ public final class ModConfig extends CommonConfig {
         "pgwbandedtorches:banded_torch_red",
         "pgwbandedtorches:banded_torch_black"
       ),
+      () -> "mod_id:item_id",
       this::stringListValidator
     );
     extraSoulTorchItems = builder.comment(" List of item ids that should be considered as a Soul Torch.").defineListAllowEmpty(
@@ -290,6 +291,7 @@ public final class ModConfig extends CommonConfig {
         "pgwbandedtorches:banded_soul_torch_red",
         "pgwbandedtorches:banded_soul_torch_black"
       ),
+      () -> "mod_id:item_id",
       this::stringListValidator
     );
     vanillaTorchesEnabled = builder
