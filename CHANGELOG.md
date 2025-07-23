@@ -7,7 +7,11 @@ and this project adheres to [Crystal Nest Semantic Versioning](https://crystalne
 
 ## [Unreleased]
 
-- Ported to 1.21.7.
+- Nothing new.
+
+## [v7.0.0] - 2025/07/23
+
+- Ported to 1.21.6, 1.21.7, and 1.21.8.
 
 ## [v7.0.0] - 2025/05/05
 

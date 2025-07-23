@@ -27,10 +27,10 @@
   "depends": {
     "fabricloader": ">=${fabric_loader_version}",
     "fabric-api": "*",
-    "minecraft": "~${minecraft_version}",
+    "minecraft": "~1.21.6",
     "java": ">=${java_version}",
     "cobweb": "^${cobweb_version}",
-    "forgeconfigapiport": "^${fcap_version}"
+    "forgeconfigapiport": "^21.6.0"
   },
   "suggests": {
     "soul_fire_d": "^${soul_fire_d_version}"
