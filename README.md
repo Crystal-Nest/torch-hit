@@ -21,7 +21,7 @@ While holding a torch you can set on fire your enemies, for an easier exploratio
 
 Compatible with [Soul Fire'd](https://modrinth.com/mod/soul-fire-d) and with any modded torch!  
 ![Soul hit](https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/torch-hit/soul-hit.gif) ![Mod hit](https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/torch-hit/mod-hit.gif)  
-Furthermore, if the modded torch is already compatible with **Soul Fire'd**, striking with it will set on the correct kind of fire!
+Furthermore, if the modded torch is compatible with **[Prometheus](https://modrinth.com/mod/prometheus-api)**, striking with it will set on the correct kind of fire!
 
 ## **Features**
 
