@@ -44,9 +44,16 @@ repositories {
     )
     filter { includeGroup("org.parchmentmc.data") }
   }
-  maven {
-    name = "Crystal Nest"
-    url = "https://maven.crystalnest.it"
+  exclusiveContent {
+    forRepository {
+      maven {
+        name = "Crystal Nest"
+        url = "https://maven.crystalnest.it"
+      }
+    }
+    filter {
+      includeGroup "it.crystalnest"
+    }
   }
   maven {
     name = "Fuzs Mod Resources"
@@ -57,6 +64,7 @@ repositories {
 if (name != "fabric") {
   dependencies {
     implementation "it.crystalnest:cobweb-$name:$minecraft_version-$cobweb_version"
+    implementation "it.crystalnest:prometheus-$name:$minecraft_version-$prometheus_version"
     implementation "it.crystalnest:soul-fire-d-$name:$minecraft_version-$soul_fire_d_version"
   }
 }
@@ -119,6 +127,7 @@ processResources {
     "neoforge_version"             : neoforge_version,
     "neoforge_loader_version_range": neoforge_loader_version_range,
     "cobweb_version"               : cobweb_version,
+    "prometheus_version"           : prometheus_version,
     "soul_fire_d_version"          : soul_fire_d_version,
     "fcap_version"                 : fcap_version,
   ]
@@ -203,7 +212,7 @@ publisher {
   if (!noPublish) {
     setLoaders(loader)
   }
-  setGameVersions(minecraft_version)
+  setGameVersions(minecraft_version, "1.21.1")
   setDisplayName("[$loader - $minecraft_version] $mod_title v$mod_version")
   setJavaVersions([JavaVersion.VERSION_21]) // Remember to update this to match java_version gradle property.
   setCurseEnvironment("server") // "server", "client" or "both".
@@ -219,6 +228,8 @@ publisher {
   }
   modrinthDepends {
     required "cobweb"
+    optional "soul-fire-d"
+    optional "prometheus-api"
     switch (loader) {
       case "Fabric":
         required "fabric-api"
@@ -230,6 +241,8 @@ publisher {
   }
   curseDepends {
     required "cobweb"
+    optional "soul-fire-d"
+    optional "prometheus"
     switch (loader) {
       case "Fabric":
         required "fabric-api"

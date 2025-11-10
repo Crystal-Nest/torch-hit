@@ -33,6 +33,7 @@
     "forgeconfigapiport": "^${fcap_version}"
   },
   "suggests": {
-    "soul_fire_d": "^${soul_fire_d_version}"
+    "soul_fire_d": "^${soul_fire_d_version}",
+    "prometheus": "^${prometheus_version}"
   }
 }
