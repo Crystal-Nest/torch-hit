@@ -7,7 +7,12 @@ and this project adheres to [Crystal Nest Semantic Versioning](https://crystalne
 
 ## [Unreleased]
 
-- Ported to 1.21.6.
+- Nothing new.
+
+## [v7.1.0] - 2025/11/10
+
+- Update for Prometheus.
+- Port to 1.21.10.
 
 ## [v7.0.0] - 2025/05/05
 
@@ -215,6 +220,7 @@ and this project adheres to [Crystal Nest Semantic Versioning](https://crystalne
 [Unreleased]: https://github.com/crystal-nest/torch-hit
 [README]: https://github.com/crystal-nest/torch-hit#readme
 
+[v7.1.0]: https://github.com/crystal-nest/torch-hit/releases?q=7.1.0
 [v7.0.0]: https://github.com/crystal-nest/torch-hit/releases?q=7.0.0
 
 [1.20.4-6.0.2.0]: https://github.com/crystal-nest/torch-hit/releases/tag/v1.20.4-6.0.2.0
