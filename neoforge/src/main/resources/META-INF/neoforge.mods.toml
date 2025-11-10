@@ -25,19 +25,25 @@ issueTrackerURL="https://github.com/${github_user}/${mod_id_kebab}/issues" #opti
 [[dependencies.${mod_id}]]
   modId = "minecraft"
   type = "required"
-  versionRange = "${minecraft_version_range}"
+  versionRange = "[${minecraft_version},)"
   ordering = "NONE"
   side = "BOTH"
 [[dependencies.${mod_id}]]
   modId = "cobweb"
   type = "required"
   versionRange = "[${cobweb_version},)"
-  ordering = "NONE"
+  ordering = "AFTER"
   side = "BOTH"
 [[dependencies.${mod_id}]]
   modId = "soul_fire_d"
   type = "optional"
   versionRange = "[${soul_fire_d_version},)"
+  ordering = "BEFORE"
+  side = "BOTH"
+[[dependencies.${mod_id}]]
+  modId = "prometheus"
+  type = "optional"
+  versionRange = "[${prometheus_version},)"
   ordering = "BEFORE"
   side = "BOTH"
 
