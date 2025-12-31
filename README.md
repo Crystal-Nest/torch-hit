@@ -19,7 +19,7 @@ While holding a torch you can set on fire your enemies, for an easier exploratio
 
 ## **Compatibility**
 
-Compatible with [Soul Fire'd](https://modrinth.com/mod/soul-fire-d) and with any modded torch!  
+Compatible with [Soul Fire'd](https://modrinth.com/mod/soul-fire-d), [Copper Fire](https://modrinth.com/mod/copper-fire), and with any modded torch!  
 ![Soul hit](https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/torch-hit/soul-hit.gif) ![Mod hit](https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/torch-hit/mod-hit.gif)  
 Furthermore, if the modded torch is compatible with **[Prometheus](https://modrinth.com/mod/prometheus-api)**, striking with it will set on the correct kind of fire!
 
@@ -29,8 +29,10 @@ Furthermore, if the modded torch is compatible with **[Prometheus](https://modri
   ![Hit](https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/torch-hit/hit.gif)
 - Hit with a tool in your main hand and a torch in your offhand to deal fire damage!  
   ![Tool hit](https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/torch-hit/tool-hit.gif)
-- If Soul Fire'd is installed, soul torches set mobs on soul fire!  
+- If **Soul Fire'd** is installed, soul torches set mobs on soul fire!  
   If it's not installed, soul torches lit Piglins on fire for double the time and any other entity for 2 seconds more!
+- If **Copper Fire** is installed, copper torches set mobs on copper fire!  
+  If it's not installed, copper torches lit Copper Golems on fire for double the time and any other entity for 1 additional second!
 - **Highly configurable!** See next section for more details.
 
 ## **Configuration**
@@ -51,12 +53,13 @@ Furthermore, if the modded torch is compatible with **[Prometheus](https://modri
 
 ## **Dependencies**
 
-| Mod                                                                     |         Loader         | Requirement |
-|:------------------------------------------------------------------------|:----------------------:|:-----------:|
-| [Cobweb](https://modrinth.com/mod/cobweb)                               |          All           |  Required   |
-| [Forge Config API Port](https://modrinth.com/mod/forge-config-api-port) | Fabric; Forge ≥ 1.20.2 |  Required   |
-| [Soul Fire'd](https://modrinth.com/mod/soul-fire-d)                     |          All           |  Optional   |
-| [Prometheus](https://modrinth.com/mod/prometheus)                       |          All           |  Optional   |
+| Mod                                                                     | Loader | Requirement |
+|:------------------------------------------------------------------------|:------:|:-----------:|
+| [Cobweb](https://modrinth.com/mod/cobweb)                               |  All   |  Required   |
+| [Forge Config API Port](https://modrinth.com/mod/forge-config-api-port) | Fabric |  Required   |
+| [Soul Fire'd](https://modrinth.com/mod/soul-fire-d)                     |  All   |  Optional   |
+| [Copper Fire](https://modrinth.com/mod/copper-fire)                     |  All   |  Optional   |
+| [Prometheus](https://modrinth.com/mod/prometheus)                       |  All   |  Optional   |
 
 ## **License and right of use**
 

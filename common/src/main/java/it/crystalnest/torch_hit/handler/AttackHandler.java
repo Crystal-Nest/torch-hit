@@ -2,9 +2,10 @@ package it.crystalnest.torch_hit.handler;
 
 import it.crystalnest.cobweb.api.item.ItemUtils;
 import it.crystalnest.torch_hit.Constants;
-import it.crystalnest.torch_hit.compat.SoulFired;
+import it.crystalnest.torch_hit.compat.Prometheus;
 import it.crystalnest.torch_hit.config.ModConfig;
 import it.crystalnest.torch_hit.platform.Services;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -12,11 +13,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.coppergolem.CopperGolem;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Repairable;
 import org.jetbrains.annotations.Nullable;
 
@@ -79,8 +80,8 @@ public final class AttackHandler {
         tool.has(DataComponents.REPAIRABLE) &&
         tool.has(DataComponents.MAX_DAMAGE) &&
         tool.get(DataComponents.MAX_DAMAGE) instanceof Integer durability &&
-        tool.get(DataComponents.REPAIRABLE) instanceof Repairable repairable &&
-        repairable.items().unwrapKey() instanceof Optional<TagKey<Item>> tag &&
+        tool.get(DataComponents.REPAIRABLE) instanceof Repairable(HolderSet<Item> items) &&
+        items.unwrapKey() instanceof Optional<TagKey<Item>> tag &&
         tag.isPresent() &&
         tag.get().toString().equals(ItemTags.WOODEN_TOOL_MATERIALS.toString())
       ) {
@@ -100,8 +101,8 @@ public final class AttackHandler {
   private static int torchHit(Entity target, ItemStack item, int defaultSeconds) {
     int seconds = getFireSeconds(item, target, defaultSeconds);
     if (seconds > 0) {
-      if (Services.PLATFORM.isModLoaded("soul_fire_d")) {
-        SoulFired.setOnFire(item, target, seconds);
+      if (Services.PLATFORM.isModLoaded("prometheus")) {
+        Prometheus.setOnFire(item, target, seconds);
       } else {
         target.igniteForSeconds(seconds);
       }
@@ -119,11 +120,14 @@ public final class AttackHandler {
    */
   private static int getFireSeconds(ItemStack item, Entity target, int seconds) {
     if (Math.random() * 100 < ModConfig.getFireChance()) {
-      if (Services.PLATFORM.isModLoaded("soul_fire_d")) {
+      if (Services.PLATFORM.isModLoaded("prometheus")) {
         return seconds;
       }
       if (Constants.isSoulTorch(item)) {
         return target instanceof AbstractPiglin ? seconds * 2 : seconds + 2;
+      }
+      if (Constants.isCopperTorch(item)) {
+        return target instanceof CopperGolem ? seconds * 2 : seconds + 1;
       }
       return seconds;
     }
@@ -175,7 +179,7 @@ public final class AttackHandler {
    * @return whether the given item is considered a torch.
    */
   private static boolean isTorch(ItemStack item) {
-    return (item.is(Items.TORCH) && ModConfig.getVanillaTorchesEnabled()) || ModConfig.getExtraTorchItems().contains(ItemUtils.getKey(item.getItem()).toString()) || Constants.isSoulTorch(item);
+    return Constants.isNormalTorch(item) || Constants.isSoulTorch(item) || Constants.isCopperTorch(item);
   }
 
   /**

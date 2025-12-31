@@ -26,6 +26,16 @@ public final class Constants {
   private Constants() {}
 
   /**
+   * Whether the given item is considered a normal torch.
+   *
+   * @param item item.
+   * @return whether the given item is considered a normal torch.
+   */
+  public static boolean isNormalTorch(ItemStack item) {
+    return (item.is(Items.TORCH) && ModConfig.getVanillaTorchesEnabled()) || ModConfig.getExtraTorchItems().contains(ItemUtils.getKey(item.getItem()).toString());
+  }
+
+  /**
    * Whether the given item is considered a soul torch.
    *
    * @param item item.
@@ -33,5 +43,15 @@ public final class Constants {
    */
   public static boolean isSoulTorch(ItemStack item) {
     return (item.is(Items.SOUL_TORCH) && ModConfig.getVanillaTorchesEnabled()) || ModConfig.getExtraSoulTorchItems().contains(ItemUtils.getKey(item.getItem()).toString());
+  }
+
+  /**
+   * Whether the given item is considered a copper torch.
+   *
+   * @param item item.
+   * @return whether the given item is considered a copper torch.
+   */
+  public static boolean isCopperTorch(ItemStack item) {
+    return (item.is(Items.COPPER_TORCH) && ModConfig.getVanillaTorchesEnabled()) || ModConfig.getExtraCopperTorchItems().contains(ItemUtils.getKey(item.getItem()).toString());
   }
 }

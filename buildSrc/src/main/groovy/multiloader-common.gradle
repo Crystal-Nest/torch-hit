@@ -65,7 +65,6 @@ if (name != "fabric") {
   dependencies {
     implementation "it.crystalnest:cobweb-$name:$minecraft_version-$cobweb_version"
     implementation "it.crystalnest:prometheus-$name:$minecraft_version-$prometheus_version"
-    implementation "it.crystalnest:soul-fire-d-$name:$minecraft_version-$soul_fire_d_version"
   }
 }
 
@@ -129,7 +128,6 @@ processResources {
     "neoforge_loader_version_range": neoforge_loader_version_range,
     "cobweb_version"               : cobweb_version,
     "prometheus_version"           : prometheus_version,
-    "soul_fire_d_version"          : soul_fire_d_version,
     "fcap_version"                 : fcap_version,
   ]
   filesMatching(["pack.mcmeta", "fabric.mod.json", "META-INF/neoforge.mods.toml", "*.mixins.json"]) {

@@ -52,6 +52,12 @@ public final class ModConfig extends CommonConfig {
   private ModConfigSpec.ConfigValue<List<? extends String>> extraSoulTorchItems;
 
   /**
+   * List of item ids that should be considered as a Copper Torch.
+   * Defaults to a list of the most common modded torches.
+   */
+  private ModConfigSpec.ConfigValue<List<? extends String>> extraCopperTorchItems;
+
+  /**
    * Whether Vanilla torches can set targets on fire.
    */
   private ModConfigSpec.BooleanValue vanillaTorchesEnabled;
@@ -150,6 +156,15 @@ public final class ModConfig extends CommonConfig {
    */
   public static List<? extends String> getExtraSoulTorchItems() {
     return CONFIG.extraSoulTorchItems.get();
+  }
+
+  /**
+   * Returns the value of {@link #extraCopperTorchItems}.
+   *
+   * @return {@link #extraCopperTorchItems} as read from the configuration file.
+   */
+  public static List<? extends String> getExtraCopperTorchItems() {
+    return CONFIG.extraCopperTorchItems.get();
   }
 
   /**
@@ -290,6 +305,29 @@ public final class ModConfig extends CommonConfig {
         "pgwbandedtorches:banded_soul_torch_green",
         "pgwbandedtorches:banded_soul_torch_red",
         "pgwbandedtorches:banded_soul_torch_black"
+      ),
+      () -> "mod_id:item_id",
+      this::stringListValidator
+    );
+    extraCopperTorchItems = builder.comment(" List of item ids that should be considered as a Copper Torch.").defineListAllowEmpty(
+      "extra copper torch items",
+      () -> List.of(
+        "pgwbandedtorches:banded_copper_torch_white",
+        "pgwbandedtorches:banded_copper_torch_orange",
+        "pgwbandedtorches:banded_copper_torch_magenta",
+        "pgwbandedtorches:banded_copper_torch_light_blue",
+        "pgwbandedtorches:banded_copper_torch_yellow",
+        "pgwbandedtorches:banded_copper_torch_lime",
+        "pgwbandedtorches:banded_copper_torch_pink",
+        "pgwbandedtorches:banded_copper_torch_gray",
+        "pgwbandedtorches:banded_copper_torch_light_gray",
+        "pgwbandedtorches:banded_copper_torch_cyan",
+        "pgwbandedtorches:banded_copper_torch_purple",
+        "pgwbandedtorches:banded_copper_torch_blue",
+        "pgwbandedtorches:banded_copper_torch_brown",
+        "pgwbandedtorches:banded_copper_torch_green",
+        "pgwbandedtorches:banded_copper_torch_red",
+        "pgwbandedtorches:banded_copper_torch_black"
       ),
       () -> "mod_id:item_id",
       this::stringListValidator

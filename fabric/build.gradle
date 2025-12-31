@@ -14,7 +14,6 @@ dependencies {
   modImplementation "it.crystalnest:cobweb-$name:$minecraft_version-$cobweb_version"
   modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:$fcap_version"
   modImplementation "it.crystalnest:prometheus-$name:$minecraft_version-$prometheus_version"
-  modImplementation "it.crystalnest:soul-fire-d-fabric:$minecraft_version-$soul_fire_d_version"
 }
 
 loom {

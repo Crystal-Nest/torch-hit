@@ -9,6 +9,13 @@ and this project adheres to [Crystal Nest Semantic Versioning](https://crystalne
 
 - Nothing new.
 
+## [v7.2.0] - 2025/12/31
+
+- 1.21.10+ only.
+- Added support for Copper Fire.
+- Added new configuration option for copper torches.
+- Ported to 1.21.11.
+
 ## [v7.1.1] - 2025/11/10
 
 - Fixed [#31](https://github.com/crystal-nest/torch-hit/issues/32), dependency error on 1.21.1.
@@ -225,6 +232,7 @@ and this project adheres to [Crystal Nest Semantic Versioning](https://crystalne
 [Unreleased]: https://github.com/crystal-nest/torch-hit
 [README]: https://github.com/crystal-nest/torch-hit#readme
 
+[v7.2.0]: https://github.com/crystal-nest/torch-hit/releases?q=7.2.0
 [v7.1.1]: https://github.com/crystal-nest/torch-hit/releases?q=7.1.1
 [v7.1.0]: https://github.com/crystal-nest/torch-hit/releases?q=7.1.0
 [v7.0.0]: https://github.com/crystal-nest/torch-hit/releases?q=7.0.0
