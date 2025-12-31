@@ -59,7 +59,7 @@ Furthermore, if the modded torch is compatible with **[Prometheus](https://modri
 | [Forge Config API Port](https://modrinth.com/mod/forge-config-api-port) | Fabric |  Required   |
 | [Soul Fire'd](https://modrinth.com/mod/soul-fire-d)                     |  All   |  Optional   |
 | [Copper Fire](https://modrinth.com/mod/copper-fire)                     |  All   |  Optional   |
-| [Prometheus](https://modrinth.com/mod/prometheus)                       |  All   |  Optional   |
+| [Prometheus](https://modrinth.com/mod/prometheus-api)                       |  All   |  Optional   |
 
 ## **License and right of use**
 
