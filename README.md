@@ -11,19 +11,21 @@
 
 ---
 
-## **Description**
+## 📝 **Description**
 
 Exploring caves gives you a choice: hold a torch in your offhand to light up the place or hold a shield to fight off against mobs.  
 With this mod you won't have to choose anymore! Torches will give you a combat advantage!  
 While holding a torch you can set on fire your enemies, for an easier exploration or an early-game alternative to Fire Aspect.
 
-## **Compatibility**
+[![Minecraft Storage](https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/torch-hit/minecraft-storage-banner.png "Minecraft Storage")](https://minecraftstorage.com/mods/torch-hit?ref=crystal-nest)
+
+## ⚙️ **Compatibility**
 
 Compatible with [Soul Fire'd](https://modrinth.com/mod/soul-fire-d), [Copper Fire](https://modrinth.com/mod/copper-fire), and with any modded torch!  
 ![Soul hit](https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/torch-hit/soul-hit.gif) ![Mod hit](https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/torch-hit/mod-hit.gif)  
 Furthermore, if the modded torch is compatible with **[Prometheus](https://modrinth.com/mod/prometheus-api)**, striking with it will set on the correct kind of fire!
 
-## **Features**
+## ✨ **Features**
 
 - Hit with a torch in your main hand to deal fire damage!  
   ![Hit](https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/torch-hit/hit.gif)
@@ -51,7 +53,7 @@ Furthermore, if the modded torch is compatible with **[Prometheus](https://modri
 - By default, mobs wielding torches can set other entities (players included) on fire.  
   This option can be disabled.
 
-## **Dependencies**
+## 🔗 **Dependencies**
 
 | Mod                                                                     | Loader | Requirement |
 |:------------------------------------------------------------------------|:------:|:-----------:|
@@ -59,14 +61,14 @@ Furthermore, if the modded torch is compatible with **[Prometheus](https://modri
 | [Forge Config API Port](https://modrinth.com/mod/forge-config-api-port) | Fabric |  Required   |
 | [Soul Fire'd](https://modrinth.com/mod/soul-fire-d)                     |  All   |  Optional   |
 | [Copper Fire](https://modrinth.com/mod/copper-fire)                     |  All   |  Optional   |
-| [Prometheus](https://modrinth.com/mod/prometheus-api)                       |  All   |  Optional   |
+| [Prometheus](https://modrinth.com/mod/prometheus-api)                   |  All   |  Optional   |
 
-## **License and right of use**
+## 📜 **License and right of use**
 
 Feel free to use this mod for any modpack or video, just be sure to give credit and possibly link [here](https://github.com/crystal-nest/torch-hit#readme).  
 This project is published under the [Crystal Nest Community License v1](https://github.com/crystal-nest/torch-hit/blob/master/LICENSE).
 
-## **Support us**
+## ❤️ **Support us**
 
 <a href="https://crystalnest.it"><img alt="Crystal Nest Website" src="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/crystal-nest/pic512.png" width="14.286%"></a><a href="https://discord.gg/BP6EdBfAmt"><img alt="Discord" src="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/discord/discord512.png" width="14.286%"></a><a href="https://www.patreon.com/crystalspider"><img alt="Patreon" src="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/patreon/patreon512.png" width="14.286%"></a><a href="https://ko-fi.com/crystalspider"><img alt="Ko-fi" src="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/kofi/kofi512.png" width="14.286%"></a><a href="https://github.com/Crystal-Nest"><img alt="Our other projects" src="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/github/github512.png" width="14.286%"><a href="https://modrinth.com/organization/crystal-nest"><img alt="Modrinth" src="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/modrinth/modrinth512.png" width="14.286%"></a><a href="https://www.curseforge.com/members/crystalspider/projects"><img alt="CurseForge" src="https://raw.githubusercontent.com/crystal-nest/mod-fancy-assets/main/curseforge/curseforge512.png" width="14.286%"></a>
 
