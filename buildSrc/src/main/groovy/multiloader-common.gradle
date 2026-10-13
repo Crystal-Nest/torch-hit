@@ -6,6 +6,15 @@ plugins {
 
 def minecraft_target = minecraft_version + minecraft_patch_version
 
+def game_versions = [minecraft_version]
+if (minecraft_patch_version) {
+  int targetPatch = minecraft_patch_version.substring(1).toInteger()
+  for (int patch = 1; patch < targetPatch; patch++) {
+    game_versions << "${minecraft_version}.${patch}".toString()
+  }
+  game_versions << minecraft_target
+}
+
 base {
   archivesName = "$mod_id_kebab-$name"
   version = "$minecraft_version-$mod_version"
@@ -186,7 +195,7 @@ publisher {
   if (!noPublish) {
     setLoaders(loader)
   }
-  setGameVersions(minecraft_version, minecraft_target)
+  setGameVersions(game_versions.toArray(new String[0]))
   setDisplayName("[$loader - $minecraft_version] $mod_title v$mod_version")
   setJavaVersions([JavaVersion.VERSION_25]) // Remember to update this to match java_version gradle property.
   setCurseEnvironment("server") // "server", "client" or "both".
