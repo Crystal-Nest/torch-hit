@@ -1,10 +1,10 @@
 package it.crystalnest.torch_hit.handler;
 
 import it.crystalnest.cobweb.api.item.ItemUtils;
+import it.crystalnest.cobweb.api.platform.PlatformQueries;
 import it.crystalnest.torch_hit.Constants;
 import it.crystalnest.torch_hit.compat.Prometheus;
 import it.crystalnest.torch_hit.config.ModConfig;
-import it.crystalnest.torch_hit.platform.Services;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.ItemTags;
@@ -101,7 +101,7 @@ public final class AttackHandler {
   private static int torchHit(Entity target, ItemStack item, int defaultSeconds) {
     int seconds = getFireSeconds(item, target, defaultSeconds);
     if (seconds > 0) {
-      if (Services.PLATFORM.isModLoaded("prometheus")) {
+      if (PlatformQueries.isModLoaded("prometheus")) {
         Prometheus.setOnFire(item, target, seconds);
       } else {
         target.igniteForSeconds(seconds);
@@ -120,7 +120,7 @@ public final class AttackHandler {
    */
   private static int getFireSeconds(ItemStack item, Entity target, int seconds) {
     if (Math.random() * 100 < ModConfig.getFireChance()) {
-      if (Services.PLATFORM.isModLoaded("prometheus")) {
+      if (PlatformQueries.isModLoaded("prometheus")) {
         return seconds;
       }
       if (Constants.isSoulTorch(item)) {

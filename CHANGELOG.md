@@ -9,6 +9,12 @@ and this project adheres to [Crystal Nest Semantic Versioning](https://crystalne
 
 - Nothing new.
 
+## [v7.2.0] - 2026/11/dd
+
+- Ported to 26.3.
+- Updated to Cobweb 2.0.0.
+- Kept FCAPI configuration without the Cobweb wrapper.
+
 ## [v7.2.0] - 2025/12/31
 
 - 1.21.10+ only.

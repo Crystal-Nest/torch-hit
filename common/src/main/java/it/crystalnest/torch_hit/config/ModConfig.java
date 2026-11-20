@@ -1,8 +1,8 @@
 package it.crystalnest.torch_hit.config;
 
-import it.crystalnest.cobweb.api.config.CommonConfig;
 import it.crystalnest.torch_hit.Constants;
 import net.neoforged.neoforge.common.ModConfigSpec;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.List;
@@ -11,11 +11,27 @@ import java.util.List;
  * Mod common configuration.
  */
 @ApiStatus.Internal
-public final class ModConfig extends CommonConfig {
+public final class ModConfig {
   /**
    * Mod common configuration.
    */
-  public static final ModConfig CONFIG = register(Constants.MOD_ID, ModConfig::new);
+  public static final ModConfig CONFIG;
+
+  /**
+   * Native configuration specification registered by each loader.
+   */
+  public static final ModConfigSpec SPEC;
+
+  /**
+   * Existing common configuration filename, shared by both loaders.
+   */
+  public static final String FILE_NAME = Constants.MOD_ID + "-common.toml";
+
+  static {
+    Pair<ModConfig, ModConfigSpec> configuration = new ModConfigSpec.Builder().configure(ModConfig::new);
+    CONFIG = configuration.getLeft();
+    SPEC = configuration.getRight();
+  }
 
   /**
    * Fire Aspect Duration for Direct Hits.
@@ -101,7 +117,7 @@ public final class ModConfig extends CommonConfig {
    * @param builder configuration builder.
    */
   private ModConfig(ModConfigSpec.Builder builder) {
-    super(builder);
+    define(builder);
   }
 
   /**
@@ -239,8 +255,22 @@ public final class ModConfig extends CommonConfig {
     return CONFIG.fireFromMobs.get();
   }
 
-  @Override
-  protected void define(ModConfigSpec.Builder builder) {
+  /**
+   * Checks whether a configuration entry is a nonblank string.
+   *
+   * @param element value to validate.
+   * @return whether the value is a nonblank string.
+   */
+  private static boolean stringListValidator(Object element) {
+    return element instanceof String string && !string.isBlank();
+  }
+
+  /**
+   * Defines the existing settings and their validation rules.
+   *
+   * @param builder configuration builder.
+   */
+  private void define(ModConfigSpec.Builder builder) {
     // Max Fire Aspect level (2) times Fire Aspect duration (4).
     int maxDuration = 8;
     directHitDuration = builder.comment(" Fire damage duration for direct (main hand) hits.").defineInRange("direct hit duration", 4, 1, maxDuration);
@@ -251,7 +281,7 @@ public final class ModConfig extends CommonConfig {
         " Leave empty to disable indirect hits.",
         " Insert either item categories or specific item IDs."
       )
-      .defineListAllowEmpty("indirect tools", () -> List.of("sword", "axe", "pickaxe", "shovel", "hoe"), () -> "", this::stringListValidator);
+      .defineListAllowEmpty("indirect tools", () -> List.of("sword", "axe", "pickaxe", "shovel", "hoe"), () -> "", ModConfig::stringListValidator);
     indirectHitToolDamage = builder.comment(" How much Indirect Hits should damage wooden tools (in percentage).", " 0 to disable.").defineInRange("indirect hit tool damage", 33, 0, 100);
     extraTorchItems = builder.comment(" List of item ids that should be considered as a Torch.").defineListAllowEmpty(
       "extra torch items",
@@ -284,7 +314,7 @@ public final class ModConfig extends CommonConfig {
         "pgwbandedtorches:banded_torch_black"
       ),
       () -> "mod_id:item_id",
-      this::stringListValidator
+      ModConfig::stringListValidator
     );
     extraSoulTorchItems = builder.comment(" List of item ids that should be considered as a Soul Torch.").defineListAllowEmpty(
       "extra soul torch items",
@@ -307,7 +337,7 @@ public final class ModConfig extends CommonConfig {
         "pgwbandedtorches:banded_soul_torch_black"
       ),
       () -> "mod_id:item_id",
-      this::stringListValidator
+      ModConfig::stringListValidator
     );
     extraCopperTorchItems = builder.comment(" List of item ids that should be considered as a Copper Torch.").defineListAllowEmpty(
       "extra copper torch items",
@@ -330,7 +360,7 @@ public final class ModConfig extends CommonConfig {
         "pgwbandedtorches:banded_copper_torch_black"
       ),
       () -> "mod_id:item_id",
-      this::stringListValidator
+      ModConfig::stringListValidator
     );
     vanillaTorchesEnabled = builder
       .comment(

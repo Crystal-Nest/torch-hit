@@ -1,6 +1,5 @@
 package it.crystalnest.torch_hit;
 
-import it.crystalnest.torch_hit.config.ModConfig;
 import org.jetbrains.annotations.ApiStatus;
 
 /**
@@ -13,7 +12,5 @@ public final class CommonModLoader {
   /**
    * Initialize common operations across loaders.
    */
-  public static void init() {
-    ModConfig.CONFIG.register();
-  }
+  public static void init() {}
 }
